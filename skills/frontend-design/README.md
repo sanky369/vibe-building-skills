@@ -91,7 +91,7 @@ Best for: New projects, MVPs, or complete redesigns
 11. performance-optimization
 12. accessibility-excellence
 
-**Timeline:** 12-16 weeks | **Effort:** High | **Impact:** Transforms MVP to refined experience
+**Effort:** High | **Impact:** Transforms MVP to refined experience
 
 ### Path B: Formalizing Existing Design
 
@@ -110,7 +110,7 @@ Best for: Inconsistent designs, growing teams, or design debt
 11. interaction-physics
 12. performance-optimization
 
-**Timeline:** 10-14 weeks | **Effort:** Medium-High | **Impact:** Reduces design debt, enables team scaling
+**Effort:** Medium-High | **Impact:** Reduces design debt, enables team scaling
 
 ### Path C: Improving Mature System
 
@@ -127,7 +127,7 @@ Best for: Established products wanting refinement
 9. color-system
 10. component-architecture
 
-**Timeline:** 8-12 weeks | **Effort:** Medium | **Impact:** Transforms good product to loved product
+**Effort:** Medium | **Impact:** Transforms good product to loved product
 
 ### Path D: Fixing Performance Issues
 
@@ -140,7 +140,7 @@ Best for: Products with perceived latency problems
 5. error-handling-recovery
 6. accessibility-excellence
 
-**Timeline:** 4-6 weeks | **Effort:** Medium | **Impact:** Dramatically improves user satisfaction
+**Effort:** Medium | **Impact:** Dramatically improves user satisfaction
 
 ### Path E: Improving Accessibility
 
@@ -155,7 +155,7 @@ Best for: Products with accessibility gaps
 7. typography-system
 8. performance-optimization
 
-**Timeline:** 6-10 weeks | **Effort:** Medium | **Impact:** Makes product usable for everyone
+**Effort:** Medium | **Impact:** Makes product usable for everyone
 
 ## How to Use These Skills
 

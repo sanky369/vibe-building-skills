@@ -80,11 +80,11 @@ Build design systems and interfaces that feel timeless and loved. Now with 5 add
 13. **design-engineer-mindset** — NEW! Bridge design and implementation, code as material
 
 **5 Implementation Paths:**
-- **Path A** — Building from Scratch (12-16 weeks)
-- **Path B** — Formalizing Existing Design (10-14 weeks)
-- **Path C** — Improving Mature System (8-12 weeks)
-- **Path D** — Fixing Performance Issues (4-6 weeks)
-- **Path E** — Improving Accessibility (6-10 weeks)
+- **Path A** — Building from Scratch
+- **Path B** — Formalizing Existing Design
+- **Path C** — Improving Mature System
+- **Path D** — Fixing Performance Issues
+- **Path E** — Improving Accessibility
 
 **Path:** Start with frontend-orchestrator to assess your situation, then follow the recommended sequence.
 
