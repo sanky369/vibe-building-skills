@@ -1,4 +1,4 @@
-# Vibe Creator's Skills
+# Vibe Building Skills
 
 A comprehensive system of 25 Claude Skills for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence—everything you need to create products that are loved.
 
