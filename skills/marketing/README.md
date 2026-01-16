@@ -6,16 +6,16 @@ Complete marketing system with 10 integrated Claude Skills. Each skill is a stan
 
 10 professional-grade Claude Skills:
 
-1. **01-brand-voice** — Define your unique brand voice
-2. **02-positioning-angles** — Find your market positioning
-3. **03-keyword-research** — Identify high-impact keywords
-4. **04-lead-magnet** — Create compelling free offers
-5. **05-direct-response-copy** — Write persuasive sales copy
-6. **06-seo-content** — Create ranking content
-7. **07-newsletter** — Build recurring audience touchpoints
-8. **08-email-sequences** — Create automated email campaigns
-9. **09-content-atomizer** — Repurpose content across platforms
-10. **10-orchestrator** — Sequence all skills strategically
+1. **brand-voice** — Define your unique brand voice
+2. **positioning-angles** — Find your market positioning
+3. **keyword-research** — Identify high-impact keywords
+4. **lead-magnet** — Create compelling free offers
+5. **direct-response-copy** — Write persuasive sales copy
+6. **seo-content** — Create ranking content
+7. **newsletter** — Build recurring audience touchpoints
+8. **email-sequences** — Create automated email campaigns
+9. **content-atomizer** — Repurpose content across platforms
+10. **orchestrator** — Sequence all skills strategically
 
 ## How to Install
 
@@ -23,7 +23,7 @@ Each skill is a folder containing a SKILL.md file. To install:
 
 ### Method 1: Individual Installation
 
-1. Navigate to each skill folder (e.g., `01-brand-voice`)
+1. Navigate to each skill folder (e.g., `brand-voice`)
 2. Copy the entire folder
 3. In Claude, go to Settings > Capabilities > Skills
 4. Click "Add Skill" and upload the folder
@@ -76,7 +76,7 @@ description: What the skill does and when to use it
 
 ### Getting Started
 
-1. Start with **10-orchestrator** to diagnose your situation
+1. Start with **orchestrator** to diagnose your situation
 2. Choose your skill sequence based on your challenge
 3. Use each skill in order
 

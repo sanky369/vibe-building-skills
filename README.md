@@ -187,41 +187,41 @@ vibe-building-skills/
 │   └── examples.py
 └── skills/
     ├── marketing/
-    │   ├── 00-orchestrator/SKILL.md
-    │   ├── 01-brand-voice/SKILL.md
-    │   ├── 02-positioning-angles/SKILL.md
-    │   ├── 03-keyword-research/SKILL.md
-    │   ├── 04-lead-magnet/SKILL.md
-    │   ├── 05-direct-response-copy/SKILL.md
-    │   ├── 06-seo-content/SKILL.md
-    │   ├── 07-newsletter/SKILL.md
-    │   ├── 08-email-sequences/SKILL.md
-    │   ├── 09-content-atomizer/SKILL.md
+    │   ├── orchestrator/SKILL.md
+    │   ├── brand-voice/SKILL.md
+    │   ├── positioning-angles/SKILL.md
+    │   ├── keyword-research/SKILL.md
+    │   ├── lead-magnet/SKILL.md
+    │   ├── direct-response-copy/SKILL.md
+    │   ├── seo-content/SKILL.md
+    │   ├── newsletter/SKILL.md
+    │   ├── email-sequences/SKILL.md
+    │   ├── content-atomizer/SKILL.md
     │   └── README.md
     ├── creative/
-    │   ├── 00-orchestrator/SKILL.md
-    │   ├── 01-creative-strategist/SKILL.md
-    │   ├── 02-image-generation/SKILL.md
-    │   ├── 03-product-photography/SKILL.md
-    │   ├── 04-product-video/SKILL.md
-    │   ├── 05-social-graphics/SKILL.md
-    │   ├── 06-brand-asset/SKILL.md
-    │   ├── 07-talking-head/SKILL.md
+    │   ├── orchestrator/SKILL.md
+    │   ├── creative-strategist/SKILL.md
+    │   ├── image-generation/SKILL.md
+    │   ├── product-photography/SKILL.md
+    │   ├── product-video/SKILL.md
+    │   ├── social-graphics/SKILL.md
+    │   ├── brand-asset/SKILL.md
+    │   ├── talking-head/SKILL.md
     │   └── README.md
     └── frontend-design/
-        ├── 00-frontend-orchestrator/SKILL.md
-        ├── 01-design-foundation/SKILL.md
-        ├── 02-layout-system/SKILL.md
-        ├── 03-typography-system/SKILL.md
-        ├── 04-color-system/SKILL.md
-        ├── 05-component-architecture/SKILL.md
-        ├── 06-interaction-physics/SKILL.md
-        ├── 07-accessibility-excellence/SKILL.md
-        ├── 08-visual-hierarchy-refactoring/SKILL.md (NEW)
-        ├── 09-loading-states/SKILL.md (NEW)
-        ├── 10-error-handling-recovery/SKILL.md (NEW)
-        ├── 11-performance-optimization/SKILL.md (NEW)
-        ├── 12-design-engineer-mindset/SKILL.md (NEW)
+        ├── frontend-orchestrator/SKILL.md
+        ├── design-foundation/SKILL.md
+        ├── layout-system/SKILL.md
+        ├── typography-system/SKILL.md
+        ├── color-system/SKILL.md
+        ├── component-architecture/SKILL.md
+        ├── interaction-physics/SKILL.md
+        ├── accessibility-excellence/SKILL.md
+        ├── visual-hierarchy-refactoring/SKILL.md
+        ├── loading-states/SKILL.md
+        ├── error-handling-recovery/SKILL.md
+        ├── performance-optimization/SKILL.md
+        ├── design-engineer-mindset/SKILL.md
         └── README.md
 ```
 
@@ -386,13 +386,17 @@ Built with research and insights from:
 - Web Content Accessibility Guidelines
 - The design and development community
 
+**Special thanks for inspiration:**
+- [@boringmarketer](https://x.com/boringmarketer) — Marketing skills inspiration
+- [@joshpuckett](https://x.com/joshpuckett) — Design and creative inspiration
+
 ## 🎉 Ready to Begin?
 
 Start your journey to world-class products today:
 
-1. **Marketing:** `skills/marketing/00-orchestrator/SKILL.md`
-2. **Creative:** `skills/creative/00-orchestrator/SKILL.md`
-3. **Frontend Design:** `skills/frontend-design/00-frontend-orchestrator/SKILL.md`
+1. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
+2. **Creative:** `skills/creative/orchestrator/SKILL.md`
+3. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
 
 Choose one, install it in Claude, and ask for help with your specific situation.
 

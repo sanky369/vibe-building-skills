@@ -6,13 +6,13 @@ Complete creative system with 7 integrated Claude Skills for AI-powered visual c
 
 7 professional-grade Creative Claude Skills:
 
-1. **01-creative-strategist** — Define your visual direction and brand aesthetics
-2. **02-image-generation** — Generate images using FAL.ai FLUX models
-3. **03-product-photography** — Create professional product shots and hero images
-4. **04-product-video** — Plan animated product videos and reveals
-5. **05-social-graphics** — Generate platform-optimized social media content
-6. **06-brand-asset** — Create logos, icons, patterns, and brand elements
-7. **07-talking-head** — Plan presenter and UGC-style video content
+1. **creative-strategist** — Define your visual direction and brand aesthetics
+2. **image-generation** — Generate images using FAL.ai FLUX models
+3. **product-photography** — Create professional product shots and hero images
+4. **product-video** — Plan animated product videos and reveals
+5. **social-graphics** — Generate platform-optimized social media content
+6. **brand-asset** — Create logos, icons, patterns, and brand elements
+7. **talking-head** — Plan presenter and UGC-style video content
 
 ## Key Features
 
@@ -78,7 +78,7 @@ Each skill is a folder containing a SKILL.md file. To install:
 
 ### Method 1: Individual Installation
 
-1. Navigate to each skill folder (e.g., `01-creative-strategist`)
+1. Navigate to each skill folder (e.g., `creative-strategist`)
 2. Copy the entire folder
 3. In Claude, go to Settings > Capabilities > Skills
 4. Click "Add Skill" and upload the folder

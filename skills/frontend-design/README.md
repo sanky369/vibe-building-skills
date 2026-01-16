@@ -6,39 +6,39 @@ A comprehensive system of **13 interconnected Claude Skills** for building world
 
 ### Foundation Layer (2 skills)
 
-**00-frontend-orchestrator** — Master coordinator that diagnoses your design maturity and sequences all skills optimally. Start here to get a personalized roadmap.
+**frontend-orchestrator** — Master coordinator that diagnoses your design maturity and sequences all skills optimally. Start here to get a personalized roadmap.
 
-**01-design-foundation** — Establish design tokens, system structure, and foundational principles. The base upon which all other skills build.
+**design-foundation** — Establish design tokens, system structure, and foundational principles. The base upon which all other skills build.
 
 ### Visual Layer (4 skills)
 
-**02-layout-system** — Create responsive layouts using Flexbox, Grid, and Container Queries. Mobile-first, accessible, and performant.
+**layout-system** — Create responsive layouts using Flexbox, Grid, and Container Queries. Mobile-first, accessible, and performant.
 
-**03-typography-system** — Define type scales, hierarchy, and readability. Establish modular typography that scales across devices.
+**typography-system** — Define type scales, hierarchy, and readability. Establish modular typography that scales across devices.
 
-**04-color-system** — Build color systems with accessibility in mind. Create tinted greys, semantic colors, and accessible contrast.
+**color-system** — Build color systems with accessibility in mind. Create tinted greys, semantic colors, and accessible contrast.
 
-**08-visual-hierarchy-refactoring** — Master visual hierarchy through size, weight, contrast, and whitespace. Learn Gestalt principles for organizing information.
+**visual-hierarchy-refactoring** — Master visual hierarchy through size, weight, contrast, and whitespace. Learn Gestalt principles for organizing information.
 
 ### Component Layer (1 skill)
 
-**05-component-architecture** — Design reusable components using atomic design principles. Build scalable, well-documented component libraries.
+**component-architecture** — Design reusable components using atomic design principles. Build scalable, well-documented component libraries.
 
 ### Interaction Layer (4 skills)
 
-**06-interaction-physics** — Create natural, intentional interactions using momentum, gestures, and animation principles. Make interfaces feel responsive.
+**interaction-physics** — Create natural, intentional interactions using momentum, gestures, and animation principles. Make interfaces feel responsive.
 
-**09-loading-states** — Design skeleton screens, spinners, progress bars, and empty states. Maintain user confidence during waits.
+**loading-states** — Design skeleton screens, spinners, progress bars, and empty states. Maintain user confidence during waits.
 
-**10-error-handling-recovery** — Design error states and recovery workflows. Guide users to resolution with context-aware messages.
+**error-handling-recovery** — Design error states and recovery workflows. Guide users to resolution with context-aware messages.
 
-**11-performance-optimization** — Master perceived latency through optimistic UI, skeleton screens, and latency strategies. Make everything feel fast.
+**performance-optimization** — Master perceived latency through optimistic UI, skeleton screens, and latency strategies. Make everything feel fast.
 
 ### Quality Layer (2 skills)
 
-**07-accessibility-excellence** — Ensure WCAG compliance, semantic HTML, and inclusive design. Make your product accessible to everyone.
+**accessibility-excellence** — Ensure WCAG compliance, semantic HTML, and inclusive design. Make your product accessible to everyone.
 
-**12-design-engineer-mindset** — Bridge design and implementation. Understand code as design material and ensure fidelity through development.
+**design-engineer-mindset** — Bridge design and implementation. Understand code as design material and ensure fidelity through development.
 
 ## Quick Start
 
