@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of 25 Claude Skills for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence—everything you need to create products that are loved.
+A comprehensive system of **31 Claude Skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence—everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -9,12 +9,12 @@ Vibe Creator's Skills is a complete, production-ready system of Claude Skills bu
 This repository contains:
 
 - **10 Marketing Skills** — Direct response marketing, SEO, email, content strategy
-- **7 Creative Skills** — AI-powered image generation, video planning, social graphics
-- **8 Frontend Design Skills** — Design systems, responsive layouts, typography, accessibility
+- **7 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, social graphics
+- **13 Frontend Design Skills** — Design systems, responsive layouts, typography, interactions, performance, accessibility
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 25 professional skills + comprehensive guidance + automation tools**
+**Total: 31 professional skills + comprehensive guidance + automation tools**
 
 ## 📦 What's Included
 
@@ -52,17 +52,39 @@ Generate professional creative assets with AI, powered by FAL.ai nanobanana pro.
 
 **Path:** Start with creative-strategist to define your visual direction, then use orchestrator to sequence remaining skills.
 
-#### Frontend Design Skills (8 skills)
-Build design systems and interfaces that feel timeless and loved.
+#### Frontend Design Skills (13 skills) ✨ ENHANCED
 
-1. **frontend-orchestrator** — Assess design maturity and sequence skills
+Build design systems and interfaces that feel timeless and loved. Now with 5 additional skills based on research insights.
+
+**Foundation Layer (2 skills):**
+1. **frontend-orchestrator** — Assess design maturity and sequence all 13 skills optimally
 2. **design-foundation** — Design tokens, principles, component structure
+
+**Visual Layer (4 skills):**
 3. **layout-system** — Responsive layouts, Flexbox, Grid, Container Queries
 4. **typography-system** — Type scales, hierarchy, readability
 5. **color-system** — Color theory, accessibility, theming, dark mode
-6. **component-architecture** — Reusable components, atomic design
-7. **interaction-design** — Animations, microinteractions, feedback
-8. **accessibility-excellence** — WCAG compliance, inclusive design
+6. **visual-hierarchy-refactoring** — NEW! Size, weight, contrast, whitespace, Gestalt principles
+
+**Component Layer (1 skill):**
+7. **component-architecture** — Reusable components, atomic design
+
+**Interaction Layer (4 skills):**
+8. **interaction-physics** — Animations, momentum, gesture physics, feedback
+9. **loading-states** — NEW! Skeleton screens, spinners, progress bars, empty states
+10. **error-handling-recovery** — NEW! Error states, recovery workflows, graceful degradation
+11. **performance-optimization** — NEW! Perceived latency, optimistic UI, Core Web Vitals
+
+**Quality Layer (2 skills):**
+12. **accessibility-excellence** — WCAG compliance, inclusive design
+13. **design-engineer-mindset** — NEW! Bridge design and implementation, code as material
+
+**5 Implementation Paths:**
+- **Path A** — Building from Scratch (12-16 weeks)
+- **Path B** — Formalizing Existing Design (10-14 weeks)
+- **Path C** — Improving Mature System (8-12 weeks)
+- **Path D** — Fixing Performance Issues (4-6 weeks)
+- **Path E** — Improving Accessibility (6-10 weeks)
 
 **Path:** Start with frontend-orchestrator to assess your situation, then follow the recommended sequence.
 
@@ -71,14 +93,36 @@ Build design systems and interfaces that feel timeless and loved.
 - **PHILOSOPHY.md** — The designer's thought process and philosophy of uncommon care
 - **RESEARCH.md** — Expert insights, recommended books, design principles
 - **Creative Automation** — Python CLI and Claude Code integration for asset generation
+- **skills/frontend-design/README.md** — Complete guide to all 13 frontend design skills
+
+## 🎯 Key Enhancements
+
+### Frontend Design Skills Improvements
+
+Based on comprehensive research from Interface Craft, design experts, and industry best practices:
+
+**5 New Skills Added:**
+- **visual-hierarchy-refactoring** — Master visual hierarchy through Gestalt principles, size, weight, contrast, and whitespace
+- **loading-states** — Design skeleton screens, spinners, progress bars, and empty states
+- **error-handling-recovery** — Design error states and recovery workflows that guide users
+- **performance-optimization** — Master perceived latency through optimistic UI and Core Web Vitals
+- **design-engineer-mindset** — Bridge the gap between design and implementation, understand code as design material
+
+**Skill Renamed:**
+- **interaction-design** → **interaction-physics** — More precise naming reflecting momentum, gesture physics, and natural interactions
+
+**Enhanced Skills:**
+- **frontend-orchestrator** — Now coordinates all 13 skills with 5 implementation paths
+- All visual layer skills — Integrated with visual hierarchy principles
+- All interaction skills — Integrated with performance considerations
 
 ## 🚀 Quick Start
 
 ### 1. Clone This Repository
 
 ```bash
-git clone https://github.com/yourusername/vibe-creators-skills.git
-cd vibe-creators-skills
+git clone https://github.com/sanky369/vibe-building-skills.git
+cd vibe-building-skills
 ```
 
 ### 2. Install Skills in Claude
@@ -95,96 +139,151 @@ Each skill is a standalone `.md` file in the `SKILL.md` format that Claude under
 - Create a ZIP file of the skills directory
 - Upload to Claude
 
+**Option C: Install by Category**
+- Install Marketing Skills: `skills/marketing/*/SKILL.md`
+- Install Creative Skills: `skills/creative/*/SKILL.md`
+- Install Frontend Design Skills: `skills/frontend-design/*/SKILL.md`
+
 ### 3. Start with the Orchestrator
 
 Begin with the orchestrator skill for your category:
 
 ```
-"I'm using the orchestrator skill. Here's my situation:
-[Describe your current state, goals, constraints]
-
-What should I focus on first?"
+"I'm using the [marketing/creative/frontend-design]-orchestrator skill.
+Here's my situation: [describe your current state]
+Can you assess my maturity level and recommend a skill sequence?"
 ```
 
 ### 4. Follow the Recommended Path
 
-The orchestrator will recommend a sequence of skills tailored to your situation. Work through them systematically with Claude's help.
+Work through skills in the sequence recommended by the orchestrator. Each skill builds on previous ones.
 
-## 📚 Directory Structure
+### 5. Use Claude Code for Implementation
+
+Each skill includes guidance for Claude Code:
 
 ```
-vibe-creators-skills/
-├── README.md                          # This file
-├── skills/
-│   ├── marketing/                     # 10 marketing skills
-│   │   ├── 01-brand-voice/
-│   │   ├── 02-positioning-angles/
-│   │   ├── ... (8 more skills)
-│   │   ├── 10-orchestrator/
-│   │   └── README.md
-│   ├── creative/                      # 7 creative skills + automation
-│   │   ├── 00-orchestrator/
-│   │   ├── 01-creative-strategist/
-│   │   ├── ... (5 more skills)
-│   │   ├── INTERACTIVE_GUIDE.md
-│   │   └── README.md
-│   └── frontend-design/               # 8 frontend design skills
-│       ├── 00-frontend-orchestrator/
-│       ├── 01-design-foundation/
-│       ├── ... (6 more skills)
-│       └── README.md
-└── docs/
-    ├── PHILOSOPHY.md                  # Designer's thought process
-    ├── RESEARCH.md                    # Expert insights and books
-    ├── README.md                      # Creative automation guide
-    ├── fal_api.py                     # FAL.ai nanobanana pro integration
-    ├── creative_cli.py                # CLI tool for asset generation
-    ├── claude_integration.py           # Claude Code integration
-    ├── examples.py                    # Usage examples
-    └── requirements.txt               # Python dependencies
+"I'm using the [skill-name] skill. Can you help me:
+- [Specific task]
+- [Implementation details]
+- [Integration with other skills]"
 ```
 
-## 🎓 Implementation Paths
+## 📊 Repository Structure
 
-### Marketing Skills Paths
+```
+vibe-building-skills/
+├── README.md (this file)
+├── PHILOSOPHY.md
+├── RESEARCH.md
+├── docs/
+│   ├── PHILOSOPHY.md
+│   ├── RESEARCH.md
+│   ├── DESIGN-PHILOSOPHY-RESEARCH.md
+│   ├── fal_api.py (Creative automation)
+│   ├── creative_cli.py
+│   ├── claude_integration.py
+│   ├── requirements.txt
+│   └── examples.py
+└── skills/
+    ├── marketing/
+    │   ├── 00-orchestrator/SKILL.md
+    │   ├── 01-brand-voice/SKILL.md
+    │   ├── 02-positioning-angles/SKILL.md
+    │   ├── 03-keyword-research/SKILL.md
+    │   ├── 04-lead-magnet/SKILL.md
+    │   ├── 05-direct-response-copy/SKILL.md
+    │   ├── 06-seo-content/SKILL.md
+    │   ├── 07-newsletter/SKILL.md
+    │   ├── 08-email-sequences/SKILL.md
+    │   ├── 09-content-atomizer/SKILL.md
+    │   └── README.md
+    ├── creative/
+    │   ├── 00-orchestrator/SKILL.md
+    │   ├── 01-creative-strategist/SKILL.md
+    │   ├── 02-image-generation/SKILL.md
+    │   ├── 03-product-photography/SKILL.md
+    │   ├── 04-product-video/SKILL.md
+    │   ├── 05-social-graphics/SKILL.md
+    │   ├── 06-brand-asset/SKILL.md
+    │   ├── 07-talking-head/SKILL.md
+    │   └── README.md
+    └── frontend-design/
+        ├── 00-frontend-orchestrator/SKILL.md
+        ├── 01-design-foundation/SKILL.md
+        ├── 02-layout-system/SKILL.md
+        ├── 03-typography-system/SKILL.md
+        ├── 04-color-system/SKILL.md
+        ├── 05-component-architecture/SKILL.md
+        ├── 06-interaction-physics/SKILL.md
+        ├── 07-accessibility-excellence/SKILL.md
+        ├── 08-visual-hierarchy-refactoring/SKILL.md (NEW)
+        ├── 09-loading-states/SKILL.md (NEW)
+        ├── 10-error-handling-recovery/SKILL.md (NEW)
+        ├── 11-performance-optimization/SKILL.md (NEW)
+        ├── 12-design-engineer-mindset/SKILL.md (NEW)
+        └── README.md
+```
 
-**Path 1: Pre-Launch** — Build your marketing foundation before launch
-**Path 2: Low Conversions** — Improve conversion rates
-**Path 3: Can't Scale** — Scale your content and reach
-**Path 4: Established but Stuck** — Break through plateaus
+## 🎓 Implementation Workflows
 
-### Creative Skills Paths
+### Marketing Workflow
 
-**Path 1: E-Commerce** — Product photography, social graphics, brand assets
-**Path 2: SaaS** — Screenshots, explainer videos, social content
-**Path 3: Personal Brand** — Headshots, social graphics, video content
-**Path 4: Content Creator** — Video thumbnails, social graphics, brand assets
+```
+1. Start: marketing-orchestrator
+   ↓
+2. Choose path based on situation
+   ↓
+3. Follow skill sequence
+   ↓
+4. Implement each skill with Claude Code
+   ↓
+5. Iterate and refine
+```
 
-### Frontend Design Paths
+### Creative Workflow
 
-**Path A: Building from Scratch** — 8-12 weeks, high effort
-**Path B: Formalizing Existing** — 4-8 weeks, medium effort
-**Path C: Improving Mature System** — 4-6 weeks, low-medium effort
-**Path D: Accessibility-First** — 6-10 weeks, high effort
+```
+1. Start: creative-orchestrator
+   ↓
+2. Define visual direction with creative-strategist
+   ↓
+3. Generate assets with image-generation + automation
+   ↓
+4. Adapt for specific platforms (social-graphics, product-photography)
+   ↓
+5. Repurpose and scale
+```
 
-## 💡 Key Principles
+### Frontend Design Workflow
 
-These skills are built on a philosophy of **uncommon care**:
+```
+1. Start: frontend-orchestrator
+   ↓
+2. Assess design maturity (5 levels)
+   ↓
+3. Choose implementation path (5 options)
+   ↓
+4. Follow skill sequence
+   ↓
+5. Implement with Claude Code
+   ↓
+6. Iterate and refine
+```
+
+## 💡 Philosophy
+
+These skills embody the principle of **"uncommon care"** from Interface Craft:
 
 > "Design with uncommon care. Reduce until it's clear. Refine until it's right. Create products that are loved. Interfaces that feel timeless. Experiences that welcome you in and anticipate your needs. Software that feels right. Like it was made by someone who took the time to apply an almost unreasonable level of consideration."
 
-### The Four Pillars
+This is not about trends or speed. This is about craft. This is about respect for the user. This is about creating something that endures.
 
-1. **User-Centered** — All decisions start with user needs
-2. **Intentional** — Every choice has a reason
-3. **Consistent** — Patterns build trust and reduce friction
-4. **Accessible** — Design for everyone, including those with disabilities
+## 🔧 Creative Asset Generation
 
-## 🔧 Creative Automation Setup
+The creative skills include a complete Python automation system for generating assets with FAL.ai nanobanana pro.
 
-The creative skills include Python automation for generating assets with FAL.ai nanobanana pro.
-
-### Installation
+### Setup
 
 ```bash
 cd docs
@@ -194,113 +293,111 @@ export FAL_API_KEY="your_api_key_here"
 
 ### Usage
 
-**Via CLI:**
+**Command Line:**
 ```bash
-python creative_cli.py generate-product-photo --description "Modern laptop on wooden desk"
+python creative_cli.py generate-product-photo "Blue wireless headphones"
 ```
 
-**Via Claude Code:**
+**Python:**
+```python
+from fal_api import CreativeAssetGenerator
+
+generator = CreativeAssetGenerator(api_key="your_key")
+image = generator.generate_product_photo("Blue wireless headphones")
 ```
-"Can you generate 5 product photos for my e-commerce store using the creative automation system?"
+
+**Claude Code:**
+```
+"Can you generate 5 product photos for my new headphones?
+Use the image-generation skill and the automation system."
 ```
 
-Claude Code will automatically use the Python modules to generate and save assets.
+## 📚 Research & Philosophy
 
-## 📖 Documentation
+This system is built on research and wisdom from:
 
-### For Marketing
-- Each skill includes frameworks, prompts, and examples
-- See `skills/marketing/README.md` for complete guide
-- Use the orchestrator to get a personalized roadmap
+- **Interface Craft** — Philosophy of uncommon care
+- **Refactoring UI** — Systematic design decisions
+- **Don Norman** — Design principles and affordances
+- **Steve Krug** — Usability and accessibility
+- **Rauno Freiberg** — Interaction physics and invisible details
+- **Linear Method** — Speed as a feature
+- **WCAG Standards** — Inclusive design
+- **Core Web Vitals** — Performance metrics
 
-### For Creative
-- Each skill includes prompting techniques for nanobanana pro
-- See `skills/creative/README.md` for setup and usage
-- See `docs/README.md` for automation system details
+See `PHILOSOPHY.md` and `RESEARCH.md` for detailed insights.
 
-### For Frontend Design
-- Each skill includes methodologies, patterns, and code examples
-- See `skills/frontend-design/README.md` for complete guide
-- See `docs/PHILOSOPHY.md` for design thinking framework
+## 🎯 What You'll Achieve
 
-## 🌟 What You'll Achieve
+### Marketing
+- ✅ Direct response marketing system
+- ✅ SEO strategy and content
+- ✅ Email sequences that convert
+- ✅ Lead magnets that work
+- ✅ Content strategy and atomization
 
-By working through these skills systematically:
-
-**Marketing:**
-- ✅ Clear brand positioning and voice
-- ✅ Consistent, high-converting copy
-- ✅ SEO-optimized content
-- ✅ Effective email sequences
-- ✅ Scalable content strategy
-
-**Creative:**
-- ✅ Professional product photography
-- ✅ Platform-optimized social graphics
-- ✅ Consistent brand assets
+### Creative
+- ✅ Professional image generation
+- ✅ Product photography
+- ✅ Social media graphics
+- ✅ Brand assets
 - ✅ Video planning and concepts
-- ✅ Automated asset generation
 
-**Frontend Design:**
-- ✅ Consistent design system with tokens
-- ✅ Responsive layouts across all devices
-- ✅ Beautiful, readable typography
-- ✅ Harmonious, accessible colors
-- ✅ Reusable, well-documented components
-- ✅ Delightful interactions and animations
-- ✅ WCAG AA accessibility compliance
+### Frontend Design
+- ✅ Consistent design system
+- ✅ Responsive layouts
+- ✅ Beautiful typography
+- ✅ Harmonious colors
+- ✅ Reusable components
+- ✅ Delightful interactions
+- ✅ Accessible to all
+- ✅ Optimized performance
+- ✅ Clear error handling
+- ✅ Confident loading states
+- ✅ Timeless design
 
-## 📚 Research and Philosophy
-
-### PHILOSOPHY.md
-Deep dive into the designer's thought process, the three pillars of uncommon care, and how to apply design thinking to any project.
-
-**Covers:**
-- Foundational principles (Dieter Rams, Don Norman, Steve Krug)
-- The craft of execution (design systems, tokens, components)
-- The designer's mindset (reduction and refinement)
-- Role of AI in designing with care
-
-### RESEARCH.md
-Synthesis of wisdom from industry experts, recommended books, and proven design principles.
-
-**Covers:**
-- 12 essential books for designers
-- Jakob Nielsen's 10 Usability Heuristics
-- Dieter Rams' 10 Principles of Good Design
-- Modern trends in 2025
-- Key principles across all expert sources
-
-## 🤝 Contributing
-
-This is a public repository. Feel free to:
-- Fork and customize for your needs
-- Submit improvements and suggestions
-- Share your implementations
-- Build on these skills
-
-## 📝 License
-
-These skills are provided as-is for your use. Feel free to modify and adapt them to your needs.
-
-## 🎯 Getting Started
+## 🚀 Getting Started
 
 1. **Clone the repository**
-2. **Read PHILOSOPHY.md** to understand the mindset
-3. **Choose your category** (marketing, creative, or frontend design)
-4. **Start with the orchestrator** for your category
-5. **Follow the recommended path**
-6. **Work with Claude** to implement each skill
-7. **Iterate and refine** until your product feels right
+2. **Choose your starting skill** (orchestrator for your category)
+3. **Install skills in Claude**
+4. **Follow the recommended path**
+5. **Use Claude Code for implementation**
+6. **Iterate and refine**
 
-## 💬 Questions?
+## 📝 Contributing
 
-Each skill includes comprehensive documentation, examples, and integration guides. Start with the orchestrator for your category—it will guide you through the entire process.
+This is a living system. Feel free to:
+- Fork and customize for your needs
+- Submit improvements and enhancements
+- Share your implementations
+- Suggest new skills or improvements
+
+## 📄 License
+
+These skills are provided as-is for your use. Feel free to customize and adapt them to your needs.
+
+## 🙏 Acknowledgments
+
+Built with research and insights from:
+- Interface Craft (interfacecraft.dev)
+- Nielsen Norman Group
+- Interaction Design Foundation
+- Web Content Accessibility Guidelines
+- The design and development community
+
+## 🎉 Ready to Begin?
+
+Start your journey to world-class products today:
+
+1. **Marketing:** `skills/marketing/00-orchestrator/SKILL.md`
+2. **Creative:** `skills/creative/00-orchestrator/SKILL.md`
+3. **Frontend Design:** `skills/frontend-design/00-frontend-orchestrator/SKILL.md`
+
+Choose one, install it in Claude, and ask for help with your specific situation.
 
 ---
 
-**Created with uncommon care.**
+**Remember:** Great products are not built in a day. They're built with care, intention, and respect for the user. Start today, iterate continuously, and watch your product transform.
 
-Transform your business, your creative process, and your products. Build things that are loved.
-
-🚀 **Let's create something great together.**
+Good luck! 🚀
