@@ -1,6 +1,6 @@
 ---
-name: Frontend Design Orchestrator
-description: Master coordinator skill that diagnoses your application's design maturity level and sequences all frontend design skills in the optimal order. Analyzes current state, identifies gaps, and creates a personalized implementation roadmap for transforming your MVP into a world-class experience.
+name: frontend-orchestrator
+description: Master coordinator skill that diagnoses your application's design maturity level and sequences all 13 frontend design skills in the optimal order. Analyzes current state, identifies gaps, and creates a personalized implementation roadmap for transforming your MVP into a world-class experience.
 ---
 
 # Frontend Design Orchestrator
@@ -10,6 +10,33 @@ description: Master coordinator skill that diagnoses your application's design m
 The Frontend Design Orchestrator is your strategic guide for applying the philosophy of "uncommon care" to your digital product. Rather than randomly applying design skills, this orchestrator helps you understand where your application stands, what matters most right now, and which skills to deploy in what sequence.
 
 This skill embodies the principle: **"Reduce until it's clear, refine until it's right."** It helps you identify what's essential for your current stage and focuses your effort there first.
+
+## The 13 Frontend Design Skills
+
+Your complete design system includes:
+
+**Foundation Layer:**
+1. **design-foundation** — Design tokens, system structure, principles
+2. **design-engineer-mindset** — Bridge design and implementation, code as material
+
+**Visual Layer:**
+3. **layout-system** — Responsive layouts, grids, flexbox, container queries
+4. **typography-system** — Type scales, hierarchy, readability
+5. **color-system** — Color theory, accessibility, theming
+6. **visual-hierarchy-refactoring** — Size, weight, contrast, whitespace, Gestalt principles
+
+**Component Layer:**
+7. **component-architecture** — Atomic design, composition, variants, documentation
+
+**Interaction Layer:**
+8. **interaction-physics** — Momentum, gestures, animation principles, implicit input
+9. **loading-states** — Skeleton screens, spinners, progress bars, empty states
+10. **error-handling-recovery** — Error messages, recovery workflows, graceful degradation
+11. **performance-optimization** — Perceived latency, optimistic UI, Core Web Vitals
+
+**Quality Layer:**
+12. **accessibility-excellence** — WCAG compliance, semantic HTML, inclusive design
+13. **frontend-orchestrator** — This skill - strategic coordination and sequencing
 
 ## Core Methodology: Design Maturity Assessment
 
@@ -62,177 +89,194 @@ Before recommending skills, the orchestrator asks these diagnostic questions:
 - How clear is your error messaging and feedback?
 - Do interactions feel responsive and intentional?
 
+**Performance Questions:**
+- How fast does your application feel?
+- Do users complain about loading times?
+- Are there perceived performance issues?
+- Do you measure Core Web Vitals?
+
 ### Step 2: Gap Analysis
 
 Based on the assessment, the orchestrator identifies which skills will have the highest impact on your specific situation.
 
 | Current State | Highest Impact Skill | Why | Secondary Skills |
 | :--- | :--- | :--- | :--- |
-| Functional MVP, no system | design-foundation | Establishing a foundation prevents future technical debt and enables faster, more consistent development. | layout-system, typography-system |
-| Inconsistent design, partial system | design-foundation | Documenting and formalizing what exists prevents regressions and enables team alignment. | component-architecture, color-system |
-| System exists, but feels generic | interaction-design | Adding intentionality to interactions transforms a functional product into one that feels loved. | typography-system, accessibility-excellence |
-| Good system, poor accessibility | accessibility-excellence | Accessibility is foundational and affects all other skills. Fixing it first ensures all future work is accessible. | component-architecture, interaction-design |
-| Mature system, needs refinement | interaction-design, typography-system | Refinement happens at the margins—in the details of how things move, feel, and communicate. | accessibility-excellence (audit), color-system (audit) |
+| Functional MVP, no system | design-foundation | Establishing a foundation prevents future technical debt and enables faster, more consistent development. | layout-system, typography-system, design-engineer-mindset |
+| Inconsistent design, partial system | design-foundation | Documenting and formalizing what exists prevents regressions and enables team alignment. | component-architecture, color-system, visual-hierarchy-refactoring |
+| System exists, but feels generic | interaction-physics | Adding intentionality to interactions transforms a functional product into one that feels loved. | typography-system, accessibility-excellence, performance-optimization |
+| Good system, poor accessibility | accessibility-excellence | Accessibility is foundational and affects all other skills. Fixing it first ensures all future work is accessible. | component-architecture, interaction-physics, error-handling-recovery |
+| Mature system, needs refinement | interaction-physics, visual-hierarchy-refactoring | Refinement happens at the margins—in the details of how things move, feel, and communicate. | performance-optimization, loading-states, design-engineer-mindset |
+| Users confused by interactions | error-handling-recovery, loading-states | Clear feedback and error messages reduce support tickets and improve confidence. | interaction-physics, performance-optimization |
+| Slow perceived performance | performance-optimization | Perceived speed dramatically affects user satisfaction and retention. | loading-states, interaction-physics, design-engineer-mindset |
 
 ### Step 3: Skill Sequencing
 
-The orchestrator recommends one of four implementation paths based on your situation:
+The orchestrator recommends one of five implementation paths based on your situation:
 
 **Path A: Building from Scratch (Functional MVP → Refined Experience)**
 1. design-foundation — Establish tokens, system structure, component library
-2. layout-system — Create responsive, accessible layout patterns
-3. typography-system — Define type scales and hierarchy
-4. color-system — Establish color system with accessibility in mind
-5. component-architecture — Build reusable, well-documented components
-6. accessibility-excellence — Audit and improve accessibility across all layers
-7. interaction-design — Add intentionality to animations and transitions
+2. design-engineer-mindset — Understand code as design material
+3. layout-system — Create responsive, accessible layout patterns
+4. typography-system — Define type scales and hierarchy
+5. visual-hierarchy-refactoring — Establish clear visual hierarchy through size, weight, contrast
+6. color-system — Establish color system with accessibility in mind
+7. component-architecture — Build reusable, well-documented components
+8. loading-states — Design loading and empty states
+9. error-handling-recovery — Design error states and recovery
+10. interaction-physics — Add intentionality to animations and transitions
+11. performance-optimization — Optimize perceived performance
+12. accessibility-excellence — Audit and improve accessibility across all layers
 
 **Path B: Formalizing Existing Design (Inconsistent → System-Driven)**
 1. design-foundation — Document and formalize existing patterns
-2. component-architecture — Extract and document existing components
-3. layout-system — Audit and standardize layout patterns
-4. typography-system — Audit and standardize typography
-5. color-system — Audit and standardize color usage
-6. accessibility-excellence — Audit and improve accessibility
-7. interaction-design — Add intentionality to interactions
+2. visual-hierarchy-refactoring — Audit and improve visual hierarchy
+3. component-architecture — Extract and document existing components
+4. layout-system — Audit and standardize layout patterns
+5. typography-system — Audit and standardize typography
+6. color-system — Audit and standardize color usage
+7. design-engineer-mindset — Establish design-code alignment
+8. accessibility-excellence — Audit and improve accessibility
+9. loading-states — Standardize loading and empty states
+10. error-handling-recovery — Standardize error handling
+11. interaction-physics — Add intentionality to interactions
+12. performance-optimization — Optimize perceived performance
 
 **Path C: Improving Mature System (System-Driven → Transcendent)**
-1. interaction-design — Add delight and intentionality
-2. accessibility-excellence — Comprehensive audit and improvement
-3. typography-system — Refinement of type scales and hierarchy
-4. color-system — Refinement of color system and theming
-5. component-architecture — Refinement of component patterns and documentation
-6. layout-system — Refinement of responsive behavior and edge cases
-7. design-foundation — Review and update design tokens and system documentation
+1. design-engineer-mindset — Deepen implementation fidelity
+2. interaction-physics — Add delight and intentionality
+3. visual-hierarchy-refactoring — Refine visual hierarchy
+4. performance-optimization — Optimize perceived performance
+5. loading-states — Enhance loading state design
+6. error-handling-recovery — Enhance error state design
+7. accessibility-excellence — Audit and enhance accessibility
+8. typography-system — Refine typography and readability
+9. color-system — Refine color system and theming
+10. component-architecture — Enhance component library
 
-**Path D: Accessibility-First (Any State → Accessible Foundation)**
-1. accessibility-excellence — Comprehensive accessibility audit and remediation
-2. design-foundation — Ensure tokens and system support accessibility
-3. component-architecture — Ensure all components are accessible
-4. layout-system — Ensure all layouts are accessible
-5. typography-system — Ensure typography supports accessibility
-6. color-system — Ensure color system supports accessibility
-7. interaction-design — Ensure interactions are accessible
+**Path D: Fixing Performance Issues (Slow → Responsive)**
+1. performance-optimization — Measure and optimize perceived latency
+2. design-engineer-mindset — Understand rendering pipeline
+3. loading-states — Implement skeleton screens and progress bars
+4. interaction-physics — Optimize animation performance
+5. error-handling-recovery — Improve error feedback
+6. accessibility-excellence — Ensure accessibility during optimization
+
+**Path E: Improving Accessibility (Partial → Excellent)**
+1. accessibility-excellence — Audit and establish accessibility baseline
+2. error-handling-recovery — Ensure error messages are accessible
+3. loading-states — Ensure loading states are accessible
+4. component-architecture — Build accessible components
+5. interaction-physics — Ensure animations respect prefers-reduced-motion
+6. visual-hierarchy-refactoring — Ensure sufficient contrast and hierarchy
+7. typography-system — Ensure readable typography
+8. performance-optimization — Ensure performance doesn't impact accessibility
+
+## How to Use the Orchestrator
+
+### Step 1: Assess Your Current State
+
+Ask yourself these questions:
+
+1. **What's your design maturity level?** (1-5)
+2. **What's your biggest pain point?** (Inconsistency, performance, accessibility, interactions, etc.)
+3. **What's your primary goal?** (Ship fast, improve retention, build brand love, etc.)
+4. **What's your team size and expertise?** (Solo developer, junior designer, experienced team, etc.)
+
+### Step 2: Choose Your Path
+
+Based on your assessment, select the path that matches your situation:
+- **Path A** if you're building from scratch
+- **Path B** if you have inconsistent design you want to formalize
+- **Path C** if you have a mature system you want to refine
+- **Path D** if performance is your main issue
+- **Path E** if accessibility is your main issue
+
+### Step 3: Follow the Sequence
+
+Work through the skills in the recommended order. Each skill builds on the previous ones.
+
+### Step 4: Iterate and Refine
+
+After implementing each skill, assess your progress. You may need to revisit earlier skills or adjust your path based on what you learn.
+
+## Integration Between Skills
+
+### Foundation Skills Enable All Others
+- **design-foundation** provides tokens used by all other skills
+- **design-engineer-mindset** ensures fidelity across all implementations
+
+### Visual Skills Work Together
+- **layout-system** creates structure
+- **typography-system** establishes hierarchy
+- **color-system** adds visual interest
+- **visual-hierarchy-refactoring** ties them together
+
+### Interaction Skills Create Delight
+- **interaction-physics** makes interactions feel natural
+- **loading-states** maintain confidence during waits
+- **error-handling-recovery** guide users to resolution
+- **performance-optimization** make everything feel fast
+
+### Quality Skills Ensure Excellence
+- **accessibility-excellence** ensures everyone can use your product
+- **frontend-orchestrator** ensures strategic coordination
 
 ## How to Use This Skill with Claude Code
 
-### Diagnostic Conversation
-
-Start by asking Claude Code:
+### Get a Personalized Roadmap
 
 ```
-"I'm using the frontend-orchestrator skill. Here's my situation:
-- We have a functional MVP built with React and Tailwind
-- We have no design system yet
-- Our biggest pain point is inconsistency
-- We have one designer and three developers
-- We want to improve user retention
-
-What's my design maturity level, and which skills should I focus on first?"
+"I'm using the frontend-orchestrator skill. Can you help me:
+- Assess my current design maturity
+- Identify my biggest pain points
+- Recommend a skill sequence
+- Create a 3-month implementation plan"
 ```
 
-Claude Code will use this skill to:
-1. Assess your maturity level
-2. Identify your highest-impact opportunities
-3. Recommend a skill sequence
-4. Explain why that sequence makes sense for your situation
-
-### Implementation Roadmap
-
-Once you have a sequence, Claude Code can help you execute each skill in order:
+### Diagnose Design Issues
 
 ```
-"I'm ready to start with design-foundation. Can you help me:
-1. Audit my current design decisions
-2. Create a design token system
-3. Document my component library
-4. Set up the structure for design system evolution?"
+"My users are complaining about [issue]. Using the orchestrator:
+- What's the root cause?
+- Which skills would help?
+- What should I prioritize?"
 ```
 
-### Ongoing Orchestration
-
-As you implement skills, you can return to the orchestrator:
+### Plan a Design System
 
 ```
-"We've implemented design-foundation and layout-system. Our consistency has improved significantly. What should we focus on next? Are there any quick wins we're missing?"
-```
-
-The orchestrator will re-assess your situation and adjust recommendations based on what you've accomplished.
-
-## Design Critique Integration
-
-The orchestrator can also critique your current design and suggest improvements:
-
-```
-"Can you analyze my current design using the orchestrator skill?
-- What's working well?
-- What's the biggest opportunity for improvement?
-- What's one thing I could change today that would have the highest impact?"
+"Can you help me plan a design system using the orchestrator?
+- Assess my current state
+- Recommend a path
+- Create a step-by-step guide
+- Estimate effort for each skill"
 ```
 
 ## Key Principles
 
-**1. Start with Your Biggest Pain Point**
-Don't follow a generic path. Start with the skill that addresses your most pressing problem. If inconsistency is killing you, start with design-foundation. If accessibility is a liability, start with accessibility-excellence.
+**1. Start Where You Are**
+Don't try to implement all skills at once. Start with the highest-impact skill for your situation.
 
 **2. Build Momentum**
-Choose the first skill that will give you the quickest win and build confidence. Success breeds momentum.
+Early wins create confidence and buy-in for continued improvement.
 
-**3. Create Interdependencies**
-Each skill builds on the previous one. The orchestrator ensures you're not building on sand.
+**3. Iterate, Don't Perfectionism**
+Each skill can be refined later. Get the basics right first.
 
-**4. Respect Your Constraints**
-The orchestrator considers your team size, timeline, and technical constraints. It won't recommend a path that's unrealistic for your situation.
+**4. Measure Progress**
+Track improvements in user satisfaction, support tickets, and retention.
 
-**5. Iterate and Refine**
-Design is never "done." The orchestrator helps you iterate and refine over time, always moving toward that transcendent level.
+**5. Celebrate Refinement**
+The journey from MVP to transcendent design is a marathon, not a sprint.
 
-## Common Scenarios and Recommended Paths
+## Checklist: Are You Ready to Begin?
 
-### Scenario 1: "We're Shipping Fast, Design Quality is Suffering"
-**Maturity Level:** Functional MVP
-**Recommended Path:** Path A (Building from Scratch)
-**Quick Win:** Start with design-foundation to establish tokens and component structure. This will slow you down initially but will speed you up dramatically within weeks.
+- [ ] I've assessed my current design maturity level
+- [ ] I've identified my biggest pain point
+- [ ] I've chosen my implementation path
+- [ ] I understand the sequence of skills
+- [ ] I know which skill to start with
+- [ ] I have a team or resources to implement
+- [ ] I'm ready to commit to the journey
 
-### Scenario 2: "We Have a Design System, But It's Not Being Used"
-**Maturity Level:** System-Driven (but not enforced)
-**Recommended Path:** Path B (Formalizing Existing Design)
-**Quick Win:** Start with component-architecture to extract and document existing components. Make the system visible and useful.
-
-### Scenario 3: "Our System Works, But It Feels Generic"
-**Maturity Level:** System-Driven
-**Recommended Path:** Path C (Improving Mature System)
-**Quick Win:** Start with interaction-design to add intentionality and delight. Small changes in animations and transitions can dramatically improve the feel.
-
-### Scenario 4: "We're Getting Accessibility Complaints"
-**Maturity Level:** Any
-**Recommended Path:** Path D (Accessibility-First)
-**Quick Win:** Start with accessibility-excellence to audit and fix the most egregious issues. This will immediately reduce support tickets and improve user satisfaction.
-
-## Integration with Other Skills
-
-The orchestrator works in concert with all other frontend design skills:
-
-- **design-foundation** — Establishes the system the orchestrator uses to make recommendations
-- **layout-system** — Implements responsive, accessible layouts
-- **typography-system** — Implements type scales and hierarchy
-- **color-system** — Implements color systems and theming
-- **component-architecture** — Implements reusable components
-- **accessibility-excellence** — Ensures all recommendations are accessible
-- **interaction-design** — Adds intentionality to all interactions
-
-## The Philosophy Behind the Orchestrator
-
-The orchestrator embodies the principle of "uncommon care." It doesn't recommend a one-size-fits-all approach. Instead, it takes time to understand your situation, your constraints, and your goals. It then recommends a path that respects your reality while moving you toward excellence.
-
-This is design thinking at its best: empathy, strategy, and execution working in concert.
-
-## When to Re-Run the Orchestrator
-
-- Every 3-6 months, or when you've completed a skill
-- When your business priorities shift
-- When you add new team members
-- When you're considering a major redesign
-- When user feedback suggests a new direction
-
-The orchestrator is not a one-time tool. It's a strategic guide that evolves with your product.
+The orchestrator's role is to guide you from where you are to where you want to be. Start with the next skill in your path.
