@@ -31,11 +31,26 @@ When you ask Claude to generate creative assets, the Orchestrator tells Claude C
 4. **How to chain operations** — Multiple assets in sequence
 5. **Where to save results** — Organized folder structure
 
+### Automatic Skill Invocation
+
+After understanding the user's creative needs, **ask if they want you to automatically invoke the relevant creative skills**. For example:
+
+```
+"For your product launch, I recommend these skills:
+1. creative-strategist (define visual direction)
+2. product-photography (hero shots)
+3. social-graphics (platform assets)
+
+Would you like me to run these skills now? I'll invoke each one to guide your asset creation."
+```
+
+If the user agrees, **invoke each skill using the /skill-name command** (e.g., `/creative-strategist`, `/product-photography`). Work through them in the recommended order.
+
 ## Setup: Enable Automation System
 
 ### Step 1: Extract Automation System
 
-Extract `vibe-creative-automation.zip` to your project:
+Copy and Extract `vibe-creative-automation.zip` to your project and add it in gitignore (it is located in the root where this file is):
 
 ```
 your-project/
@@ -56,13 +71,13 @@ pip install requests
 ### Step 3: Set API Key
 
 ```bash
-export FAL_API_KEY="your_fal_api_key_here"
+export FAL_API_KEY="REDACTED_FAL_API_KEY"
 ```
 
 Or set in your environment:
 
 ```bash
-export FAL_KEY="your_fal_api_key_here"
+export FAL_KEY="REDACTED_FAL_API_KEY"
 ```
 
 ### Step 4: Test Connection
