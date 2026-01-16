@@ -209,6 +209,22 @@ NO:
 4. **Weekly Reviews** — Track progress and adjust
 5. **Monthly Reviews** — Step back and assess system
 
+### Automatic Skill Invocation
+
+After diagnosing the user's situation and recommending a sequence, **ask the user if they want you to automatically invoke the recommended skills**. For example:
+
+```
+"Based on your situation, I recommend this sequence:
+1. brand-voice
+2. positioning-angles
+3. keyword-research
+...
+
+Would you like me to run these skills now? I'll invoke each one to help you implement the methodology."
+```
+
+If the user agrees, **invoke each skill using the /skill-name command** (e.g., `/brand-voice`, `/lead-magnet`). Work through them in the recommended order.
+
 ## Integration with Other Skills
 
 Orchestrator coordinates all 9 other skills:

@@ -223,6 +223,22 @@ After implementing each skill, assess your progress. You may need to revisit ear
 
 ## How to Use This Skill with Claude Code
 
+### Automatic Skill Invocation
+
+After assessing the user's situation and recommending a path, **ask the user if they want you to automatically invoke the recommended skills in sequence**. For example:
+
+```
+"Based on your assessment, I recommend Path B with these skills:
+1. design-foundation
+2. visual-hierarchy-refactoring
+3. component-architecture
+...
+
+Would you like me to run these skills now? I'll invoke each one in sequence to analyze your codebase and provide specific recommendations."
+```
+
+If the user agrees, **invoke each recommended skill using the /skill-name command** (e.g., `/design-foundation`, `/interaction-physics`). Work through them in the recommended order, applying each skill's methodology to the user's specific codebase.
+
 ### Get a Personalized Roadmap
 
 ```
@@ -230,7 +246,7 @@ After implementing each skill, assess your progress. You may need to revisit ear
 - Assess my current design maturity
 - Identify my biggest pain points
 - Recommend a skill sequence
-- Create a 3-month implementation plan"
+- Then run the recommended skills automatically"
 ```
 
 ### Diagnose Design Issues
