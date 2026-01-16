@@ -124,7 +124,7 @@ Based on my challenge, what's the optimal skill sequence?
 9. Content Atomizer
 10. Orchestrator (ongoing)
 
-**Timeline**: 12-16 weeks
+
 
 ### Path 2: Low Conversions
 
@@ -135,7 +135,7 @@ Based on my challenge, what's the optimal skill sequence?
 5. Email Sequences (optimize)
 6. Orchestrator (ongoing)
 
-**Timeline**: 7-9 weeks
+
 
 ### Path 3: Can't Scale
 
@@ -146,7 +146,7 @@ Based on my challenge, what's the optimal skill sequence?
 5. Lead Magnet (optimize)
 6. Orchestrator (ongoing)
 
-**Timeline**: 10-12 weeks
+
 
 ### Path 4: Established But Stuck
 
@@ -160,7 +160,7 @@ Based on my challenge, what's the optimal skill sequence?
 8. Content Atomizer
 9. Orchestrator (ongoing)
 
-**Timeline**: 12-14 weeks
+
 
 ## Key Features
 
