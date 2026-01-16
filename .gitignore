@@ -37,9 +37,19 @@ env/
 *~
 .DS_Store
 
-# Environment variables
+# Environment variables and secrets
 .env
 .env.local
+.env.*.local
+*.key
+*.pem
+
+# API Keys and credentials
+api_keys.txt
+credentials.json
+secrets.json
+.fal_api_key
+FAL_API_KEY
 
 # Generated assets
 output/
@@ -58,3 +68,8 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

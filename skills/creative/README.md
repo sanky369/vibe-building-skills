@@ -24,6 +24,19 @@ Complete creative system with 7 integrated Claude Skills for AI-powered visual c
 ✅ **Production Ready** — Professional-quality output  
 ✅ **Integrated System** — All skills work together seamlessly
 
+## 🔒 Security First: API Key Management
+
+**IMPORTANT:** Your FAL.ai API key is sensitive. Never commit it to version control or share it publicly.
+
+- ✅ Use environment variables
+- ✅ Store in `.env` file (add to `.gitignore`)
+- ✅ Rotate keys periodically
+- ❌ Never hardcode keys in files
+- ❌ Never commit `.env` files
+- ❌ Never share keys in issues or PRs
+
+For detailed security guidelines, see [SECURITY.md](../../SECURITY.md)
+
 ## Setup: FAL.ai API Integration
 
 ### Step 1: Get Your API Key
