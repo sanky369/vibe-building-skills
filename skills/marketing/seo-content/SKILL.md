@@ -7,193 +7,456 @@ description: Create articles that rank in search engines and engage readers. Use
 
 ## Overview
 
-SEO Content is content optimized for search engines that also engages and converts readers. This skill teaches you to write content that ranks and resonates.
+SEO Content is content optimized for search engines that also engages and converts readers. This skill teaches you to write content that ranks and resonates, following modern E-E-A-T principles and topical authority strategies.
 
-**Keywords**: SEO content, search engine optimization, content marketing, ranking content, organic traffic, search intent, content strategy
+**Keywords**: SEO content, search engine optimization, content marketing, ranking content, organic traffic, search intent, content strategy, E-E-A-T, topical authority
 
-## Core Methodology
+**Related**: See `/seo-strategy` for the complete strategic framework and keyword research methodology.
 
-SEO Content has two layers:
+---
 
-1. **For Search Engines** — Optimized for ranking
-2. **For People** — Engaging and valuable
+## The Modern SEO Content Framework
 
-The best SEO content serves both.
+### Two Layers of Optimization
 
-## Layer 1: Optimize for Search Engines
+1. **For Search Engines** — Technical optimization for ranking
+2. **For People** — Engaging, valuable content that converts
+
+The best SEO content serves both equally.
+
+### The E-E-A-T Imperative
+
+Google now evaluates all content against E-E-A-T:
+
+| Factor | How to Demonstrate |
+|--------|-------------------|
+| **Experience** | First-hand examples, real case studies, personal insights |
+| **Expertise** | Deep knowledge, accurate information, comprehensive coverage |
+| **Authoritativeness** | Credentials, citations, external recognition |
+| **Trustworthiness** | Accuracy, sources, transparency, no misleading claims |
+
+**Action**: Every article should include at least one personal example, cite 2-3 authoritative sources, and demonstrate depth beyond surface-level coverage.
+
+---
+
+## Layer 1: Search Engine Optimization
 
 ### Keyword Optimization
 
-**Primary Keyword**: The main keyword you're targeting
+**Primary Keyword**: Your main target keyword
 
-**Example**: "remote team management"
+**Placement Strategy**:
+| Location | Requirement |
+|----------|-------------|
+| Title tag | First 60 characters |
+| H1 heading | Include naturally |
+| First 100 words | Early placement |
+| Body content | 2-3 times naturally |
+| Subheadings | Where relevant |
+| URL slug | Short, keyword-included |
 
-**Where to use**:
-- Title tag (first 60 characters)
-- H1 heading (first heading)
-- First 100 words
-- 2-3 times throughout the article
-- In subheadings
+**Secondary Keywords**: Related terms that support the primary keyword
+- Use naturally throughout content
+- Include in H2/H3 headings where relevant
+- Support topical completeness
 
-**Secondary Keywords**: Related keywords to target
+### Title Tag Formula
 
-**Example**: "how to manage remote teams," "distributed team communication"
+**Requirements**: 50-60 characters, keyword early, compelling
 
-**Where to use**: Naturally throughout the article
+**Formulas**:
+```
+[Keyword]: [Number] [Benefit/Strategies/Ways] for [Outcome]
+How to [Keyword] in [Year]: [Specific Benefit]
+[Keyword]: The Complete Guide to [Outcome]
+[Number] [Keyword] Tips That [Specific Result]
+```
 
-### Title Tag
-
-Your title tag appears in search results and should:
-- Include your primary keyword
-- Be 50-60 characters
-- Create curiosity or promise benefit
-
-**Formula**: "[Keyword]: [Benefit or Question]"
-
-**Example**: "Remote Team Management: 7 Strategies for Success"
+**Examples**:
+- "Remote Team Management: 7 Strategies That Actually Work"
+- "How to Improve Core Web Vitals in 2025: Complete Guide"
 
 ### Meta Description
 
-Your meta description appears under your title in search results:
-- 150-160 characters
-- Include your keyword
-- Create curiosity or promise value
+**Requirements**: 150-160 characters, keyword included, compelling CTA
 
-**Formula**: "[Benefit]. Learn [specific outcome] in this guide."
+**Formula**: "[Benefit statement]. Learn [specific outcome] with [unique angle]. [Soft CTA]."
 
-**Example**: "Learn 7 proven strategies to manage remote teams effectively and boost productivity. Complete guide with actionable tips."
+**Example**: "Master remote team management with 7 proven strategies. Learn how top companies boost productivity by 40%. Complete guide inside."
 
 ### Heading Structure
 
-Use proper heading hierarchy:
-- H1: Your main topic (one per page)
-- H2: Main sections
-- H3: Subsections
+Use proper hierarchy to signal content structure:
+
+```
+H1: [Main Topic with Primary Keyword]
+  H2: [Major Section 1]
+    H3: [Subsection]
+    H3: [Subsection]
+  H2: [Major Section 2]
+    H3: [Subsection]
+  H2: FAQ (for featured snippets)
+```
+
+**Rules**:
+- One H1 per page
+- H2s for main sections (5-8 for comprehensive articles)
+- H3s for subsections within H2s
+- Include keywords naturally in headings
+
+### Content Length Guidelines
+
+| Keyword Competition | Target Length |
+|--------------------|---------------|
+| Low competition | 1,500-2,000 words |
+| Medium competition | 2,000-3,000 words |
+| High competition | 3,000-5,000+ words |
+
+**Key insight**: Longer content ranks better IF it's comprehensive and valuable. Padding for length hurts rankings.
+
+---
+
+## Layer 2: Human Optimization
+
+### Content Structure Template
+
+**1. Opening Hook (First 2-3 sentences)**
+- Answer search intent immediately
+- Create curiosity or promise value
+- Make them want to continue
 
 **Example**:
-```
-H1: Remote Team Management: 7 Strategies for Success
-H2: Strategy 1: Clear Communication Protocols
-H3: Why Communication Matters
-H3: How to Implement
-```
+> "Most remote teams fail because of one fixable problem: unclear communication protocols. In this guide, you'll learn the exact 7 strategies that helped 500+ companies boost remote productivity by 40%."
 
-### Content Length
-
-Target 2,000-3,000 words for competitive keywords. Longer content ranks better IF it's valuable.
-
-## Layer 2: Optimize for People
-
-### Content Structure
-
-**Opening Hook** (first 2-3 sentences)
-- Answer the search intent immediately
-- Create curiosity or promise value
-- Make them want to keep reading
-
-**Table of Contents** (for longer articles)
-- Helps readers navigate
+**2. Table of Contents**
+- For articles 1,500+ words
+- Improves navigation
 - Helps search engines understand structure
+- Enables jump links in search results
 
-**Main Content**
-- Clear sections with subheadings
-- Short paragraphs (2-3 sentences)
-- Bullet points for lists
-- Examples and case studies
+**3. Main Content Sections**
+Each section should:
+- Address one specific subtopic
+- Include practical examples
+- Provide actionable takeaways
+- Use formatting for scannability
 
-**Conclusion**
-- Summarize key points
-- Include call-to-action
+**4. FAQ Section**
+- Target featured snippets
+- Answer related questions
+- Use exact question format
+- Keep answers concise (40-60 words)
+
+**5. Conclusion**
+- Summarize key takeaways (3-5 bullets)
+- Include clear call-to-action
 - Link to related content
+- Reinforce main value proposition
 
-### Search Intent
+### Search Intent Alignment
 
-Understand what the searcher wants:
+**Critical**: Match your content format to searcher intent.
 
-**Informational**: "How to manage remote teams" → Provide comprehensive guide
+| Intent Type | What They Want | Content Format |
+|-------------|----------------|----------------|
+| Informational | "How to manage remote teams" | Comprehensive tutorial/guide |
+| Commercial | "Best remote team tools" | Comparison, reviews, rankings |
+| Transactional | "Asana pricing" | Pricing page, product page |
+| Navigational | "Slack login" | Direct page, comparison to alternatives |
 
-**Transactional**: "Remote team management software" → Compare options, show pricing
+**Wrong format = no ranking**, regardless of content quality.
 
-**Navigational**: "Asana remote teams" → Compare to alternatives
+### Readability Standards
 
-**Commercial**: "Best remote team management tool" → Review and recommend
-
-### Readability
-
-Make content easy to read:
-- Short paragraphs (2-3 sentences max)
-- Subheadings every 200-300 words
-- Bullet points for lists
-- Bold key phrases
-- Short sentences
+- **Paragraphs**: 2-3 sentences max
+- **Sentences**: Under 20 words preferred
+- **Subheadings**: Every 200-300 words
+- **Bullet points**: For lists of 3+ items
+- **Bold text**: Key phrases and takeaways
+- **White space**: Generous margins and padding
 
 ### Engagement Elements
 
-Include elements that keep readers engaged:
-- Real examples and case studies
-- Data and statistics
-- Images and visuals
-- Actionable tips
-- Stories and anecdotes
+Include these to increase dwell time and reduce bounce:
 
-## SEO Content Formula
+| Element | Purpose | Frequency |
+|---------|---------|-----------|
+| Real examples | Demonstrate expertise | Every major section |
+| Data/statistics | Build credibility | 3-5 per article |
+| Images/visuals | Break up text, illustrate points | Every 300-500 words |
+| Actionable tips | Provide immediate value | Throughout |
+| Case studies | Show proof of concepts | 1-2 per article |
+| Pull quotes | Highlight key insights | 2-3 per article |
 
-**1. Research Your Keyword**
-- Search volume: 100-10,000 searches/month
-- Search intent: What do searchers want?
-- Top competitors: What are they ranking for?
+---
 
-**2. Create Your Outline**
-- H1: Your main topic
-- H2s: Main sections (5-8 sections)
-- H3s: Subsections under each H2
+## The Complete SEO Content Process
 
-**3. Write Your Content**
-- Hook: Answer search intent immediately
-- Sections: Provide comprehensive, valuable content
-- Examples: Include real examples
-- Conclusion: Summarize and link forward
+### Step 1: Keyword Research & Validation
 
-**4. Optimize for SEO**
-- Include keyword in title, H1, first 100 words
-- Include secondary keywords naturally
-- Use proper heading structure
-- Target 2,000-3,000 words
-- Include internal links
+Before writing, confirm:
+- [ ] Search volume: 100-10,000/month for long-tails
+- [ ] Search intent: What format does Google reward?
+- [ ] Competition: Can you realistically rank?
+- [ ] SERP analysis: What's missing from current results?
 
-**5. Optimize for People**
-- Write for your brand voice
-- Make it engaging and readable
-- Include examples and stories
-- Add visuals
-- Make it actionable
+### Step 2: Competitor Analysis
 
-## How to Use This Skill
+Analyze top 5 ranking pages:
+- Content length and depth
+- Headings and structure
+- Topics covered (and gaps)
+- Media and visuals used
+- E-E-A-T signals present
 
-1. **Identify Your Keyword** — What keyword are you targeting?
-2. **Understand Search Intent** — What do searchers want?
-3. **Research Competitors** — What are top-ranking articles doing?
-4. **Create Your Outline** — Structure your content
-5. **Write Your Content** — Follow the formula above
-6. **Optimize for SEO** — Add keywords, structure, length
-7. **Optimize for People** — Make it engaging and valuable
+**Find the gap**: What can you cover that they don't?
+
+### Step 3: Create Content Brief
+
+**Brief Template**:
+```
+Primary Keyword: [keyword]
+Secondary Keywords: [list]
+Search Intent: [informational/commercial/etc.]
+Target Length: [word count]
+Target Audience: [who]
+Content Angle: [unique perspective]
+Key Sections: [H2 outline]
+Competitor Gaps: [what to add]
+E-E-A-T Elements: [how to demonstrate]
+Internal Links: [pages to link]
+CTA: [desired action]
+```
+
+### Step 4: Write with AI Assistance
+
+**The 80/20 Approach**:
+- AI handles: Outlines, first drafts, research summaries, metadata
+- You handle: Unique insights, examples, fact-checking, voice refinement
+
+**Process**:
+1. Generate outline from brief
+2. Expand each section
+3. Add your unique examples and insights
+4. Refine voice and tone
+5. Fact-check all claims
+
+### Step 5: On-Page SEO Checklist
+
+- [ ] Title tag: 50-60 chars, keyword, compelling
+- [ ] Meta description: 150-160 chars, keyword, CTA
+- [ ] H1: Includes primary keyword
+- [ ] H2s: 5-8 main sections with keywords
+- [ ] First 100 words: Primary keyword included
+- [ ] Images: Compressed, descriptive alt text
+- [ ] Internal links: 3-5 to relevant pages
+- [ ] External links: 2-3 to authoritative sources
+- [ ] URL: Short, descriptive, keyword-included
+- [ ] Schema markup: FAQ, Article, or appropriate type
+
+### Step 6: Quality Review Checklist
+
+- [ ] E-E-A-T signals present (experience, expertise, authority, trust)
+- [ ] Search intent fully satisfied
+- [ ] Unique value vs. competitors
+- [ ] Formatting clean and scannable
+- [ ] All facts verified and sourced
+- [ ] Brand voice consistent
+- [ ] CTA clear and relevant
+- [ ] No keyword stuffing
+- [ ] Mobile-friendly layout
+
+---
+
+## Content Templates
+
+### Template 1: How-To Guide
+
+```
+H1: How to [Achieve Outcome] in [Year]: [Benefit]
+
+[Hook: State the problem and promise the solution]
+
+Table of Contents
+
+H2: Why [Topic] Matters
+[Context and stakes]
+
+H2: Step 1: [First Action]
+[Instructions + example]
+
+H2: Step 2: [Second Action]
+[Instructions + example]
+
+[Continue for all steps]
+
+H2: Common Mistakes to Avoid
+[3-5 pitfalls with solutions]
+
+H2: FAQ
+[4-6 questions in Q&A format]
+
+H2: Conclusion
+[Summary + CTA]
+```
+
+### Template 2: Listicle/Roundup
+
+```
+H1: [Number] Best [Category] for [Outcome] in [Year]
+
+[Hook: Why this matters + selection criteria]
+
+Table of Contents
+
+H2: Quick Comparison
+[Summary table of all items]
+
+H2: 1. [Item Name] - Best for [Use Case]
+[Overview, features, pros/cons, who it's for]
+
+[Continue for all items]
+
+H2: How to Choose the Right [Category]
+[Decision framework]
+
+H2: FAQ
+[4-6 questions]
+
+H2: Conclusion
+[Top picks summary + CTA]
+```
+
+### Template 3: Ultimate Guide
+
+```
+H1: The Complete Guide to [Topic]: Everything You Need to Know
+
+[Hook: Scope of guide + who it's for]
+
+Table of Contents
+
+H2: What is [Topic]?
+[Definition + context]
+
+H2: Why [Topic] Matters
+[Benefits + stakes]
+
+H2: How [Topic] Works
+[Detailed explanation]
+
+H2: [Major Subtopic 1]
+H3: [Aspect 1]
+H3: [Aspect 2]
+
+[Continue for all subtopics]
+
+H2: Best Practices
+[5-10 actionable tips]
+
+H2: Common Mistakes
+[Pitfalls to avoid]
+
+H2: Tools and Resources
+[Recommended tools]
+
+H2: FAQ
+[6-10 questions]
+
+H2: Conclusion
+[Key takeaways + next steps]
+```
+
+---
+
+## Schema Markup Implementation
+
+### FAQ Schema (for featured snippets)
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Your question here?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Your answer here (40-60 words)."
+    }
+  }]
+}
+```
+
+### Article Schema
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Your Title",
+  "author": {
+    "@type": "Person",
+    "name": "Author Name"
+  },
+  "datePublished": "2025-01-15",
+  "dateModified": "2025-01-15",
+  "image": "https://yoursite.com/image.jpg"
+}
+```
+
+---
 
 ## Integration with Other Skills
 
-SEO Content works with:
-- **Keyword Research** — Your keywords guide what to write
-- **Brand Voice** — Your voice makes content engaging
-- **Content Atomizer** — Your content gets repurposed
-- **Newsletter** — Your content drives newsletter subscribers
+| Skill | Integration |
+|-------|-------------|
+| **seo-strategy** | Provides keyword research and overall strategy |
+| **keyword-research** | Feeds target keywords for content |
+| **brand-voice** | Ensures consistent tone and personality |
+| **direct-response-copy** | Makes content convert better |
+| **content-atomizer** | Repurposes content across platforms |
+| **newsletter** | Drives subscriber growth from SEO traffic |
+
+---
 
 ## Common Pitfalls
 
-**Keyword Stuffing** — Overusing keywords makes content unreadable.  
-**Thin Content** — Content is too short and not comprehensive.  
-**Poor Structure** — No clear heading hierarchy or organization.  
-**No Examples** — Content is theoretical without real examples.  
-**Ignoring Search Intent** — Content doesn't answer what searchers want.
+| Pitfall | Problem | Solution |
+|---------|---------|----------|
+| Keyword stuffing | Unreadable, hurts rankings | Use keywords naturally, 2-3x max |
+| Thin content | Not comprehensive enough | Match/exceed competitor depth |
+| Wrong format | Misaligned with search intent | Analyze SERP before writing |
+| No examples | Theoretical, not practical | Include real examples in each section |
+| Missing E-E-A-T | Generic, no expertise shown | Add credentials, sources, experience |
+| Poor structure | Hard to navigate | Use clear heading hierarchy |
+| No internal links | Missed ranking opportunity | Link 3-5 relevant internal pages |
 
-## Next Steps
+---
 
-Once you've created your SEO content, move to Skill 09: Content Atomizer to repurpose it across platforms.
+## Metrics to Track
+
+After publishing, monitor via Google Search Console:
+
+| Metric | What It Tells You | Target |
+|--------|-------------------|--------|
+| Impressions | Visibility in search | Increasing trend |
+| Clicks | Traffic from search | Growing |
+| CTR | Title/description effectiveness | >3% |
+| Average position | Ranking progress | Top 10 |
+| Dwell time (GA) | Content engagement | >2 minutes |
+
+---
+
+## How to Use This Skill
+
+1. **Get keyword from user** — What are they targeting?
+2. **Validate with seo-strategy** — Is it winnable?
+3. **Analyze SERP** — What's the intent? What's missing?
+4. **Create content brief** — Structure the article
+5. **Write with templates** — Use appropriate format
+6. **Apply checklists** — On-page SEO + quality review
+7. **Add schema markup** — FAQ or Article
+8. **Recommend tracking** — GSC metrics to monitor
+
+For complete keyword research methodology and 90-day SEO plans, use the `/seo-strategy` skill.
