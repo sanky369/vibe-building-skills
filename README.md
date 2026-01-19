@@ -4,7 +4,7 @@ A comprehensive system of **31 Claude Skills** for building world-class digital 
 
 ## 🎯 What Is This?
 
-Vibe Creator's Skills is a complete, production-ready system of Claude Skills built on the philosophy of **uncommon care**—designing and building with deep intention, reducing until it's clear, and refining until it's right.
+Vibe Creator's Skills is a complete, production-ready system of Claude Skills built on the philosophy of focus and care — designing and building with deep intention, reducing until it's clear, and refining until it's right.
 
 This repository contains:
 
