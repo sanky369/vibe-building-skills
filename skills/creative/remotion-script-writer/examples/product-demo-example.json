@@ -1,0 +1,462 @@
+{
+  "videoMetadata": {
+    "title": "Task Manager Pro - Product Demo",
+    "durationInSeconds": 60,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "videoType": "product-demo",
+    "description": "A comprehensive product demo showcasing the key features of Task Manager Pro"
+  },
+  "scenes": [
+    {
+      "sceneNumber": 1,
+      "title": "Opening Title",
+      "durationInSeconds": 5,
+      "visuals": {
+        "background": "#007bff",
+        "elements": [
+          {
+            "type": "text",
+            "content": "Task Manager Pro",
+            "fontSize": 64,
+            "fontFamily": "Roboto",
+            "fontWeight": "bold",
+            "color": "#FFFFFF",
+            "position": { "x": "center", "y": "center" },
+            "animation": {
+              "type": "scale-in",
+              "springConfig": { "damping": 200 }
+            }
+          },
+          {
+            "type": "text",
+            "content": "Manage tasks. Boost productivity.",
+            "fontSize": 24,
+            "fontFamily": "Roboto",
+            "color": "#FFFFFF",
+            "opacity": 0.9,
+            "position": { "x": "center", "y": "60%" },
+            "animation": {
+              "type": "fade-in",
+              "delay": 0.5,
+              "durationInSeconds": 1
+            }
+          }
+        ]
+      },
+      "audio": {
+        "voiceover": "Welcome to Task Manager Pro, the ultimate tool for managing your tasks and boosting your team's productivity."
+      },
+      "transitionToNextScene": {
+        "type": "wipe",
+        "direction": "from-left",
+        "durationInSeconds": 1
+      }
+    },
+    {
+      "sceneNumber": 2,
+      "title": "Feature 1 - Quick Task Creation",
+      "durationInSeconds": 12,
+      "visuals": {
+        "background": "#FFFFFF",
+        "elements": [
+          {
+            "type": "text",
+            "content": "Create tasks in seconds",
+            "fontSize": 48,
+            "fontFamily": "Roboto",
+            "fontWeight": "bold",
+            "color": "#333333",
+            "position": { "x": "10%", "y": "15%" },
+            "animation": {
+              "type": "slide-in",
+              "direction": "from-left",
+              "durationInSeconds": 0.8
+            }
+          },
+          {
+            "type": "text",
+            "content": "Our intuitive interface lets you add tasks with just a few clicks. Set priorities, deadlines, and assign team members instantly.",
+            "fontSize": 20,
+            "fontFamily": "Roboto",
+            "color": "#666666",
+            "position": { "x": "10%", "y": "30%" },
+            "maxWidth": "40%",
+            "animation": {
+              "type": "fade-in",
+              "delay": 0.5,
+              "durationInSeconds": 1
+            }
+          },
+          {
+            "type": "image",
+            "src": "/assets/task-creation.png",
+            "position": { "x": "55%", "y": "50%" },
+            "width": "40%",
+            "animation": {
+              "type": "scale-in",
+              "delay": 1,
+              "springConfig": { "damping": 200 }
+            }
+          },
+          {
+            "type": "highlight",
+            "target": "task-input",
+            "color": "#007bff",
+            "opacity": 0.3,
+            "animation": {
+              "type": "pulse",
+              "delay": 3,
+              "durationInSeconds": 2
+            }
+          }
+        ]
+      },
+      "audio": {
+        "voiceover": "Create tasks in seconds with our intuitive interface. Simply type your task, set a priority, add a deadline, and assign it to a team member. It's that easy."
+      },
+      "transitionToNextScene": {
+        "type": "slide",
+        "direction": "from-bottom",
+        "durationInSeconds": 1
+      }
+    },
+    {
+      "sceneNumber": 3,
+      "title": "Feature 2 - Team Collaboration",
+      "durationInSeconds": 12,
+      "visuals": {
+        "background": "#F8F9FA",
+        "elements": [
+          {
+            "type": "text",
+            "content": "Collaborate seamlessly",
+            "fontSize": 48,
+            "fontFamily": "Roboto",
+            "fontWeight": "bold",
+            "color": "#333333",
+            "position": { "x": "10%", "y": "15%" },
+            "animation": {
+              "type": "slide-in",
+              "direction": "from-left",
+              "durationInSeconds": 0.8
+            }
+          },
+          {
+            "type": "text",
+            "content": "Real-time updates keep everyone on the same page. Comment on tasks, share files, and track progress together.",
+            "fontSize": 20,
+            "fontFamily": "Roboto",
+            "color": "#666666",
+            "position": { "x": "10%", "y": "30%" },
+            "maxWidth": "40%",
+            "animation": {
+              "type": "fade-in",
+              "delay": 0.5,
+              "durationInSeconds": 1
+            }
+          },
+          {
+            "type": "image",
+            "src": "/assets/team-collaboration.png",
+            "position": { "x": "55%", "y": "50%" },
+            "width": "40%",
+            "animation": {
+              "type": "scale-in",
+              "delay": 1,
+              "springConfig": { "damping": 200 }
+            }
+          },
+          {
+            "type": "icon",
+            "name": "users",
+            "size": 48,
+            "color": "#007bff",
+            "position": { "x": "55%", "y": "20%" },
+            "animation": {
+              "type": "bounce-in",
+              "delay": 2,
+              "springConfig": { "damping": 8 }
+            }
+          }
+        ]
+      },
+      "audio": {
+        "voiceover": "Collaborate seamlessly with your team. Real-time updates ensure everyone stays on the same page. Comment on tasks, share files, and track progress together."
+      },
+      "transitionToNextScene": {
+        "type": "wipe",
+        "direction": "from-right",
+        "durationInSeconds": 1
+      }
+    },
+    {
+      "sceneNumber": 4,
+      "title": "Feature 3 - Progress Tracking",
+      "durationInSeconds": 12,
+      "visuals": {
+        "background": "#FFFFFF",
+        "elements": [
+          {
+            "type": "text",
+            "content": "Track progress effortlessly",
+            "fontSize": 48,
+            "fontFamily": "Roboto",
+            "fontWeight": "bold",
+            "color": "#333333",
+            "position": { "x": "10%", "y": "15%" },
+            "animation": {
+              "type": "slide-in",
+              "direction": "from-left",
+              "durationInSeconds": 0.8
+            }
+          },
+          {
+            "type": "text",
+            "content": "Visual dashboards and reports give you instant insights into project status and team performance.",
+            "fontSize": 20,
+            "fontFamily": "Roboto",
+            "color": "#666666",
+            "position": { "x": "10%", "y": "30%" },
+            "maxWidth": "40%",
+            "animation": {
+              "type": "fade-in",
+              "delay": 0.5,
+              "durationInSeconds": 1
+            }
+          },
+          {
+            "type": "chart",
+            "chartType": "progress-bar",
+            "data": [
+              { "label": "Design", "value": 100, "color": "#27AE60" },
+              { "label": "Development", "value": 75, "color": "#007bff" },
+              { "label": "Testing", "value": 40, "color": "#FFA500" }
+            ],
+            "position": { "x": "55%", "y": "50%" },
+            "width": "40%",
+            "animation": {
+              "type": "progress-fill",
+              "delay": 1,
+              "durationInSeconds": 2
+            }
+          }
+        ]
+      },
+      "audio": {
+        "voiceover": "Track progress effortlessly with visual dashboards and detailed reports. Get instant insights into project status and team performance at a glance."
+      },
+      "transitionToNextScene": {
+        "type": "fade",
+        "durationInSeconds": 1
+      }
+    },
+    {
+      "sceneNumber": 5,
+      "title": "Statistics",
+      "durationInSeconds": 10,
+      "visuals": {
+        "background": "#F8F9FA",
+        "elements": [
+          {
+            "type": "text",
+            "content": "Trusted by teams worldwide",
+            "fontSize": 48,
+            "fontFamily": "Roboto",
+            "fontWeight": "bold",
+            "color": "#333333",
+            "position": { "x": "center", "y": "15%" },
+            "animation": {
+              "type": "fade-in",
+              "durationInSeconds": 0.5
+            }
+          },
+          {
+            "type": "statistic",
+            "value": "10,000+",
+            "label": "Active Users",
+            "fontSize": 64,
+            "labelFontSize": 24,
+            "color": "#007bff",
+            "position": { "x": "25%", "y": "45%" },
+            "animation": {
+              "type": "counter",
+              "from": 0,
+              "to": 10000,
+              "delay": 0.5,
+              "durationInSeconds": 2
+            }
+          },
+          {
+            "type": "statistic",
+            "value": "500+",
+            "label": "Companies",
+            "fontSize": 64,
+            "labelFontSize": 24,
+            "color": "#27AE60",
+            "position": { "x": "50%", "y": "45%" },
+            "animation": {
+              "type": "counter",
+              "from": 0,
+              "to": 500,
+              "delay": 1,
+              "durationInSeconds": 2
+            }
+          },
+          {
+            "type": "statistic",
+            "value": "99.9%",
+            "label": "Uptime",
+            "fontSize": 64,
+            "labelFontSize": 24,
+            "color": "#E74C3C",
+            "position": { "x": "75%", "y": "45%" },
+            "animation": {
+              "type": "counter",
+              "from": 0,
+              "to": 99.9,
+              "delay": 1.5,
+              "durationInSeconds": 2
+            }
+          }
+        ]
+      },
+      "audio": {
+        "voiceover": "Task Manager Pro is trusted by over 10,000 users across 500 companies worldwide, with a 99.9% uptime guarantee."
+      },
+      "transitionToNextScene": {
+        "type": "slide",
+        "direction": "from-top",
+        "durationInSeconds": 1
+      }
+    },
+    {
+      "sceneNumber": 6,
+      "title": "Call to Action",
+      "durationInSeconds": 9,
+      "visuals": {
+        "background": "#007bff",
+        "elements": [
+          {
+            "type": "text",
+            "content": "Ready to boost your productivity?",
+            "fontSize": 48,
+            "fontFamily": "Roboto",
+            "fontWeight": "bold",
+            "color": "#FFFFFF",
+            "position": { "x": "center", "y": "30%" },
+            "animation": {
+              "type": "scale-in",
+              "springConfig": { "damping": 200 }
+            }
+          },
+          {
+            "type": "button",
+            "text": "Start Free Trial",
+            "fontSize": 28,
+            "backgroundColor": "#FFFFFF",
+            "textColor": "#007bff",
+            "position": { "x": "center", "y": "50%" },
+            "padding": "15px 40px",
+            "borderRadius": "8px",
+            "animation": {
+              "type": "bounce-in",
+              "delay": 0.8,
+              "springConfig": { "damping": 8 }
+            }
+          },
+          {
+            "type": "text",
+            "content": "No credit card required",
+            "fontSize": 18,
+            "fontFamily": "Roboto",
+            "color": "#FFFFFF",
+            "opacity": 0.9,
+            "position": { "x": "center", "y": "65%" },
+            "animation": {
+              "type": "fade-in",
+              "delay": 1.2,
+              "durationInSeconds": 1
+            }
+          },
+          {
+            "type": "text",
+            "content": "www.taskmanagerpro.com",
+            "fontSize": 20,
+            "fontFamily": "Roboto",
+            "color": "#FFFFFF",
+            "opacity": 0.9,
+            "position": { "x": "center", "y": "80%" },
+            "animation": {
+              "type": "fade-in",
+              "delay": 1.5,
+              "durationInSeconds": 1
+            }
+          }
+        ]
+      },
+      "audio": {
+        "voiceover": "Ready to boost your productivity? Start your free trial today at taskmanagerpro.com. No credit card required."
+      },
+      "transitionToNextScene": null
+    }
+  ],
+  "requiredAssets": {
+    "images": [
+      {
+        "description": "Task creation interface screenshot",
+        "path": "/assets/task-creation.png",
+        "dimensions": "800x600"
+      },
+      {
+        "description": "Team collaboration interface screenshot",
+        "path": "/assets/team-collaboration.png",
+        "dimensions": "800x600"
+      }
+    ],
+    "videos": [],
+    "audio": [
+      {
+        "description": "Background music (upbeat, corporate)",
+        "path": "/assets/background-music.mp3",
+        "duration": 60,
+        "volume": 0.2
+      }
+    ],
+    "fonts": [
+      "Roboto"
+    ],
+    "logos": [
+      {
+        "description": "Company logo",
+        "path": "/assets/logo.png"
+      }
+    ],
+    "icons": [
+      "users",
+      "check-circle",
+      "trending-up"
+    ]
+  },
+  "technicalRequirements": {
+    "remotionPackages": [
+      "@remotion/transitions",
+      "@remotion/google-fonts"
+    ],
+    "thirdPartyLibraries": [],
+    "dataFetching": null
+  },
+  "voiceoverNotes": {
+    "tone": "Professional and enthusiastic",
+    "pace": "Moderate (150-160 words per minute)",
+    "emphasis": "Feature benefits and ease of use"
+  },
+  "brandingGuidelines": {
+    "primaryColor": "#007bff",
+    "secondaryColor": "#6c757d",
+    "accentColor": "#27AE60",
+    "fontFamily": "Roboto",
+    "logoPlacement": "Bottom right corner throughout video"
+  }
+}
