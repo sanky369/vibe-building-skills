@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of **31 Claude Skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence—everything you need to create products that are loved.
+A comprehensive system of **32 Claude Skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence—everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -9,12 +9,12 @@ Vibe Creator's Skills is a complete, production-ready system of Claude Skills bu
 This repository contains:
 
 - **10 Marketing Skills** — Direct response marketing, SEO, email, content strategy
-- **7 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, social graphics
+- **8 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
 - **13 Frontend Design Skills** — Design systems, responsive layouts, typography, interactions, performance, accessibility
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 31 professional skills + comprehensive guidance + automation tools**
+**Total: 32 professional skills + comprehensive guidance + automation tools**
 
 ## 📦 What's Included
 
@@ -38,7 +38,7 @@ Transform your marketing from generic to direct response, from scattered to stra
 
 **Path:** Start with orchestrator to assess your situation, then follow the recommended sequence.
 
-#### Creative Skills (7 skills + automation)
+#### Creative Skills (8 skills + automation)
 Generate professional creative assets with AI, powered by FAL.ai nanobanana pro.
 
 1. **orchestrator** — Coordinate all creative skills
@@ -49,6 +49,7 @@ Generate professional creative assets with AI, powered by FAL.ai nanobanana pro.
 6. **social-graphics** — Platform-optimized social content
 7. **brand-asset** — Logos, icons, patterns, brand elements
 8. **talking-head** — Presenter and UGC-style videos
+9. **remotion-script-writer** — Generate detailed video scripts for Remotion
 
 **Plus:** Python automation system for CLI-based and Claude Code asset generation
 
@@ -209,6 +210,7 @@ vibe-building-skills/
     │   ├── social-graphics/SKILL.md
     │   ├── brand-asset/SKILL.md
     │   ├── talking-head/SKILL.md
+    │   ├── remotion-script-writer/SKILL.md
     │   └── README.md
     └── frontend-design/
         ├── frontend-orchestrator/SKILL.md

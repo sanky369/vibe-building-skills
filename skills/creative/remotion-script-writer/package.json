@@ -1,0 +1,32 @@
+{
+  "name": "remotion-script-writer",
+  "version": "1.0.0",
+  "description": "An agent skill for generating detailed video scripts for Remotion based on input requirements and codebase analysis",
+  "keywords": [
+    "remotion",
+    "video",
+    "script",
+    "animation",
+    "tutorial",
+    "demo",
+    "agent-skill"
+  ],
+  "author": "Manus AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/remotion-script-writer"
+  },
+  "skills": {
+    "main": "SKILL.md",
+    "rules": [
+      "rules/prompt-structure.md",
+      "rules/script-generation.md",
+      "rules/animation-patterns.md",
+      "rules/scene-templates.md"
+    ],
+    "examples": [
+      "examples/product-demo-example.json"
+    ]
+  }
+}

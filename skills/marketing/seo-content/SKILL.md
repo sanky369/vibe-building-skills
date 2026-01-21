@@ -11,7 +11,7 @@ SEO Content is content optimized for search engines that also engages and conver
 
 **Keywords**: SEO content, search engine optimization, content marketing, ranking content, organic traffic, search intent, content strategy, E-E-A-T, topical authority
 
-**Related**: See `/seo-strategy` for the complete strategic framework and keyword research methodology.
+**Related**: See `./seo-strategy` for the complete strategic framework and keyword research methodology.
 
 ---
 

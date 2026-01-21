@@ -7,98 +7,187 @@ description: Find your unique market positioning using 8 proven frameworks. Use 
 
 ## Overview
 
-Positioning Angles are the unique angles that make your offer compelling and different. This skill teaches you 8 frameworks to find your positioning.
+Positioning is not about being better. It's about being different in a way that matters to your audience. One angle will outperform others 3-10x. Test, don't guess.
 
 **Keywords**: positioning, differentiation, market positioning, unique value proposition, competitive advantage, messaging strategy, brand positioning
 
-## Core Methodology
+## The 4-Step Positioning Process
 
-Positioning is not about being better. It's about being different in a way that matters to your audience.
+### Step 1: Match Your Market Stage
 
-There are 8 proven positioning frameworks:
+Your positioning approach must match where your market is. Using the wrong approach wastes your message.
 
-1. **Problem Inversion** — Position against the problem, not the solution
-2. **Outcome Reframe** — Reframe the outcome in unexpected ways
-3. **Audience Specificity** — Position for a specific audience
-4. **Mechanism** — Position around your unique mechanism or method
-5. **Comparison** — Position against a known alternative
-6. **Constraint-Based** — Position around a specific constraint
-7. **Transformation** — Position around the transformation you provide
-8. **Contrarian** — Position against conventional wisdom
+| Stage | Market Reality | Your Approach | Template |
+|-------|---------------|---------------|----------|
+| **NEW** | Market doesn't know the solution exists | Simple promise | "Now you can [X]" |
+| **GROWING** | Market knows solutions exist, wants results | Bigger claim | "[X] in [specific time]" |
+| **CROWDED** | Many competitors, market is confused | Show mechanism | "The [method] that works" |
+| **JADED** | Market has been burned, skeptical | Prove it | "[Data/proof] that shows" |
+| **MATURE** | Market knows all options, seeks identity | Sell identity | "For [people who are X]" |
 
-## The 8 Positioning Frameworks
+**How to identify your stage:**
+- **NEW**: You have to explain what the category is
+- **GROWING**: Competitors exist but aren't saturating ads/content
+- **CROWDED**: Multiple well-known players, active advertising
+- **JADED**: Common complaints about the category ("all [X] are scams")
+- **MATURE**: Market has clear leaders, buyers identify with brands
 
-### Framework 1: Problem Inversion
+### Step 2: Find Your Mechanism
 
-Instead of positioning your solution, position against the problem.
+Your mechanism is what you do that competitors skip. It's the "how" behind your results.
 
-**Formula**: "The [problem] problem. Here's how we solve it."
+**The key question**: What do you do differently that actually creates results?
 
-**Example**: Instead of "Project management software," position as "The project chaos problem. Here's how we bring order."
+**Naming your mechanism**:
+- Give it a name: "The [X] Method" or "The [X] System"
+- NOT "our approach" or "our process" — those are generic
+- The name should hint at what makes it work
 
-### Framework 2: Outcome Reframe
+**Examples**:
+- Generic: "Our coaching methodology"
+- Named: "The 5-4-3-2-1 Accountability System"
+- Generic: "Our hiring process"
+- Named: "The Reverse Interview Method"
 
-Reframe the outcome in an unexpected way.
+**Finding your mechanism**:
+1. List every step in your process
+2. Circle what competitors skip or do differently
+3. That's your mechanism — name it
 
-**Formula**: "Most people think [common outcome]. We deliver [unexpected outcome]."
+### Step 3: Pick Your Angle
 
-**Example**: Instead of "Email marketing platform," position as "Most people think email is about opens and clicks. We deliver revenue."
+Choose ONE primary angle. Each has a specific psychological trigger.
 
-### Framework 3: Audience Specificity
+#### CONTRARIAN
+Challenge what everyone believes. Works when conventional wisdom is failing people.
 
-Position for a specific audience, not everyone.
+**Template**: "Everything you know about [X] is wrong"
 
-**Formula**: "The [specific audience] solution for [specific problem]."
+**Examples**:
+- "Everything you know about dieting is wrong"
+- "Forget everything you learned about cold email"
+- "The productivity advice that's actually hurting you"
 
-**Example**: Instead of "CRM for businesses," position as "The CRM for remote sales teams."
+**Best for**: Markets where common approaches aren't working
 
-### Framework 4: Mechanism
+---
 
-Position around your unique mechanism or method.
+#### TRANSFORMATION
+Show the journey from pain to gain. Works when the emotional gap is large.
 
-**Formula**: "We solve [problem] using [unique mechanism]."
+**Template**: "From [painful state] to [desired state]"
 
-**Example**: Instead of "Fitness app," position as "We use AI coaching to personalize your workouts."
+**Examples**:
+- "From broke freelancer to $20K/month agency owner"
+- "From inbox chaos to zero unread in 30 days"
+- "From dreading Mondays to building your dream business"
 
-### Framework 5: Comparison
+**Best for**: Offers with clear before/after states
 
-Position against a known alternative.
+---
 
-**Formula**: "[Your offer] for [known alternative]."
+#### ENEMY
+Give them something to fight against. Works when there's a clear villain.
 
-**Example**: Instead of "Video editing software," position as "Adobe Premiere for creators, not filmmakers."
+**Template**: "Stop letting [X] steal your [Y]"
 
-### Framework 6: Constraint-Based
+**Examples**:
+- "Stop letting algorithms steal your reach"
+- "Stop letting meetings steal your deep work"
+- "Stop letting big agencies steal your budget"
 
-Position around a specific constraint.
+**Best for**: Markets with frustration toward a specific problem/entity
 
-**Formula**: "The [constraint] solution for [problem]."
+---
 
-**Example**: Instead of "Marketing agency," position as "The marketing agency for bootstrapped founders."
+#### SPEED
+Promise results fast without the usual sacrifice. Works when people are impatient.
 
-### Framework 7: Transformation
+**Template**: "[Outcome] in [time] without [sacrifice]"
 
-Position around the transformation you provide.
+**Examples**:
+- "6-pack abs in 90 days without giving up carbs"
+- "Launch your course in 2 weeks without tech headaches"
+- "Fluent Spanish in 3 months without grammar drills"
 
-**Formula**: "We transform [current state] into [desired state]."
+**Best for**: Offers that genuinely deliver faster results
 
-**Example**: Instead of "Writing course," position as "We transform writers into published authors."
+---
 
-### Framework 8: Contrarian
+#### SPECIFICITY
+Narrow down to exact person and exact outcome. Works in crowded markets.
 
-Position against conventional wisdom.
+**Template**: "For [exact person] who wants [exact thing]"
 
-**Formula**: "Everyone says [conventional wisdom]. We believe [contrarian view]."
+**Examples**:
+- "For SaaS founders who want to hit $10K MRR"
+- "For busy moms who want to lose 20 lbs before summer"
+- "For developers who want to become tech leads in 2024"
 
-**Example**: Instead of "Productivity app," position as "Everyone says you need more tools. We believe you need fewer."
+**Best for**: Crowded markets where you can own a niche
 
-## How to Use This Skill
+### Step 4: Test Your Angle
 
-1. **Choose Your Framework** — Which framework fits your offer?
-2. **Generate Angles** — Create 3-5 positioning statements using that framework
-3. **Test Your Angles** — Which one resonates most with your audience?
-4. **Refine** — Adjust based on feedback
-5. **Commit** — Choose one primary positioning angle
+Before committing, run your positioning through this checklist:
+
+| Test | Question | Bad Example | Good Example |
+|------|----------|-------------|--------------|
+| **Specific?** | Does it include concrete details? | "Get better results" | "Lose 20 lbs in 6 weeks" |
+| **Differentiated?** | Can a competitor claim the same thing? | "Quality marketing services" | "The Reverse Funnel Method for coaches" |
+| **Believable?** | Does your mechanism/proof support it? | "Become a millionaire overnight" | "Add $5K/month with 3 LinkedIn posts per week" |
+
+**All three boxes must be checked.** If any fails:
+- Not specific → Add numbers, timeframes, or details
+- Not differentiated → Lean harder into your mechanism
+- Not believable → Reduce the claim or add proof
+
+## Putting It Together
+
+**Formula**: [Market Stage Approach] + [Your Mechanism] + [Your Angle]
+
+**Example walkthrough**:
+1. **Market Stage**: Crowded (many course platforms exist) → Show mechanism
+2. **Mechanism**: "The Micro-Launch Method" (launching with just 10 people)
+3. **Angle**: Speed → "Launch your course in 2 weeks without building an audience first"
+
+**Final positioning**: "The Micro-Launch Method: Launch your course in 2 weeks without building an audience first"
+
+## Quick Reference Card
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     POSITIONING ANGLES                          │
+├─────────────────────────────────────────────────────────────────┤
+│ 1. MATCH YOUR MARKET STAGE                                      │
+│                                                                 │
+│    NEW      → Simple promise    "Now you can [X]"               │
+│    GROWING  → Bigger claim      "[X] in [specific time]"        │
+│    CROWDED  → Show mechanism    "The [method] that works"       │
+│    JADED    → Prove it          "[Data/proof] that shows"       │
+│    MATURE   → Sell identity     "For [people who are X]"        │
+│                                                                 │
+│ 2. FIND YOUR MECHANISM                                          │
+│                                                                 │
+│    What do you do that competitors skip?                        │
+│    Name it: "The [X] Method" – not "our approach"               │
+│                                                                 │
+│ 3. PICK YOUR ANGLE                                              │
+│                                                                 │
+│    CONTRARIAN     "Everything you know about [X] is wrong"      │
+│    TRANSFORMATION "From [painful state] to [desired state]"     │
+│    ENEMY          "Stop letting [X] steal your [Y]"             │
+│    SPEED          "[Outcome] in [time] without [sacrifice]"     │
+│    SPECIFICITY    "For [exact person] who wants [exact thing]"  │
+│                                                                 │
+│ 4. TEST IT                                                      │
+│                                                                 │
+│    □ Specific? (not "better results" – "20 lbs in 6 weeks")     │
+│    □ Differentiated? (competitor can't claim the same)          │
+│    □ Believable? (mechanism/proof supports it)                  │
+│                                                                 │
+│    One angle will outperform others 3-10x. Test, don't guess.   │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ## Integration with Other Skills
 
@@ -108,13 +197,6 @@ Positioning Angles works with:
 - **Direct Response Copy** — Your positioning makes copy compelling
 - **Lead Magnet** — Your positioning shapes your offer
 
-## Common Pitfalls
-
-**Too Generic** — Your positioning could apply to anyone.  
-**Not Credible** — Your positioning doesn't match your actual offer.  
-**Too Niche** — Your positioning limits your market too much.  
-**Unclear** — Your positioning confuses rather than clarifies.
-
 ## Next Steps
 
-Once you've found your positioning angle, move to Skill 03: Keyword Research to identify what to create about.
+Once you've found your positioning angle, move to **Keyword Research** to identify what content to create around your positioning.
