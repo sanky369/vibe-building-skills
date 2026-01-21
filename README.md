@@ -33,6 +33,8 @@ Transform your marketing from generic to direct response, from scattered to stra
 8. **newsletter** — 6 newsletter formats
 9. **email-sequences** — Welcome, nurture, conversion, launch sequences
 10. **content-atomizer** — Repurpose content 15 ways
+11. **seo-strategy** — Plan complete SEO strategy for your product
+13. **tweet-writer** — Search for suitable viral tweet format for the purpose and writes tweets accordingly
 
 **Path:** Start with orchestrator to assess your situation, then follow the recommended sequence.
 
