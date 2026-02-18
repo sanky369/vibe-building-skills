@@ -71,13 +71,13 @@ pip install requests
 ### Step 3: Set API Key
 
 ```bash
-export FAL_API_KEY="REDACTED_FAL_API_KEY"
+export FAL_API_KEY="your_fal_api_key_here"
 ```
 
 Or set in your environment:
 
 ```bash
-export FAL_KEY="REDACTED_FAL_API_KEY"
+export FAL_KEY="your_fal_api_key_here"
 ```
 
 ### Step 4: Test Connection
