@@ -128,7 +128,7 @@ All creative skills reference environment variables, not hardcoded keys:
 
 ```markdown
 # WRONG - DO NOT DO THIS
-export FAL_API_KEY="sk-1234567890abcdef"
+export FAL_API_KEY="real-api-key-goes-here"
 ```
 
 ## Audit Results

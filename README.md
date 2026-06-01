@@ -1,26 +1,37 @@
 # Vibe Building Skills
 
-A comprehensive system of **32 Claude Skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence—everything you need to create products that are loved.
+A comprehensive system of **34 Claude Skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
-Vibe Creator's Skills is a complete, production-ready system of Claude Skills built on the philosophy of focus and care — designing and building with deep intention, reducing until it's clear, and refining until it's right.
+Vibe Building Skills is a complete, production-ready system of Claude Skills built on the philosophy of focus and care--designing and building with deep intention, reducing until it's clear, and refining until it's right.
 
 This repository contains:
 
-- **10 Marketing Skills** — Direct response marketing, SEO, email, content strategy
-- **8 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
+- **12 Marketing Skills** — Direct response marketing, SEO, email, content strategy, and X/Twitter writing
+- **9 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
 - **13 Frontend Design Skills** — Design systems, responsive layouts, typography, interactions, performance, accessibility
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 32 professional skills + comprehensive guidance + automation tools**
+**Total: 34 professional skills + comprehensive guidance + automation tools**
+
+## Maintainer Snapshot
+
+This is an active open-source skill library maintained by [Sanket Dongre](https://github.com/sanky369). As of June 1, 2026, the repository has **22 stars**, **4 forks**, and recent GitHub traffic of **318 clones from 206 unique cloners over 14 days**.
+
+Maintainer priorities:
+
+- Keep each skill usable as a standalone `SKILL.md`
+- Improve documentation, examples, and installation paths
+- Review contributions for quality, safety, and practical usefulness
+- Expand automated validation for skill metadata, structure, and secret-safety checks
 
 ## 📦 What's Included
 
 ### Skills by Category
 
-#### Marketing Skills (10 skills)
+#### Marketing Skills (12 skills)
 Transform your marketing from generic to direct response, from scattered to strategic.
 
 1. **orchestrator** — Diagnose your marketing situation and sequence skills optimally
@@ -34,11 +45,11 @@ Transform your marketing from generic to direct response, from scattered to stra
 9. **email-sequences** — Welcome, nurture, conversion, launch sequences
 10. **content-atomizer** — Repurpose content 15 ways
 11. **seo-strategy** — Plan complete SEO strategy for your product
-13. **tweet-writer** — Search for suitable viral tweet format for the purpose and writes tweets accordingly
+12. **tweet-writer** — Research viral X/Twitter patterns and write tweets or threads with proven hooks
 
 **Path:** Start with orchestrator to assess your situation, then follow the recommended sequence.
 
-#### Creative Skills (8 skills + automation)
+#### Creative Skills (9 skills + automation)
 Generate professional creative assets with AI, powered by FAL.ai nanobanana pro.
 
 1. **orchestrator** — Coordinate all creative skills
@@ -93,8 +104,8 @@ Build design systems and interfaces that feel timeless and loved. Now with 5 add
 
 ### Documentation
 
-- **PHILOSOPHY.md** — The designer's thought process and philosophy of uncommon care
-- **RESEARCH.md** — Expert insights, recommended books, design principles
+- **docs/PHILOSOPHY.md** — The designer's thought process and philosophy of uncommon care
+- **docs/RESEARCH.md** — Expert insights, recommended books, design principles
 - **Creative Automation** — Python CLI and Claude Code integration for asset generation
 - **skills/frontend-design/README.md** — Complete guide to all 13 frontend design skills
 
@@ -177,8 +188,9 @@ Each skill includes guidance for Claude Code:
 ```
 vibe-building-skills/
 ├── README.md (this file)
-├── PHILOSOPHY.md
-├── RESEARCH.md
+├── LICENSE
+├── CONTRIBUTING.md
+├── SECURITY.md
 ├── docs/
 │   ├── PHILOSOPHY.md
 │   ├── RESEARCH.md
@@ -200,6 +212,8 @@ vibe-building-skills/
     │   ├── newsletter/SKILL.md
     │   ├── email-sequences/SKILL.md
     │   ├── content-atomizer/SKILL.md
+    │   ├── seo-strategy/SKILL.md
+    │   ├── tweet-writer/SKILL.md
     │   └── README.md
     ├── creative/
     │   ├── orchestrator/SKILL.md
@@ -329,7 +343,7 @@ This system is built on research and wisdom from:
 - **WCAG Standards** — Inclusive design
 - **Core Web Vitals** — Performance metrics
 
-See `PHILOSOPHY.md` and `RESEARCH.md` for detailed insights.
+See `docs/PHILOSOPHY.md` and `docs/RESEARCH.md` for detailed insights.
 
 ## 🎯 What You'll Achieve
 
@@ -377,9 +391,11 @@ This is a living system. Feel free to:
 - Share your implementations
 - Suggest new skills or improvements
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
 ## 📄 License
 
-These skills are provided as-is for your use. Feel free to customize and adapt them to your needs.
+MIT. See [LICENSE](LICENSE).
 
 ## 🙏 Acknowledgments
 
