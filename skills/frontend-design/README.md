@@ -1,6 +1,6 @@
 # Frontend Design Skills - Complete System
 
-A comprehensive system of **13 interconnected Claude Skills** for building world-class digital experiences. Based on the philosophy of Interface Craft and research from industry experts.
+A comprehensive system of **13 interconnected agent skills** for building world-class digital experiences. Based on the philosophy of Interface Craft and research from industry experts.
 
 ## The 13 Skills
 

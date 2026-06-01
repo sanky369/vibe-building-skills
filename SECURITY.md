@@ -108,7 +108,7 @@ class NanobananProClient:
             raise ValueError("FAL_API_KEY or FAL_KEY not found...")
 ```
 
-### Claude Skills
+### Agent Skills
 
 All creative skills reference environment variables, not hardcoded keys:
 

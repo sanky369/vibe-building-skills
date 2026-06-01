@@ -1,10 +1,10 @@
 # Vibe Skills for Claude
 
-Complete marketing system with 10 integrated Claude Skills. Each skill is a standalone SKILL.md file that can be installed directly into Claude.
+Complete marketing system with 10 integrated agent skills. Each skill is a standalone SKILL.md file that can be installed directly into Claude.
 
 ## What You're Getting
 
-10 professional-grade Claude Skills:
+10 professional-grade agent skills:
 
 1. **brand-voice** — Define your unique brand voice
 2. **positioning-angles** — Find your market positioning

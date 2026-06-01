@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for improving Vibe Building Skills. This repo is meant to stay practical, safe, and easy to install as a collection of standalone Claude Skills.
+Thanks for improving Vibe Building Skills. This repo is meant to stay practical, safe, and easy to install as a collection of standalone agent skills.
 
 ## What Makes a Good Contribution
 

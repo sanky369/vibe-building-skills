@@ -1,10 +1,10 @@
 # Vibe Building Skills
 
-A comprehensive system of **34 Claude Skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence--everything you need to create products that are loved.
+A comprehensive system of **34 agent skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
-Vibe Building Skills is a complete, production-ready system of Claude Skills built on the philosophy of focus and care--designing and building with deep intention, reducing until it's clear, and refining until it's right.
+Vibe Building Skills is a complete, production-ready system of agent skills built on the philosophy of focus and care--designing and building with deep intention, reducing until it's clear, and refining until it's right.
 
 This repository contains:
 

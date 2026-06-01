@@ -1,10 +1,10 @@
 # Vibe Creative Skills for Claude
 
-Complete creative system with 7 integrated Claude Skills for AI-powered visual content generation. Each skill uses FAL.ai's nanobanana pro and FLUX models for high-quality image generation.
+Complete creative system with 7 integrated agent skills for AI-powered visual content generation. Each skill uses FAL.ai's nanobanana pro and FLUX models for high-quality image generation.
 
 ## What You're Getting
 
-7 professional-grade Creative Claude Skills:
+7 professional-grade creative agent skills:
 
 1. **creative-strategist** — Define your visual direction and brand aesthetics
 2. **image-generation** — Generate images using FAL.ai FLUX models
