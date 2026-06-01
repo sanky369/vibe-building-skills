@@ -49,22 +49,23 @@ Transform your marketing from generic to direct response, from scattered to stra
 
 **Path:** Start with orchestrator to assess your situation, then follow the recommended sequence.
 
-#### Creative Skills (9 skills + automation)
+#### Creative Skills (10 skills + automation)
 Generate professional creative assets with AI, powered by FAL.ai nanobanana pro.
 
 1. **orchestrator** — Coordinate all creative skills
 2. **creative-strategist** — Define your visual direction
-3. **image-generation** — Generate images with nanobanana pro
-4. **product-photography** — Create professional product shots
-5. **product-video** — Plan animated product videos
-6. **social-graphics** — Platform-optimized social content
-7. **brand-asset** — Logos, icons, patterns, brand elements
-8. **talking-head** — Presenter and UGC-style videos
-9. **remotion-script-writer** — Generate detailed video scripts for Remotion
+3. **original-design** — Interactive, question-driven workflow to create an original design language (a coherent visual "world") for infographics, video storyboards, websites, or app UI/UX; pulls live visual inspiration from the web
+4. **image-generation** — Generate images with nanobanana pro
+5. **product-photography** — Create professional product shots
+6. **product-video** — Plan animated product videos
+7. **social-graphics** — Platform-optimized social content
+8. **brand-asset** — Logos, icons, patterns, brand elements
+9. **talking-head** — Presenter and UGC-style videos
+10. **remotion-script-writer** — Generate detailed video scripts for Remotion
 
 **Plus:** Python automation system for CLI-based and Claude Code asset generation
 
-**Path:** Start with creative-strategist to define your visual direction, then use orchestrator to sequence remaining skills.
+**Path:** Start with creative-strategist (or original-design for a full visual identity) to define your visual direction, then use orchestrator to sequence remaining skills.
 
 #### Frontend Design Skills (13 skills) ✨ ENHANCED
 
@@ -218,6 +219,7 @@ vibe-building-skills/
     ├── creative/
     │   ├── orchestrator/SKILL.md
     │   ├── creative-strategist/SKILL.md
+    │   ├── original-design/SKILL.md
     │   ├── image-generation/SKILL.md
     │   ├── product-photography/SKILL.md
     │   ├── product-video/SKILL.md

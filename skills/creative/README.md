@@ -14,6 +14,8 @@ Complete creative system with 7 integrated agent skills for AI-powered visual co
 6. **brand-asset** — Create logos, icons, patterns, and brand elements
 7. **talking-head** — Plan presenter and UGC-style video content
 
+Plus **original-design** — an interactive, question-driven skill that creates an original *design language* (a coherent visual "world") for infographics, video storyboards, websites, or app UI/UX, gathering live visual inspiration from the web. Run it before the generation skills to define the world every asset should belong to.
+
 ## Key Features
 
 ✅ **FAL.ai Integration** — Uses nanobanana pro and FLUX models  
