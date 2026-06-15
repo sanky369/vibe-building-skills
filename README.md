@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of **34 agent skills** for building world-class digital products. From marketing strategy to creative asset generation to frontend design excellence--everything you need to create products that are loved.
+A comprehensive system of **36 agent skills** for building world-class digital products. From product strategy to marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -8,13 +8,14 @@ Vibe Building Skills is a complete, production-ready system of agent skills buil
 
 This repository contains:
 
+- **1 Product Strategy Skill** — Foundation Sprint method for evaluating, differentiating, and pressure-testing product ideas
 - **12 Marketing Skills** — Direct response marketing, SEO, email, content strategy, and X/Twitter writing
-- **9 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
+- **10 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
 - **13 Frontend Design Skills** — Design systems, responsive layouts, typography, interactions, performance, accessibility
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 34 professional skills + comprehensive guidance + automation tools**
+**Total: 36 professional skills + comprehensive guidance + automation tools**
 
 ## Maintainer Snapshot
 
@@ -30,6 +31,13 @@ Maintainer priorities:
 ## 📦 What's Included
 
 ### Skills by Category
+
+#### Product Strategy Skills (1 skill)
+Decide what to build, who it is for, how it wins, and what to test before committing.
+
+1. **foundation-sprint** — Evaluate, pressure-test, or sharpen any product, feature, app, startup, or business idea using the Foundation Sprint method from Jake Knapp and John Zeratsky's *Click*
+
+**Path:** Start here when you are choosing a direction, validating an idea, improving an existing product, or trying to find sharper differentiation.
 
 #### Marketing Skills (12 skills)
 Transform your marketing from generic to direct response, from scattered to strategic.
@@ -155,13 +163,14 @@ Each skill is a standalone `.md` file in the `SKILL.md` format that Claude under
 - Upload to Claude
 
 **Option C: Install by Category**
+- Install Product Strategy Skills: `skills/product-strategy/*/SKILL.md`
 - Install Marketing Skills: `skills/marketing/*/SKILL.md`
 - Install Creative Skills: `skills/creative/*/SKILL.md`
 - Install Frontend Design Skills: `skills/frontend-design/*/SKILL.md`
 
-### 3. Start with the Orchestrator
+### 3. Start with the Right Entry Point
 
-Begin with the orchestrator skill for your category:
+Begin with Foundation Sprint if you are still deciding what to build. If the direction is already clear, start with the orchestrator skill for your category:
 
 ```
 "I'm using the [marketing/creative/frontend-design]-orchestrator skill.
@@ -202,6 +211,13 @@ vibe-building-skills/
 │   ├── requirements.txt
 │   └── examples.py
 └── skills/
+    ├── product-strategy/
+    │   ├── foundation-sprint/
+    │   │   ├── SKILL.md
+    │   │   └── references/
+    │   │       ├── examples.md
+    │   │       └── method.md
+    │   └── README.md
     ├── marketing/
     │   ├── orchestrator/SKILL.md
     │   ├── brand-voice/SKILL.md
@@ -246,6 +262,22 @@ vibe-building-skills/
 ```
 
 ## 🎓 Implementation Workflows
+
+### Product Strategy Workflow
+
+```
+1. Start: foundation-sprint
+   ↓
+2. Lock the customer, problem, advantage, and competitors
+   ↓
+3. Choose the differentiators you can own
+   ↓
+4. Compare approaches with Magic Lenses
+   ↓
+5. Write the Founding Hypothesis
+   ↓
+6. Test the riskiest assumption before building
+```
 
 ### Marketing Workflow
 
@@ -349,6 +381,12 @@ See `docs/PHILOSOPHY.md` and `docs/RESEARCH.md` for detailed insights.
 
 ## 🎯 What You'll Achieve
 
+### Product Strategy
+- ✅ Sharper product hypothesis before launch
+- ✅ Clear target customer and painful problem
+- ✅ Defensible differentiation against competitors
+- ✅ A first experiment that tests the riskiest assumption
+
 ### Marketing
 - ✅ Direct response marketing system
 - ✅ SEO strategy and content
@@ -379,7 +417,7 @@ See `docs/PHILOSOPHY.md` and `docs/RESEARCH.md` for detailed insights.
 ## 🚀 Getting Started
 
 1. **Clone the repository**
-2. **Choose your starting skill** (orchestrator for your category)
+2. **Choose your starting skill** (`foundation-sprint` for product direction, or an orchestrator for an execution category)
 3. **Install skills in Claude**
 4. **Follow the recommended path**
 5. **Use Claude Code for implementation**
@@ -416,9 +454,10 @@ Built with research and insights from:
 
 Start your journey to world-class products today:
 
-1. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
-2. **Creative:** `skills/creative/orchestrator/SKILL.md`
-3. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
+1. **Product Strategy:** `skills/product-strategy/foundation-sprint/SKILL.md`
+2. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
+3. **Creative:** `skills/creative/orchestrator/SKILL.md`
+4. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
 
 Choose one, install it in Claude, and ask for help with your specific situation.
 
