@@ -1,309 +1,139 @@
 ---
 name: social-graphics
-description: Generate platform-optimized social media graphics and posts. Use when creating content for Instagram, Twitter, LinkedIn, TikTok, or other social platforms.
+description: "Produce platform-correct social media graphics: pick the right dimensions and layout per platform, write the headline/body/CTA copy, build the generation prompt, and generate the image via the repo's FAL.ai pipeline. Use whenever the user wants a social post visual, Instagram post/story/carousel, LinkedIn graphic, Twitter/X image, TikTok thumbnail, Pinterest pin, launch announcement graphic, or 'something to post about X' — even if they never name a platform. Also use to adapt one design across several platforms. Produces a Social Graphic Spec per asset (platform, dimensions, layout, copy, full generation prompt) plus generated images when FAL_API_KEY is available."
 ---
 
-# Social Graphics Skill
+# Social Graphics
 
-## Overview
+Turn a message and a platform into ready-to-post graphics. For each asset you produce a **Social Graphic Spec** — platform, exact dimensions, layout, overlay copy, and a complete generation prompt — then generate the image through the repo pipeline (`docs/creative_cli.py`, model `fal-ai/nano-banana-pro`). The governing principle: **a social graphic is read for under two seconds** — one message, one focal point, one CTA; if a viewer can't get the point from a thumbnail-sized glance, the design fails regardless of how good it looks full-size.
 
-Social Graphics creates platform-specific visual content optimized for engagement. This skill teaches you to generate graphics that perform well on each platform.
+## When to use / when not to
 
-**Keywords**: social media graphics, social posts, platform-optimized, Instagram graphics, LinkedIn posts, Twitter graphics, TikTok graphics, social content
+- Use for platform-bound static visuals: feed posts, stories, pins, link-preview images, announcement graphics, quote cards, carousels.
+- Logos, icons, patterns, brand marks → `skills/creative/brand-asset`.
+- Standalone product hero shots (no platform framing, no overlay copy) → `skills/creative/product-photography`.
+- Motion content → `skills/creative/product-video` (product-led) or `skills/creative/talking-head` (person-led).
+- No brand style yet and the user wants a consistent look → run `skills/creative/creative-strategist` first; its style guide feeds this skill.
+- If the visual language itself feels generic and needs an original identity → `skills/creative/original-design` first.
 
-## Core Methodology
+## Intake
 
-Social graphics have three layers:
+Ask in one tight batch, only what's missing:
 
-1. **Platform Optimization** — Size, format, and best practices
-2. **Visual Design** — Eye-catching composition and colors
-3. **Message Integration** — Text, CTA, and messaging
+1. **Message** — what is this post saying, in one sentence? What should the viewer do (CTA)?
+2. **Platform(s) and format** — Instagram feed/story/carousel, LinkedIn, Twitter/X, TikTok, Pinterest? One platform or a multi-platform set?
+3. **Brand constraints** — style guide from `skills/creative/creative-strategist`, brand colors/fonts, product imagery to feature?
+4. **Tone** — professional, trendy, minimalist, playful?
 
-## Platform Specifications
+Infer instead of asking: tone from the platform (LinkedIn → professional; TikTok → energetic), colors from any brand materials in the project. **Don't stall:** with a clear message and platform, state assumptions for the rest and proceed.
 
-### Platform 1: Instagram
+## Platform specifications (source of truth for dimensions)
 
-**Dimensions**:
-- Feed Post: 1080x1080 (square)
-- Story: 1080x1920 (vertical)
-- Reel: 1080x1920 (vertical)
-- Carousel: 1080x1350 (portrait)
+| Platform | Format | Pixels | CLI aspect-ratio | Design posture |
+|---|---|---|---|---|
+| Instagram | Feed post | 1080×1080 | `1:1` | vibrant, high contrast, trending aesthetic |
+| Instagram | Story / Reel cover | 1080×1920 | `9:16` | full-bleed vertical, text in safe zone |
+| Instagram | Carousel | 1080×1350 | `4:5` | one idea per card, visual continuity across cards |
+| LinkedIn | Feed post | 1200×627 | `16:9`* | professional, credible, value-led copy |
+| LinkedIn | Document page | 1200×1500 | `4:5` | clean, readable, business imagery |
+| Twitter/X | Post image | 1200×675 | `16:9` | bold, simple, instant visual impact |
+| TikTok | Thumbnail/graphic | 1080×1920 | `9:16` | bold text overlays, energetic, authentic feel |
+| Pinterest | Standard pin | 1000×1500 | `2:3` | vertical, inspiring, high-quality imagery |
 
-**Best Practices**:
-- Vibrant colors, high contrast
-- Text overlay (top or bottom)
-- Call-to-action visible
-- Trending aesthetic
-- 2-3 second hook
+*Closest supported ratio; the CLI supports `21:9, 16:9, 3:2, 4:3, 5:4, 1:1, 4:5, 3:4, 2:3, 9:16` — always pick the nearest and note any crop.
 
-**Prompt Template**:
+## Workflow
+
+### 1. Resolve platform and format
+
+If the user named a platform, use the table above. If not, decide: B2B/professional audience → LinkedIn; consumer/lifestyle → Instagram; discovery/how-to/aspirational → Pinterest; announcement to an existing following → the platform where they have one (ask only if truly unknown). Multi-platform request → design the **master** for the most constrained format first (usually 1:1 or 9:16), then adapt per platform; never stretch one image across all.
+
+### 2. Write the copy before the visual
+
+- **Headline:** ≤10 words, the message itself, not a teaser.
+- **Body (optional):** ≤2 short lines supporting the headline.
+- **CTA:** 2–4 words, action verb ("Shop now", "Get the guide", "Link in bio").
+
+If the copy can't fit these limits, the post is carrying more than one message — split it into a carousel or multiple posts and tell the user why.
+
+### 3. Design the layout
+
+Pick one focal point (product shot, illustration, bold typography) and place copy against the quietest area. Decision rules: photo-led → headline top or bottom third over a darkened/blurred band; typography-led → headline IS the focal point, minimal imagery; carousel → identical layout grid on every card, only content changes. Rule of thirds, generous negative space, max 2–3 font roles (headline / body / CTA).
+
+### 4. Build the generation prompt
+
+Formula — every prompt contains all six parts, in order:
+
 ```
-Instagram [post type] graphic, [subject], [color palette], 
-[composition], eye-catching, high contrast, professional design, 
-[mood], 1080x1080, trending on instagram, modern aesthetic
-```
-
-### Platform 2: LinkedIn
-
-**Dimensions**:
-- Feed Post: 1200x627 (landscape)
-- Document: 1200x1500 (portrait)
-- Video: 1200x675 (landscape)
-
-**Best Practices**:
-- Professional aesthetic
-- Clear, readable text
-- Business-focused imagery
-- Credible, authoritative
-- Value-focused messaging
-
-**Prompt Template**:
-```
-LinkedIn professional graphic, [subject], [color palette], 
-professional design, business aesthetic, [mood], 1200x627, 
-corporate quality, trending on linkedin, authoritative
-```
-
-### Platform 3: Twitter/X
-
-**Dimensions**:
-- Tweet Image: 1024x512 (landscape)
-- Recommended: 1200x675 (landscape)
-
-**Best Practices**:
-- Bold, simple design
-- High contrast
-- Readable text
-- Quick visual impact
-- Trending style
-
-**Prompt Template**:
-```
-Twitter graphic, [subject], bold design, high contrast, 
-[color palette], simple composition, eye-catching, 1024x512, 
-trending on twitter, modern aesthetic
+[Platform + format] graphic, [subject/focal point], [color palette from brand or chosen],
+[composition: focal point + where copy space is reserved], [tone/mood words],
+[dimensions], professional design, high contrast, eye-catching
 ```
 
-### Platform 4: TikTok
+Always reserve explicit "clean negative space at [position] for text overlay" in the prompt — nano-banana-pro renders text imperfectly, so plan to overlay final copy in a design tool rather than trusting generated text for anything longer than 2–3 words.
 
-**Dimensions**:
-- Video: 1080x1920 (vertical)
-- Thumbnail: 1280x720 (landscape)
+### 5. Generate
 
-**Best Practices**:
-- Vertical format
-- Trending sounds/music
-- Quick cuts
-- Bold text overlays
-- Energetic, fun
-- Authentic feel
+If `FAL_API_KEY` (or `FAL_KEY`) is set, run the repo CLI (`docs/fal_api.py` under the hood, model `fal-ai/nano-banana-pro`):
 
-**Prompt Template**:
-```
-TikTok graphic, [subject], vertical format, 1080x1920, 
-trendy aesthetic, bold colors, eye-catching, energetic mood, 
-modern design, trending on tiktok, authentic style
+```bash
+python docs/creative_cli.py social \
+  --platform instagram --topic "Product Launch" \
+  --prompt "<full prompt>" --aspect-ratio 1:1 --resolution 2K
 ```
 
-### Platform 5: Pinterest
+`--platform` accepts `instagram|linkedin|twitter|tiktok|pinterest`. Generate `--num-images 2` when the user is choosing between directions. If no key is set, deliver the spec with ready-to-run commands instead.
 
-**Dimensions**:
-- Standard Pin: 1000x1500 (portrait)
-- Idea Pin: 1000x1200 (portrait)
+### 6. Self-check against the quality bar, deliver the spec + images.
 
-**Best Practices**:
-- Vertical orientation
-- Inspiring imagery
-- Clear, readable text
-- Trending colors
-- High-quality photography
+## Required output format
 
-**Prompt Template**:
-```
-Pinterest pin graphic, [subject], vertical format, 1000x1500, 
-inspiring aesthetic, [color palette], professional design, 
-trending on pinterest, high-quality, eye-catching
-```
+One block per asset; a multi-platform set is the master followed by adaptation blocks:
 
-## Design Elements
+```markdown
+# Social Graphic Spec — [Campaign/Message]
 
-### Element 1: Color Palette
-```
-From Your Creative Strategist Guide:
-- Use primary colors for main elements
-- Secondary colors for accents
-- Ensure high contrast for readability
-- Consider platform color trends
-```
+## Asset 1 — [Platform · Format]
+- **Dimensions:** 1080×1080 (aspect `1:1`) · **Role:** master | adaptation
+- **Message:** [one sentence]
 
-### Element 2: Typography
-```
-- Bold, readable fonts
-- Clear hierarchy (headline, subheading, body)
-- High contrast with background
-- Limited fonts (2-3 maximum)
-- Professional or trendy based on brand
+### Copy
+- Headline: "..." (≤10 words)
+- Body: "..." (≤2 lines, or —)
+- CTA: "..."
+
+### Layout
+- Focal point: ... · Copy placement: ... · Palette: [colors + source: brand guide / chosen]
+
+### Generation prompt
+> [full prompt, all six parts]
+
+`python docs/creative_cli.py social --platform [x] --topic "[x]" --prompt "..." --aspect-ratio [x] --resolution 2K`
+
+### Result
+- [generated file path(s), or "pending — FAL_API_KEY not set"]
+- Post-gen step: overlay final copy in design tool: [yes/no + what]
+
+## Asset 2 — [Platform · Format]
+(same structure; for adaptations, note only what changes from the master)
 ```
 
-### Element 3: Composition
-```
-- Rule of thirds for balanced design
-- Clear focal point
-- Negative space for breathing room
-- Visual hierarchy
-- Eye-catching arrangement
-```
+## Quality bar (check before delivering)
 
-### Element 4: Visual Elements
-```
-- Icons or graphics
-- Product images
-- Lifestyle photography
-- Geometric shapes
-- Textures or patterns
-```
+- Dimensions match the platform table exactly; aspect ratio is a supported CLI value.
+- Headline ≤10 words; total text ≤3 elements (headline, body, CTA); one message per asset.
+- Copy placement sits over reserved negative space, not over the focal point.
+- Text-background contrast is explicitly handled (band, shadow, or blur called out in layout).
+- Palette and tone match the brand style guide when one exists; deviations flagged to the user.
+- Prompt contains all six formula parts, including reserved copy space.
+- Multi-platform sets: adapted per format, never one image stretched; carousel cards share one grid.
+- No invented engagement statistics; "best practice" guidance here is heuristic — label it if asked.
 
-## Complete Social Graphics Prompts
+## Integration
 
-### Instagram Feed Post
-```
-Instagram feed post graphic, [topic/product], vibrant [color palette], 
-eye-catching composition, modern design, rule of thirds, high contrast, 
-professional quality, 1080x1080, trending on instagram, social media aesthetic
-```
-
-### LinkedIn Professional Post
-```
-LinkedIn professional graphic, [topic], corporate [color palette], 
-professional design, authoritative aesthetic, business-focused, 
-clean composition, 1200x627, trending on linkedin, high-quality
-```
-
-### Twitter Promotional Post
-```
-Twitter promotional graphic, [topic], bold design, high contrast, 
-[color palette], simple composition, eye-catching, 1024x512, 
-trending on twitter, modern aesthetic, professional quality
-```
-
-### TikTok Trending Post
-```
-TikTok trending graphic, [topic], vertical format, 1080x1920, 
-trendy aesthetic, bold colors, energetic mood, eye-catching, 
-modern design, authentic style, high engagement potential
-```
-
-### Pinterest Inspiration Pin
-```
-Pinterest inspiration pin, [topic], vertical format, 1000x1500, 
-inspiring aesthetic, [color palette], professional design, 
-high-quality imagery, trending on pinterest, eye-catching, 
-aspirational mood
-```
-
-## Text Overlay Best Practices
-
-### Headline Text
-```
-- Large, bold, readable
-- 5-10 words maximum
-- Clear value proposition
-- High contrast with background
-- Professional or trendy font
-```
-
-### Body Text
-```
-- Secondary information
-- 1-2 lines maximum
-- Readable size
-- Supports headline
-- Clear call-to-action
-```
-
-### Call-to-Action
-```
-- "Learn More"
-- "Shop Now"
-- "Discover"
-- "Join Us"
-- "Click Link in Bio"
-- Clear, action-oriented
-```
-
-## How to Use This Skill
-
-1. **Choose Your Platform** — Which platform are you posting to?
-2. **Select Your Dimensions** — Use platform specifications
-3. **Define Your Message** — What's the main message?
-4. **Choose Your Design Style** — Professional, trendy, minimalist?
-5. **Build Your Prompt** — Combine all elements
-6. **Generate Image** — Use Image Generation skill
-7. **Add Text** — Add headline, body, CTA in design tool
-8. **Test** — Review before posting
-
-## Integration with Other Skills
-
-Social Graphics works with:
-- **Creative Strategist** — Your style guide informs design
-- **Image Generation** — Uses FAL.ai to create graphics
-- **Product Photography** — Product images become social assets
-- **Brand Asset** — Graphics use brand elements
-
-## Platform-Specific Tips
-
-**Instagram**: Use trending colors, high engagement visuals, clear CTA  
-**LinkedIn**: Professional aesthetic, value-focused, authoritative tone  
-**Twitter**: Bold, simple, high contrast, trending style  
-**TikTok**: Vertical, trendy, energetic, authentic feel  
-**Pinterest**: Inspiring, vertical, high-quality, aspirational
-
-## Pro Tips
-
-**Consistency**: Use same color palette and style across platforms  
-**Trending**: Reference trending aesthetics for each platform  
-**Testing**: Test different designs and measure engagement  
-**Timing**: Post at optimal times for each platform  
-**Hashtags**: Research relevant hashtags for each platform  
-**Engagement**: Include clear CTA to drive engagement  
-**Branding**: Maintain brand identity across all platforms
-
-## Common Pitfalls
-
-**Wrong Dimensions** — Use platform-specific sizes  
-**Poor Contrast** — Ensure text is readable  
-**Cluttered Design** — Keep design clean and focused  
-**Weak CTA** — Make action clear and compelling  
-**Inconsistent Branding** — Use your Creative Strategist guide  
-**Ignoring Trends** — Stay current with platform trends  
-**Low Quality** — Use high-resolution images and professional design
-
-## Troubleshooting
-
-### Text Not Readable
-- Increase text size
-- Add text shadow or background
-- Increase contrast with background
-- Use bolder font
-
-### Design Looks Cluttered
-- Remove unnecessary elements
-- Add more negative space
-- Simplify color palette
-- Focus on one main message
-
-### Not Getting Engagement
-- Review trending designs on platform
-- Increase contrast and vibrancy
-- Make CTA more compelling
-- Test different compositions
-
-### Inconsistent Across Platforms
-- Reference your Creative Strategist guide
-- Use consistent color palette
-- Maintain brand elements
-- Adapt design to platform specs
-
-## Next Steps
-
-Once you're creating social graphics, move to Skill 06: Brand Asset to create comprehensive brand elements.
+- `skills/creative/creative-strategist` → feeds in: the style guide (palette, typography, mood) every spec must obey.
+- `skills/creative/original-design` → feeds in: a design-language brief when the user wants an original visual world; every graphic becomes an artifact of it.
+- `skills/creative/product-photography` → feeds in: product shots reused as focal-point imagery.
+- `skills/creative/product-video` → feeds in: hero keyframes reused as post visuals; consumes: nothing.
+- `skills/creative/brand-asset` → feeds in: logos/marks to place; consumes: nothing.
+- `skills/creative/orchestrator` → routes multi-asset campaigns through this skill per platform.

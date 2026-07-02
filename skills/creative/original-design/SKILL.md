@@ -1,19 +1,18 @@
 ---
 name: original-design
-description: Use when creating an original visual design language, identity, or art direction for any artifact — infographics, video storyboards, websites, or mobile app UI/UX — or when a design feels generic, derivative, "AI-default," or inconsistent and needs one unifying idea. Triggers on "design language", "art direction", "make it original", "visual identity", "looks generic", "design a world".
+description: "Facilitates an interactive session that turns a product or subject into an original, internally consistent visual design language for any artifact — infographics, video storyboards, websites, or mobile app UI/UX. Use when the user wants an original design language, identity, or art direction, or when a design feels generic, derivative, 'AI-default,' or inconsistent and needs one unifying idea. Triggers on 'design language', 'art direction', 'make it original', 'visual identity', 'looks generic', 'design a world'. Produces a completed Design Language Brief (core metaphor, visual vocabulary, design DNA, signature constraint, Originality Test verdicts) saved to the project and handed off to the production skill for the chosen medium."
 ---
 
 # Original Design
 
-## Overview
+Run an **interactive, question-driven** session that turns a product or subject into a complete **design language** — a coherent visual *world* from which every screen, frame, icon, illustration, and animation is drawn as an "artifact" — and deliver it as a filled-in **Design Language Brief**. It works for any visual deliverable: an infographic, a video storyboard, a website, or a mobile app UI/UX. The governing principle: **originality is not about being unique — it is about being internally consistent around one core idea.** Don't ask "how do I make this look unique?"; ask "what is the visual manifestation of the core idea?" The biggest shift this skill enforces: **don't design screens — design a world.** Everything else is an element of that world.
 
-**Originality is not about being unique. It is about being internally consistent around one core idea.**
+## When to use / when not to
 
-Most people start by asking *"How do I make this look unique?"* The best designers start by asking *"What is the visual manifestation of the core idea?"*
-
-This skill runs an **interactive, question-driven** session that turns a product or subject into a complete **design language** — a coherent visual *world* from which every screen, frame, icon, illustration, and animation is drawn as an "artifact." It works for any visual deliverable: an infographic, a video storyboard, a website, or a mobile app UI/UX.
-
-**The biggest shift this skill enforces: don't design screens — design a world.** Everything else is just an element of that world.
+- Use when the user needs an original visual identity or art direction, or an existing design reads generic/AI-default and needs one unifying idea.
+- If the user needs a practical brand *style guide* (palette, fonts, mood for asset generation) rather than an original world → `skills/creative/creative-strategist`; this skill's brief can feed that one.
+- If the design language already exists and the user just needs assets → go straight to the production skill for the medium (see Phase 9).
+- If the problem is UI structure/usability rather than visual identity → `skills/frontend-design/frontend-orchestrator`.
 
 ## How to run this skill (read first)
 
@@ -55,6 +54,8 @@ Establish what you're actually making before anything visual. Ask:
 - **Who is it for, and what should they *feel*?**
 
 Then say the mindset shift out loud to the user: *"We're not going to design screens. We're going to design a world, and your "+ medium +" will be made of artifacts from that world."*
+
+**Don't stall:** if the request already answers these (e.g. "an original look for my kids' math app"), reflect the answers back as assumptions in one line and move straight to Phase 1 — the interactive rule applies to the *design* questions, not to re-asking what the user already said.
 
 ## Phase 1 — Define the core metaphor
 
@@ -168,14 +169,33 @@ State each question and its verdict back to the user explicitly.
 
 ## Phase 9 — Write the brief and hand off
 
-Fill in [assets/design-language-brief-template.md](assets/design-language-brief-template.md) with every locked decision and save it to the user's project (suggest `design-language.md`). Then translate the language into the chosen medium using [references/medium-playbooks.md](references/medium-playbooks.md), and offer to invoke the matching production skill:
+Fill in [assets/design-language-brief-template.md](assets/design-language-brief-template.md) with every locked decision and save it to the user's project (suggest `design-language.md`). Then translate the language into the chosen medium using [references/medium-playbooks.md](references/medium-playbooks.md) (read it at this phase for the per-medium translation tables), and offer to invoke the matching production skill:
 
-- **Infographic / social graphic** → `social-graphics`, `image-generation`, or `brand-asset`
-- **Video storyboard** → `remotion-script-writer`, `product-video`, or `creative-strategist`
-- **Website** → `frontend-orchestrator`, `design-foundation`, `color-system`, `typography-system`
-- **Mobile app UI/UX** → `frontend-orchestrator`, `component-architecture`, `layout-system`
+- **Infographic / social graphic** → `skills/creative/social-graphics`, `skills/creative/image-generation`, or `skills/creative/brand-asset`
+- **Video storyboard** → `skills/creative/remotion-script-writer`, `skills/creative/product-video`, or `skills/creative/creative-strategist`
+- **Website** → `skills/frontend-design/frontend-orchestrator`, `skills/frontend-design/design-foundation`, `skills/frontend-design/color-system`, `skills/frontend-design/typography-system`
+- **Mobile app UI/UX** → `skills/frontend-design/frontend-orchestrator`, `skills/frontend-design/component-architecture`, `skills/frontend-design/layout-system`
 
 The brief is the contract: every downstream asset must be an artifact of the world it describes.
+
+## Required output format
+
+The deliverable is the completed brief — always the exact structure of [assets/design-language-brief-template.md](assets/design-language-brief-template.md), every section filled, none skipped:
+
+```markdown
+# Design Language Brief — [Product / Subject]
+## 1. Core metaphor            (the one-sentence design language)
+## 2. Visual universe          (6–10 vocabulary elements mapped to icons/illustrations/motion/UI/colors/type)
+## 3. Design DNA               (shapes · colors with hex · one motion philosophy · one texture language)
+## 4. Mascot system            (who/personality/where it appears — or "none" with reason)
+## 5. Signature constraint     ("In this world, we never ___ / we always ___")
+## 6. Cross-domain inspiration (3–5 concrete steals with sources)
+## 7. Chosen direction         (the winning world + 1–2 backups)
+## 8. Originality Test         (all five questions with explicit YES verdicts)
+## 9. Production notes         (medium handoff: which skill, what it must obey)
+```
+
+Two sessions run on the same product must produce briefs with these same nine sections in this order; only the creative content differs.
 
 ## Common mistakes
 
@@ -187,6 +207,13 @@ The brief is the contract: every downstream asset must be an artifact of the wor
 | No signature constraint | Without a constraint there's no identity (Phase 5 is not optional) |
 | Designing screens/frames before the world | Define the world first; artifacts come last |
 | Shipping without the Originality Test | The 5-question gate is mandatory |
+
+## Integration
+
+- `skills/creative/creative-strategist` → consumes: the brief's Design DNA (colors, texture, motion) as raw material for a practical asset-generation style guide.
+- `skills/creative/social-graphics`, `skills/creative/image-generation`, `skills/creative/brand-asset` → consume: the brief; every generated asset must be an artifact of the world (repo image pipeline: `docs/creative_cli.py`, model `fal-ai/nano-banana-pro`).
+- `skills/creative/product-video`, `skills/creative/talking-head`, `skills/creative/remotion-script-writer` → consume: the brief as the visual world their beats, settings, and scenes are drawn from.
+- `skills/frontend-design/frontend-orchestrator` → consumes: the brief as the identity layer over its design-system skills (`design-foundation`, `color-system`, `typography-system`, `layout-system`, `component-architecture`).
 
 ## The bottom line
 
