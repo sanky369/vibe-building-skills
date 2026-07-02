@@ -1,337 +1,142 @@
 ---
 name: brand-asset
-description: Generate branded design elements and visual assets. Use when creating logos, icons, brand patterns, or other branded visual elements.
+description: "Produces branded visual identity elements — logo concepts, icon sets, seamless patterns, brand illustrations, and textures — as generation-ready prompt specs, and generates them via FAL.ai fal-ai/nano-banana-pro when the automation is configured. Use when the user says 'design a logo', 'I need icons', 'brand pattern / texture', 'brand illustrations', 'visual identity elements', or 'make my brand assets'. Produces one prompt-spec block per asset (asset type, style, palette with hex, composition, negative constraints), a variant plan for user selection, file-naming conventions, and a brand-guidelines entry for each approved asset; runs docs/creative_cli.py brand when FAL_API_KEY is set."
 ---
 
-# Brand Asset Skill
+# Brand Asset
 
-## Overview
+Generate the visual identity elements a brand reuses everywhere — logo concepts,
+icons, patterns, illustrations, textures — as prompt specs sharp enough that the
+whole family looks designed by one hand. **Prime rule: cohesion over cleverness.**
+A brand asset is judged by how well it matches its siblings and survives resizing,
+not by how impressive it is alone. And be honest about the medium: the model
+outputs **raster concepts**; production logos and icons still need vector tracing.
 
-Brand Asset creates branded visual elements that reinforce your brand identity. This skill teaches you to generate logos, icons, patterns, and other brand elements.
+## When to use / when not to
 
-**Keywords**: brand assets, logo design, brand elements, icons, brand patterns, visual identity, brand design, branded graphics
+Use for logos, icon sets, patterns, brand illustrations, and textures. Hand off
+instead when:
 
-## Core Methodology
+- No visual direction exists → `skills/creative/creative-strategist` first; its
+  brief supplies this skill's style, palette, and mood. For a single throwaway
+  asset, derive a minimal style inline and label it an assumption.
+- The asset is a product image → `skills/creative/product-photography`
+- The asset is a platform post/banner → `skills/creative/social-graphics`
+- It's a general non-branded image → `skills/creative/image-generation`
+- The user wants a full identity system rolled out across asset types →
+  `skills/creative/orchestrator` sequences it (strategist → this skill → the rest)
 
-Brand assets have three components:
+## Intake
 
-1. **Brand Identity** — Logo, colors, typography
-2. **Asset Type** — What kind of asset to create
-3. **Consistency Framework** — Ensuring brand cohesion
+Ask in one batch, only what's missing:
 
-## Asset Types
+1. **Brand** — name, what it does, one sentence of personality.
+2. **Asset type(s)** — logo, icon set, pattern, illustration, texture? (These are
+   also the automation's exact `--asset-type` choices.)
+3. **Style anchor** — Creative Direction Brief / existing logo to match, or
+   palette hex codes? For icons/patterns joining an existing identity, matching
+   it is mandatory, not optional.
+4. **Usage** — where will it live (app icon, website, print, merch)? This drives
+   simplicity requirements and variant needs.
+5. **Automation** — `FAL_API_KEY` set, or deliver specs only?
 
-### Asset Type 1: Logo Design
+Infer, don't ask: aspect ratio (logos/icons/patterns → `1:1`; wordmark
+lockups → `3:2` or `16:9`); resolution `2K` (patterns/textures `4K`). **Don't
+stall:** with brand + asset type known, assume the rest, label it, proceed.
 
-**Purpose**: Primary brand mark
+## Workflow
 
-**Prompt Template**:
-```
-Logo design for [brand name], [style], [color palette], 
-minimalist, scalable, professional, modern, [mood], 
-vector-like, clean design, 4K, professional quality, 
-trending on behance
-```
+1. **Lock the style line.** One style from the vocabulary (minimalist, geometric,
+   organic, illustrative, abstract) + palette in words and hex + mood — taken
+   from the Creative Direction Brief when it exists. Every asset in the family
+   uses the same style line verbatim.
+2. **Write prompt specs from the templates** in `references/asset-library.md` —
+   read it now; it has the per-type templates, style vocabulary, color
+   application patterns, and delivery specs. Decision rules:
+   - **Logo** → always generate as concepts to choose from: 4 variants
+     (`--num-images 4`) or 3–4 distinct specs (different style angles). Never
+     one take. Flat, plain background, no photorealism, no tiny text.
+   - **Icon set** → generate the whole set as ONE sheet in one call so stroke
+     weight and corner radius stay consistent; never one icon per call.
+   - **Pattern/texture** → demand `seamless, tileable, edge-to-edge` and
+     test-tile the result before accepting.
+   - **Illustration** → fix subject + line weight + palette; generate 2–3.
+3. **Set negative constraints** on every spec: no watermark, no gradients-and-
+   bevels clutter (unless the style calls for it), no readable text beyond the
+   exact brand name supplied, no stock-clipart clichés.
+4. **Generate or deliver.** If `FAL_API_KEY` (or `FAL_KEY`) is set:
 
-**Example**:
-```
-Logo design for tech startup, geometric style, blue and white colors, 
-minimalist, scalable, professional, modern, innovative mood, 
-vector-like, clean design, 4K, professional quality, trending on behance
-```
+   ```bash
+   python docs/creative_cli.py brand \
+     --asset-type logo --brand-name "TechCorp" \
+     --prompt "<full prompt>" \
+     --aspect-ratio 1:1 --resolution 2K --num-images 4
+   ```
 
-### Asset Type 2: Icon Set
+   Saves to `assets/brand-assets/<brand-slug>/<asset-type>/` as
+   `<type>_<n>_<timestamp>.png`. No key → deliver specs + exact commands; never
+   claim generation happened. Parameter source of truth:
+   `skills/creative/image-generation/references/automation.md`.
+5. **User selects; you verify.** Present variants, have the user pick one per
+   slot (recommend one, one-line reason). Check winners against the quality bar;
+   fix misses with the fix-it phrases in `references/asset-library.md` — one
+   iteration round.
+6. **Record in the brand guide.** Add each approved asset to the guidelines entry
+   (format below) and state the production step honestly (e.g. "trace to SVG
+   before shipping").
 
-**Purpose**: Supporting visual elements
+## Required output format
 
-**Prompt Template**:
-```
-Icon set for [brand/purpose], [number] icons, [style], 
-[color palette], consistent design, professional, 
-scalable, [mood], vector-like, high quality, 4K
-```
-
-**Example**:
-```
-Icon set for SaaS product, 6 icons, minimalist style, 
-blue and gray colors, consistent design, professional, 
-scalable, modern mood, vector-like, high quality, 4K
-```
-
-### Asset Type 3: Brand Pattern
-
-**Purpose**: Repeating design element
-
-**Prompt Template**:
-```
-Brand pattern design, [pattern type], [color palette], 
-seamless, repeating, [style], professional, [mood], 
-scalable, high quality, 4K, vector-like
-```
-
-**Example**:
-```
-Brand pattern design, geometric pattern, blue and white colors, 
-seamless, repeating, minimalist style, professional, modern mood, 
-scalable, high quality, 4K, vector-like
-```
-
-### Asset Type 4: Brand Illustration
-
-**Purpose**: Custom illustrations for brand
-
-**Prompt Template**:
-```
-Brand illustration for [brand], [subject], [style], 
-[color palette], professional, [mood], consistent with brand, 
-high quality, 4K, trending on dribbble
-```
-
-**Example**:
-```
-Brand illustration for wellness company, person meditating, 
-minimalist style, green and white colors, professional, 
-calm mood, consistent with brand, high quality, 4K, 
-trending on dribbble
-```
-
-### Asset Type 5: Brand Texture
-
-**Purpose**: Textured background element
-
-**Prompt Template**:
-```
-Brand texture design, [texture type], [color palette], 
-subtle, professional, seamless, scalable, [mood], 
-high quality, 4K, vector-like
-```
-
-**Example**:
-```
-Brand texture design, geometric texture, blue tones, 
-subtle, professional, seamless, scalable, modern mood, 
-high quality, 4K, vector-like
-```
-
-## Style Options
-
-### Style 1: Minimalist
-```
-"Minimalist design, simple shapes, clean lines, 
-lots of white space, modern, professional"
-```
-
-### Style 2: Geometric
-```
-"Geometric design, geometric shapes, clean lines, 
-modern, professional, symmetrical"
-```
-
-### Style 3: Organic
-```
-"Organic design, flowing shapes, natural forms, 
-smooth curves, modern, professional"
-```
-
-### Style 4: Illustrative
-```
-"Illustrative design, artistic style, detailed, 
-expressive, professional, modern"
-```
-
-### Style 5: Abstract
-```
-"Abstract design, abstract shapes, conceptual, 
-modern, professional, artistic"
-```
-
-## Color Palette Application
-
-### Primary Color Usage
-```
-"Use [primary color] for main elements, 
-[secondary color] for accents, 
-[accent color] for highlights"
-```
-
-### Monochromatic Approach
-```
-"Monochromatic design using [primary color], 
-varying shades for depth and hierarchy"
-```
-
-### Complementary Colors
-```
-"Complementary color scheme with [color1] and [color2], 
-professional, balanced, eye-catching"
-```
-
-## Complete Brand Asset Prompts
-
-### Professional Logo
-```
-Professional logo design for [brand name], [style], 
-[color palette], minimalist, scalable, modern, professional, 
-vector-like, clean design, 4K, trending on behance, 
-suitable for all applications
-```
-
-### Icon Set
-```
-Professional icon set, [number] icons, [style], 
-[color palette], consistent design, professional, 
-scalable, modern, vector-like, high quality, 4K, 
-suitable for UI/UX design
-```
-
-### Brand Pattern
-```
-Seamless brand pattern, [pattern type], [color palette], 
-professional design, modern, scalable, vector-like, 
-high quality, 4K, suitable for backgrounds and textures
-```
-
-### Brand Illustration
-```
-Custom brand illustration, [subject], [style], 
-[color palette], professional, [mood], consistent with brand, 
-high quality, 4K, trending on dribbble, unique and memorable
-```
-
-### Brand Texture
-```
-Professional brand texture, [texture type], [color palette], 
-subtle, professional, seamless, scalable, modern, 
-high quality, 4K, suitable for backgrounds and overlays
-```
-
-## Brand Guidelines for Assets
-
-Create a brand asset guide:
+One block per asset:
 
 ```
-BRAND ASSET GUIDELINES
-
-1. LOGO
-   - Primary Logo: [Description]
-   - Logo Variations: [List variations]
-   - Minimum Size: [Size]
-   - Clear Space: [Specification]
-   - Color Variations: [Colors]
-
-2. ICON SET
-   - Style: [Style]
-   - Size: [Sizes]
-   - Stroke Weight: [Weight]
-   - Color Usage: [Colors]
-
-3. COLOR PALETTE
-   - Primary: [Color + Hex]
-   - Secondary: [Color + Hex]
-   - Accents: [Colors + Hex]
-   - Usage Rules: [Rules]
-
-4. TYPOGRAPHY
-   - Headline Font: [Font]
-   - Body Font: [Font]
-   - Sizes: [Sizes]
-
-5. PATTERNS & TEXTURES
-   - Primary Pattern: [Description]
-   - Secondary Texture: [Description]
-   - Usage: [Where used]
-
-6. CONSISTENCY RULES
-   - Must Always: [Requirements]
-   - Never Include: [Prohibitions]
-   - Quality Standards: [Standards]
+## Asset Spec — [asset name, e.g. logo-concept-A]
+- **Asset type:** logo / icon / pattern / illustration / texture
+- **Brand:** [name] · **Usage:** [where it will live]
+- **Style:** [one style line, shared across the family]
+- **Palette:** [color name #hex, role] ...
+- **Composition:** [e.g. centered mark, plain background / 6-icon sheet on grid / edge-to-edge tile]
+- **Mood:** [2–3 adjectives]
+- **Aspect ratio:** [ratio] · **Resolution:** [1K/2K/4K] · **Format:** png
+- **Negative constraints:** [no watermark, no text beyond "<brand>", ...]
+- **Prompt (final, paste-ready):**
+  > [single flowing prompt]
+- **Variants:** [n] — [what varies]
+- **File naming:** assets/brand-assets/<brand-slug>/<asset-type>/<type>_<n>_<timestamp>.png
+- **Generate with:** `python docs/creative_cli.py brand --asset-type ... --brand-name "..." --prompt "..." --aspect-ratio ... --num-images n`
+- **Production note:** [raster concept — trace to SVG / normalize grid / verify tiling]
 ```
 
-## How to Use This Skill
+After selection, append per approved asset a **Brand guide entry**: asset name,
+file path, color variants needed, minimum size / clear space (logos), and usage
+rule — using the guidelines skeleton in `references/asset-library.md`.
 
-1. **Define Your Brand** — What's your brand identity?
-2. **Choose Asset Type** — What asset do you need?
-3. **Select Your Style** — Which style matches your brand?
-4. **Define Colors** — Use your Creative Strategist palette
-5. **Build Your Prompt** — Combine all elements
-6. **Generate Asset** — Use Image Generation skill
-7. **Refine** — Iterate based on results
-8. **Document** — Add to brand guidelines
+## Quality bar
 
-## Integration with Other Skills
+- [ ] Every asset in the family shares the same style line and palette verbatim
+- [ ] Logos: 3+ distinct concepts offered; works in one color; still reads at thumbnail size (describe the check, don't assume)
+- [ ] Icon sets: generated as one sheet; consistent stroke weight and corner radius
+- [ ] Patterns/textures: `seamless, tileable` in the prompt AND tiling verified (or flagged unverified)
+- [ ] All colors given in words + hex, pulled from the brief when one exists
+- [ ] Negative constraints on every spec; no text rendered beyond the supplied brand name
+- [ ] Deliverable states the raster→vector production step for logos/icons — never imply the PNG is print-ready vector
+- [ ] Only real automation parameters (`fal-ai/nano-banana-pro`; no size/steps/guidance knobs exist)
 
-Brand Asset works with:
-- **Creative Strategist** — Your style guide informs assets
-- **Image Generation** — Uses FAL.ai to create assets
-- **Social Graphics** — Assets used in social content
-- **Product Photography** — Assets used in product context
+Hard don'ts: never mix two styles in one asset family; never present a generated
+logo as trademark-cleared (recommend a clearance search); never fake generation
+results when the API key is absent.
 
-## Asset Specifications
+## Integration
 
-### Logo Specifications
-- **Formats**: PNG, SVG, PDF
-- **Sizes**: 16px to 512px
-- **Colors**: Full color, monochrome, white
-- **Backgrounds**: Transparent, white, colored
-
-### Icon Specifications
-- **Size**: 16px, 24px, 32px, 48px, 64px
-- **Style**: Consistent across set
-- **Stroke Weight**: Consistent
-- **Color**: Full color or monochrome
-
-### Pattern Specifications
-- **Size**: 512x512 or larger
-- **Seamless**: Tiles without visible seams
-- **Resolution**: 4K or higher
-- **Format**: PNG or SVG
-
-## Pro Tips
-
-**Consistency**: All assets should feel cohesive  
-**Scalability**: Assets should work at all sizes  
-**Versatility**: Assets should work in multiple contexts  
-**Simplicity**: Simpler designs are more memorable  
-**Testing**: Test assets in real contexts  
-**Documentation**: Document all assets in brand guide  
-**Updates**: Keep brand assets current and refreshed
-
-## Common Pitfalls
-
-**Inconsistent Style** — All assets should match brand  
-**Poor Scalability** — Assets must work at all sizes  
-**Weak Design** — Design should be memorable and distinctive  
-**Color Mismatch** — Use your Creative Strategist palette  
-**Overcomplication** — Simpler is usually better  
-**Low Quality** — Use high resolution and professional design  
-**Missing Documentation** — Document all assets
-
-## Troubleshooting
-
-### Logo Doesn't Look Professional
-- Simplify the design
-- Improve spacing and proportions
-- Use professional color palette
-- Add "professional," "modern," "premium" to prompt
-
-### Icon Set Looks Inconsistent
-- Specify "consistent design" in prompt
-- Use same stroke weight
-- Use same style throughout
-- Reference same style for all icons
-
-### Pattern Doesn't Tile Seamlessly
-- Specify "seamless" in prompt
-- Request "repeating pattern"
-- Ensure edges align
-- Test tiling before use
-
-### Colors Don't Match Brand
-- Reference specific color names
-- Use hex codes if available
-- Reference your Creative Strategist palette
-- Test in brand context
-
-## Next Steps
-
-Once you've created brand assets, move to Skill 07: Talking Head to create presenter content.
+- `skills/creative/creative-strategist` → upstream; the Creative Direction Brief
+  supplies style line, palette, mood, and prohibitions.
+- `skills/creative/image-generation` → shared automation;
+  `skills/creative/image-generation/references/automation.md` is the parameter
+  source of truth.
+- `skills/creative/social-graphics` and `skills/creative/product-photography` →
+  downstream; consume approved logos/patterns as recurring elements.
+- `skills/creative/orchestrator` → sequences this skill inside brand-identity and
+  rebrand paths; the artifact passed forward is the approved asset set + brand
+  guide entries.
+- `references/asset-library.md` — full templates, style vocabulary, delivery
+  specs, guidelines skeleton, fix-it phrases. Read before writing specs.

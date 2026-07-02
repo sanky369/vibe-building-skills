@@ -1,170 +1,116 @@
 ---
 name: remotion-script-writer
-description: Writes detailed video scripts for Remotion based on input requirements and codebase analysis
-metadata:
-  tags: remotion, video, script, animation, tutorial, demo, product
+description: "Write a complete, render-ready Remotion video script as structured JSON: analyze the user's codebase or product, break the video into timed scenes, specify every visual element, animation, transition, and voiceover line, and list required assets and Remotion packages. Use whenever the user wants a Remotion video, a programmatic/code-rendered video, a product demo video of their app, an animated coding tutorial, a data-visualization video, or short-form animated social content — trigger on 'make a video of my app', 'Remotion', 'animated demo', 'code walkthrough video', 'render a video from code'. Produces a Remotion Script JSON (videoMetadata, scenes[], requiredAssets, technicalRequirements) that Remotion agent tooling can implement directly."
 ---
 
-## When to use
+# Remotion Script Writer
 
-Use this skill whenever you need to generate a comprehensive video script for creating a Remotion video. This skill is particularly useful for:
+Turn a video goal plus (optionally) a codebase into a **Remotion Script JSON** — a scene-by-scene specification precise enough that a Remotion agent can implement it without asking follow-up questions. The governing principle: **the script is the single source of truth for the render** — every duration, element, animation, and voiceover line is stated in numbers and exact strings, never "about 5 seconds" or "some intro text". Two agents given the same input must emit structurally identical scripts.
 
-- **Product demo videos** that showcase features of a web application or software product
-- **Coding tutorials** that explain a codebase or specific technical concepts with animated code
-- **Animated videos** with complex sequences, transitions, and visual effects
-- **Data visualization videos** that present statistics, charts, and dynamic data
-- **Social media content** with captions, effects, and platform-specific optimizations
+## When to use / when not to
 
-This skill analyzes your codebase, understands your requirements, and generates a detailed JSON script that can be directly used by Remotion's agent skills to create the final video.
+- Use when the output will be rendered programmatically with Remotion: product demos of web apps, coding tutorials with animated code, motion-graphics pieces, data-visualization videos, short-form social animations.
+- Concept and beats not yet decided for a product video → run `skills/creative/product-video` first; its beat sheet becomes this skill's scene list.
+- Person-on-camera video → `skills/creative/talking-head` (Remotion is not the tool).
+- Static graphics → `skills/creative/social-graphics`.
+- This skill writes the script only — implementing the React components, previewing in Remotion Studio, and rendering are done by Remotion's own agent skills downstream.
 
-## How to use
+## Rules files — read before writing the script
 
-Read individual rule files for detailed explanations and examples:
+- `rules/prompt-structure.md` — the input fields the script is built from (goal, targetAudience, code, videoType, duration, style, animations, transitions). Read it when normalizing intake into the input object.
+- `rules/script-generation.md` — the authoritative output JSON structure and generation instructions. Read it before emitting the script; the skeleton below is a summary, that file is the contract.
+- `rules/animation-patterns.md` — the approved animation/transition vocabulary with exact JSON shapes and timing guidelines. Read it when specifying any `animation` or `transitionToNextScene` value; do not invent animation types outside it.
+- `rules/scene-templates.md` — ready-made scene JSON for common cases (title card, feature showcase, code walkthrough, data viz, outro/CTA). Read it when a scene matches a known pattern; start from the template and edit.
+- `examples/product-demo-example.json` — a complete worked script. Read it for calibration on granularity.
 
-- [rules/prompt-structure.md](rules/prompt-structure.md) - Defines the input structure and requirements for the skill
-- [rules/script-generation.md](rules/script-generation.md) - The core prompt for generating detailed video scripts
-- [rules/animation-patterns.md](rules/animation-patterns.md) - Common animation patterns and timing guidelines
-- [rules/scene-templates.md](rules/scene-templates.md) - Reusable scene templates for common video scenarios
+## Intake
 
-## Quick Start
+Ask in one tight batch, only what's missing (field names per `rules/prompt-structure.md`):
 
-### 1. Prepare Your Input
+1. **goal** and **targetAudience** — what should the video achieve, for whom?
+2. **videoType** — `product-demo` | `coding-tutorial` | `animation` | `data-visualization` | `social-media`?
+3. **duration** (seconds) and destination platform (decides width/height/fps).
+4. **code** — path to the codebase, repo URL, or snippets, if the video features an app or code.
+5. **style** — visual/branding constraints (colors, fonts, logo; a `skills/creative/creative-strategist` style guide if one exists).
 
-Create a JSON object with your video requirements:
+Infer instead of asking: `language` from the codebase; dimensions from platform (1920×1080 landscape default, 1080×1920 for vertical social, fps 30); animation/transition preferences from `style` if not given. **Don't stall:** with goal + videoType + duration known, state assumptions and proceed.
+
+## Workflow
+
+### 1. Analyze the source material
+
+If `code` is provided, explore it: identify the key features, user flows, data structures, and UI surfaces worth showing. Rank features by relevance to `goal` — the video shows the top 3–5, not everything. If no code, extract the equivalent list from the user's description.
+
+### 2. Structure the scenes
+
+Decision rules by `videoType`:
+- **product-demo** → title card → problem/context → one scene per feature (top 3–5) → outro/CTA.
+- **coding-tutorial** → title → concept setup → one scene per code step (show code, then explain) → recap.
+- **data-visualization** → title → context → one scene per chart/insight → takeaway.
+- **social-media** → hook scene (≤3s) → 1–2 payoff scenes → CTA; total ≤60s.
+- **animation** → derive beats from the creative concept (or the `skills/creative/product-video` beat sheet).
+
+Timing math is mandatory: scene durations plus transition overlaps must sum exactly to `duration`. `TransitionSeries` transitions overlap adjacent scenes — account for the overlap, don't just add durations. Keep total under ~5 minutes (render performance heuristic).
+
+### 3. Specify each scene completely
+
+For every scene fill every field: `sceneNumber`, `title`, `durationInSeconds`, `visuals.background`, `visuals.elements[]` (type, exact content string, font, size, color, position, `animation` from `rules/animation-patterns.md`), `audio.voiceover` (the exact sentence(s) spoken — verify they fit the scene duration at ~2.5 words/second), and `transitionToNextScene`. Use `rules/scene-templates.md` templates where they match.
+
+### 4. Compile assets and technical requirements
+
+List every image, video clip, audio track, font, and logo referenced by any scene in `requiredAssets` — nothing referenced may be missing from the list. Asset generation is out of scope: mark each as user-provided or describe it precisely; still images can be produced via `skills/creative/image-generation` (repo pipeline: `docs/creative_cli.py`, model `fal-ai/nano-banana-pro`). List `remotionPackages` (e.g. `@remotion/transitions` whenever transitions are used) and any third-party libraries.
+
+### 5. Validate against the quality bar, then deliver the JSON
+
+Deliver the script plus the handoff note (below). The downstream Remotion agent generates components, sets up the composition, previews in Studio, and renders.
+
+## Required output format
+
+Emit one JSON object exactly matching the structure in `rules/script-generation.md`:
 
 ```json
 {
-  "goal": "Create a product demo video for our new task management app",
-  "targetAudience": "Project managers and teams looking for productivity tools",
-  "code": "/path/to/your/codebase",
-  "language": "TypeScript",
-  "videoType": "product-demo",
-  "duration": 60,
-  "style": "modern",
-  "animations": ["fade", "slide", "typewriter"],
-  "transitions": ["wipe", "fade"]
+  "videoMetadata": {
+    "title": "...", "durationInSeconds": 60,
+    "width": 1920, "height": 1080, "fps": 30,
+    "videoType": "product-demo"
+  },
+  "scenes": [
+    {
+      "sceneNumber": 1, "title": "...", "durationInSeconds": 5,
+      "visuals": {
+        "background": "#RRGGBB or asset ref",
+        "elements": [
+          { "type": "text|image|code|chart", "content": "exact content",
+            "animation": { "type": "<from rules/animation-patterns.md>", "durationInSeconds": 1 } }
+        ]
+      },
+      "audio": { "voiceover": "Exact spoken sentence(s)." },
+      "transitionToNextScene": { "type": "<from rules/animation-patterns.md>", "durationInSeconds": 1 }
+    }
+  ],
+  "requiredAssets": { "images": [], "videos": [], "audio": [], "fonts": [], "logos": [] },
+  "technicalRequirements": { "remotionPackages": [], "thirdPartyLibraries": [] }
 }
 ```
 
-### 2. Generate the Script
+Follow the JSON with a short markdown handoff note: total duration check (scene math shown), the 1–3 assumptions you made, and which assets the user must supply before rendering.
 
-Pass your input to the `remotion-script-writer` skill. The skill will:
+## Quality bar (check before delivering)
 
-1. Analyze your codebase to identify key features and functionality
-2. Structure the video into logical scenes with appropriate timing
-3. Design visual elements, animations, and transitions for each scene
-4. Generate voiceover scripts synchronized with visuals
-5. List all required assets (images, fonts, audio, etc.)
-6. Specify technical requirements (Remotion packages, libraries)
+- Scene durations + transition overlaps sum exactly to `videoMetadata.durationInSeconds`; show the arithmetic in the handoff note.
+- Every `animation` and transition `type` exists in `rules/animation-patterns.md` — no invented types.
+- Every voiceover line fits its scene at ~2.5 words/second; no scene has visuals with no purpose stated by the voiceover or title.
+- Every asset referenced in any scene appears in `requiredAssets`; fonts used by text elements are listed.
+- Remotion correctness baked into the spec: frame-based timing via `useCurrentFrame()`, springs with `damping: 200` for reveals, typewriter via string slicing (not per-character opacity), deterministic randomness only (`random()` from remotion, never `Math.random()`), `premountFor` on heavy sequences, `<Sequence>/<Series>/<TransitionSeries>` for ordering.
+- `content` fields are final copy, not placeholders like "feature description here".
+- Voiceover is auto-drafted — flag in the handoff note that the user may want to refine it.
 
-### 3. Use the Output
+## Integration
 
-The skill generates a comprehensive JSON script that includes:
-
-- **Video metadata**: Title, duration, dimensions, fps, video type
-- **Scene breakdown**: Detailed specifications for each scene
-- **Visual elements**: Text, images, code, animations, transitions
-- **Audio**: Voiceover scripts and background music
-- **Assets**: Complete list of required images, fonts, icons, etc.
-- **Technical requirements**: Remotion packages and third-party libraries
-
-### 4. Create the Video
-
-Pass the generated script to Remotion's agent skills to:
-
-1. Generate React components for each scene
-2. Implement animations and transitions
-3. Set up the composition structure
-4. Preview the video in Remotion Studio
-5. Render the final video
-
-## Example Output
-
-See [examples/product-demo-example.json](examples/product-demo-example.json) for a complete example of a generated video script.
-
-## Supported Video Types
-
-- **`product-demo`**: Feature showcases, UI walkthroughs, product announcements
-- **`coding-tutorial`**: Code explanations, technical concepts, programming tutorials
-- **`animation`**: Creative animations, motion graphics, visual effects
-- **`data-visualization`**: Charts, graphs, statistics, animated data
-- **`social-media`**: Short-form content, viral videos, platform-optimized content
-
-## Best Practices
-
-The skill incorporates Remotion best practices:
-
-- All animations use `useCurrentFrame()` hook for frame-based timing
-- Spring animations with natural motion (`damping: 200`) for smooth reveals
-- Proper sequencing with `<Sequence>`, `<Series>`, and `<TransitionSeries>`
-- Typewriter effects using string slicing (not per-character opacity)
-- Deterministic animations (no `Math.random()`, use `random()` from remotion)
-- Premounting sequences with `premountFor` prop for better performance
-- Accurate duration calculation accounting for transition overlaps
-
-## Customization
-
-Modify the rule files to customize the skill:
-
-- **`prompt-structure.md`**: Add new input fields or validation rules
-- **`script-generation.md`**: Adjust the generation prompt or output format
-- **`animation-patterns.md`**: Add custom animation patterns and effects
-- **`scene-templates.md`**: Create new scene templates for specific use cases
-
-## Advanced Features
-
-### Codebase Analysis
-
-The skill can analyze codebases from:
-
-- Local file paths
-- GitHub repositories (public or private)
-- Code snippets provided directly
-
-It identifies:
-
-- Key functions and components
-- Data structures and APIs
-- User interactions and workflows
-- Technical architecture and patterns
-
-### Dynamic Content
-
-Generate scripts with dynamic content:
-
-- Fetch data from APIs for real-time information
-- Calculate video duration based on content length
-- Adjust scene timing based on voiceover length
-- Parameterize content for multiple video variations
-
-### Branding Integration
-
-Apply consistent branding:
-
-- Custom color schemes
-- Company logos and icons
-- Brand-specific fonts
-- Visual style guidelines
-
-## Limitations
-
-- Maximum recommended video duration: 5 minutes (for performance)
-- Code analysis works best with well-documented, structured code
-- Voiceover scripts are auto-generated and may require manual refinement
-- Asset generation (images, icons) is not included - assets must be provided or described
-- Complex 3D animations may require additional manual setup
-
-## Support
-
-For questions, issues, or feature requests:
-
-- Consult the [README.md](README.md) for detailed documentation
-- Check the [examples](examples/) directory for sample scripts
-- Visit [remotion.dev](https://www.remotion.dev) for Remotion documentation
-- Join the Remotion Discord community for help and discussions
-
-## Version
-
-**Version**: 1.0.0  
-**Last Updated**: January 2026  
-**Created by**: Manus AI
+- `skills/creative/product-video` → feeds in: concept + beat sheet + keyframes for product videos; each beat becomes a scene.
+- `skills/creative/creative-strategist` → feeds in: style guide (colors, fonts, mood) applied to `visuals` and `style`.
+- `skills/creative/original-design` → feeds in: a design-language brief; every scene's visual vocabulary must come from that world.
+- `skills/creative/image-generation` → produces: still assets listed in `requiredAssets.images`.
+- `skills/creative/social-graphics` → consumes: rendered stills/thumbnails for post assets.
+- Downstream: Remotion agent skills (outside this repo) consume the JSON to build components, preview, and render.

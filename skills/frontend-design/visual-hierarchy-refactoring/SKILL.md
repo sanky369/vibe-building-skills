@@ -1,515 +1,107 @@
 ---
 name: visual-hierarchy-refactoring
-description: Master visual hierarchy through size, weight, contrast, and whitespace. Learn to establish clear information hierarchy without relying solely on color. Covers Gestalt principles, the rule of excessive whitespace, and the visual weight system. Use when designing layouts, establishing visual importance, or refactoring cluttered interfaces.
+description: "Refactor cluttered or flat interfaces so users instantly see what matters, using size, weight, contrast, and whitespace — not more color. Use when the user says 'it looks cluttered', 'everything competes for attention', 'it looks amateur/flat', 'users can't find the button', 'make this scannable', 'this screen is overwhelming', or shares a screen where nothing stands out. Audits the actual component: lists every element's current visual weight vs intended priority, then delivers refactored component code (CSS/TSX) with a before/after hierarchy table explaining each change. De-emphasizes secondary elements before amplifying primary ones, and applies Gestalt grouping via spacing."
 ---
 
-# Visual Hierarchy & Refactoring UI
+# Visual Hierarchy Refactoring
 
-## Overview
+Take a real screen or component and refactor it so the eye lands on the right things in the right order. The deliverable is refactored code plus a before/after hierarchy audit — not design commentary. Governing principles: **hierarchy is a function of size, weight, and lightness contrast — color is the last resort**, and **the fastest fix is de-emphasis: quiet the noise before amplifying the signal.**
 
-Visual hierarchy is the principle that **design is a function of size, weight, and contrast**—not color. When done right, users instantly understand what's important and where to look next. This skill teaches you to establish clear hierarchy through systematic visual decisions.
+## When to use / handoffs
 
-## Core Principle: The Rule of Excessive Whitespace
+- Use when a specific screen is cluttered, flat, unscannable, or "looks off" despite sane tokens.
+- No consistent tokens exist at all (every fix would be a new magic number) → `skills/frontend-design/design-foundation` first.
+- The problem is structural (columns misaligned, breaks on mobile) → `skills/frontend-design/layout-system`.
+- Font sizes themselves are chaotic across the app → `skills/frontend-design/typography-system`.
+- Palette is the problem (clashing hues, contrast failures everywhere) → `skills/frontend-design/color-system`.
 
-The most common mistake in interface design is **density**. When interfaces feel cluttered, the instinct is to shrink text. This is wrong.
+## Step 1 — Inspect the target
 
-**The Solution: Start with too much space.**
+1. **Get the actual component.** Read the file(s) for the screen the user named; if none named, ask for the one screen that matters most (this is the only intake question that blocks). Render or screenshot it if the environment allows.
+2. **Read the available tokens** (spacing scale, text sizes, grey ramp) — every fix must use them.
+3. **Detect hierarchy smells** in the code, with counts:
+   - Emphasis inflation: how many elements per screen are bold, colored, large, or bordered? (>3 competing emphases = nothing is emphasized)
+   - Cramped spacing: padding/margins ≤8px between unrelated groups
+   - True greys / pure black: `#808080`-family, `#000`, `text-gray-500` on colored surfaces
+   - Uniform sizing: title, body, and metadata within a step of each other
+   - Even spacing everywhere: identical gap inside and between groups (kills Gestalt grouping)
+   - Border overuse: boxes-in-boxes where spacing would separate
 
-When you have breathing room, users can scan the interface and identify signals amongst the noise. Generous whitespace signals confidence—it implies that the content presented is important enough to stand on its own, without competing for attention.
+## Step 2 — Build the hierarchy audit
 
-### Application
+For the target screen, list every visible element and assign:
 
-If a standard margin is 16px, try 32px or 48px. If you feel it's too much space, you're probably on the right track. Reduce from there, but never back to density.
+- **Intended priority**: P1 (the one thing this screen exists for — one, maybe two elements), P2 (supporting), P3 (metadata/chrome).
+- **Current visual weight**: loud / medium / quiet, judged from size, weight, color, and surroundings.
 
-```css
-/* Generous whitespace creates confidence */
-.card {
-  padding: 48px;  /* Not 16px */
-  margin-bottom: 32px;  /* Not 8px */
-}
+Every mismatch is a work item. If you can't name the single P1, ask the user one question: "What should a user do or see first on this screen?" — then proceed.
 
-.section {
-  margin-top: 64px;  /* Breathing room between sections */
-  margin-bottom: 64px;
-}
-```
+## Step 3 — Refactor, in this order
 
-## Visual Hierarchy Through Size, Weight, and Contrast
+Apply changes strictly in this sequence — each pass often removes the need for the next:
 
-### 1. Size Hierarchy
+1. **Whitespace first.** Start with too much and pull back. Double the spacing between unrelated groups; keep related items close (label 8px from its input; 24px+ between form groups). If a standard margin is 16px, try 32–48px between sections. Spacing must come from the token scale.
+2. **De-emphasize P2/P3** before touching P1: drop bold from labels, lighten metadata to a mid-grey step (`gray-500/600`), remove borders/backgrounds that box in secondary content, shrink or icon-ify tertiary actions. Secondary buttons go outline/ghost; destructive actions become quiet until confirmed.
+3. **Then amplify P1** — usually needs only one move once the noise is gone: one size step up, or weight 600→700, or the darkest text step, or the single saturated CTA. Not all four.
+4. **Contrast ladder via lightness, not hue:** P1 text = darkest grey step, P2 = gray-600/700, P3 = gray-500. Tinted greys only (matching brand temperature) — never `#808080`/`#000`. Reserve saturated color for interactive elements and status.
+5. **Group with Gestalt rules:** proximity (spacing shows relationships — the gap between groups ≥2× the gap within), similarity (identical roles look identical), common region (a card/background only when spacing can't do the job). Full principle set with CSS: `references/gestalt-principles.md`.
+6. **Size ratios:** adjacent hierarchy levels differ by ~1.25–1.5×; P1 vs body ~1.5–2×. If two levels are within 10% of each other, merge them.
 
-Size is the most powerful tool for establishing hierarchy. Larger elements draw attention first.
-
-**Guidelines:**
-- Primary information should be 1.5-2x larger than secondary
-- Each level should be clearly distinguishable
-- Use modular scales (Major Second, Major Third, Perfect Fifth)
-
-```css
-/* Size hierarchy */
-h1 {
-  font-size: 48px;  /* Primary */
-}
-
-h2 {
-  font-size: 32px;  /* Secondary */
-}
-
-h3 {
-  font-size: 24px;  /* Tertiary */
-}
-
-body {
-  font-size: 16px;  /* Base */
-}
-
-small {
-  font-size: 12px;  /* Tertiary text */
-}
-```
-
-### 2. Weight Hierarchy
-
-Font weight creates visual emphasis without changing size.
-
-**Guidelines:**
-- Use 2-3 weights maximum (e.g., 400, 600, 700)
-- Bold for emphasis, not for everything
-- Lighter weight for secondary information
+### Canonical before/after (the shape of most fixes)
 
 ```css
-/* Weight hierarchy */
-h1 {
-  font-weight: 700;  /* Bold for primary */
-  font-size: 48px;
-}
+/* BEFORE: cramped, uniform, grey-on-grey */
+.card { padding: 8px; }
+.card h2 { font-size: 16px; font-weight: 400; color: #666; margin-bottom: 4px; }
+.card p  { font-size: 14px; color: #999; line-height: 1.3; }
 
-h2 {
-  font-weight: 600;  /* Semi-bold for secondary */
-  font-size: 32px;
-}
-
-body {
-  font-weight: 400;  /* Regular for body */
-  font-size: 16px;
-}
-
-.secondary-text {
-  font-weight: 400;  /* Regular, not bold */
-  color: var(--text-secondary);
-}
+/* AFTER: room, clear ladder, tinted greys */
+.card { padding: var(--space-6); }
+.card h2 { font-size: var(--text-xl); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); }
+.card p  { font-size: var(--text-base); color: var(--gray-600); line-height: 1.6; }
+.card .meta { font-size: var(--text-sm); color: var(--gray-500); }
 ```
 
-### 3. Contrast Hierarchy
+## Required output format
 
-Contrast creates visual separation and guides attention.
-
-**Guidelines:**
-- High contrast for primary information
-- Medium contrast for secondary
-- Low contrast for tertiary/disabled
-
-```css
-/* Contrast hierarchy */
-.primary-text {
-  color: var(--text-primary);  /* High contrast */
-}
-
-.secondary-text {
-  color: var(--text-secondary);  /* Medium contrast */
-}
-
-.tertiary-text {
-  color: var(--text-tertiary);  /* Low contrast */
-}
-
-.disabled-text {
-  color: var(--text-disabled);  /* Very low contrast */
-  opacity: 0.5;
-}
-```
-
-## The Color Weight System
-
-### Tinted Greys, Not True Greys
-
-A definitive marker of amateur design is using "True Grey" (#808080) or "True Black" (#000000) on colored backgrounds.
-
-**The Principle:** Always use tinted greys. If your brand is blue, your "grey" should be a deeply desaturated blue. If your brand is warm/orange, your grey should be warm.
-
-```css
-/* Bad - True Grey */
-.text-on-blue {
-  color: #808080;  /* True grey - looks wrong */
-}
-
-/* Good - Tinted Grey */
-.text-on-blue {
-  color: #4B5563;  /* Deeply desaturated blue - feels right */
-}
-
-/* Bad - True Black */
-.text {
-  color: #000000;  /* True black - harsh */
-}
-
-/* Good - Tinted Black */
-.text {
-  color: #030712;  /* Deeply desaturated blue-black - softer */
-}
-```
-
-### Building a Color Weight System
-
-Create 8-10 shades per hue before writing any code. This prevents "hex code drift" where a codebase accumulates 50 slightly different versions of the same color.
-
-```css
-/* Color weight system - 10 shades per hue */
-:root {
-  /* Primary Blue */
-  --blue-50:   #F0F9FF;
-  --blue-100:  #E0F2FE;
-  --blue-200:  #BAE6FD;
-  --blue-300:  #7DD3FC;
-  --blue-400:  #38BDF8;
-  --blue-500:  #0EA5E9;
-  --blue-600:  #0284C7;
-  --blue-700:  #0369A1;
-  --blue-800:  #075985;
-  --blue-900:  #0C3D66;
-
-  /* Tinted Greys (desaturated blue) */
-  --gray-50:   #F8FAFC;
-  --gray-100:  #F1F5F9;
-  --gray-200:  #E2E8F0;
-  --gray-300:  #CBD5E1;
-  --gray-400:  #94A3B8;
-  --gray-500:  #64748B;
-  --gray-600:  #475569;
-  --gray-700:  #334155;
-  --gray-800:  #1E293B;
-  --gray-900:  #0F172A;
-}
-```
-
-### Contrast Hierarchy with Color Weight
-
-Use color sparingly. Text hierarchy should be handled first by lightness (size/weight), then by color.
-
-```css
-/* Contrast hierarchy - color reserved for interactive elements */
-.heading {
-  color: var(--gray-900);  /* Darkest - highest contrast */
-  font-weight: 700;
-  font-size: 32px;
-}
-
-.body-text {
-  color: var(--gray-700);  /* Dark - good contrast */
-  font-weight: 400;
-  font-size: 16px;
-}
-
-.secondary-text {
-  color: var(--gray-500);  /* Medium - reduced contrast */
-  font-weight: 400;
-  font-size: 14px;
-}
-
-.button-primary {
-  background-color: var(--blue-600);  /* Color for interactive elements */
-  color: white;
-}
-
-.button-secondary {
-  background-color: var(--gray-100);  /* Subtle background */
-  color: var(--gray-900);
-}
-```
-
-## Gestalt Principles: How Humans Perceive Visual Groups
-
-Gestalt principles explain how humans naturally group visual elements. Use these to create clear hierarchy and organization.
-
-### 1. Proximity
-
-Elements that are close together are perceived as related.
-
-**Application:**
-- Group related items together
-- Increase space between unrelated groups
-- Use spacing to show relationships
-
-```css
-/* Proximity - group related items */
-.form-group {
-  margin-bottom: 24px;  /* Space between groups */
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;  /* Close to input */
-}
-
-.form-group input {
-  width: 100%;
-}
-```
-
-### 2. Similarity
-
-Elements that look similar are perceived as related.
-
-**Application:**
-- Use consistent styling for related items
-- Vary styling to show differences
-- Buttons of the same type should look identical
-
-```css
-/* Similarity - consistent styling for related items */
-.button-primary {
-  background: var(--blue-600);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-}
-
-.button-primary:hover {
-  background: var(--blue-700);
-}
-
-/* All primary buttons look the same */
-.button-primary.small {
-  padding: 8px 16px;
-  font-size: 14px;
-}
-```
-
-### 3. Figure/Ground
-
-Humans naturally distinguish foreground from background.
-
-**Application:**
-- Use contrast to separate foreground from background
-- Active states should stand out from inactive
-- Modals should have clear distinction from background
-
-```css
-/* Figure/Ground - clear foreground/background separation */
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);  /* Darkened background */
-}
-
-.modal {
-  background: white;  /* Clear foreground */
-  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-}
-
-.button.active {
-  background: var(--blue-600);  /* Foreground */
-  color: white;
-}
-
-.button.inactive {
-  background: var(--gray-100);  /* Background */
-  color: var(--gray-600);
-}
-```
-
-### 4. Closure
-
-Humans complete incomplete shapes. Minimalist designs work because of this principle.
-
-**Application:**
-- Use negative space to imply forms
-- Incomplete shapes are still perceived as complete
-- Reduces visual clutter while maintaining clarity
-
-```css
-/* Closure - incomplete shapes are still perceived */
-.icon-incomplete {
-  width: 24px;
-  height: 24px;
-  border: 2px solid currentColor;
-  border-right: none;
-  border-bottom: none;
-  /* Brain completes the square */
-}
-```
-
-### 5. Symmetry & Order
-
-Balanced layouts feel stable. Asymmetry draws attention.
-
-**Application:**
-- Use grids for stable, organized layouts
-- Intentional asymmetry draws attention to important elements
-- Symmetry creates trust and predictability
-
-```css
-/* Symmetry - stable, organized layout */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-/* Asymmetry - draws attention */
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;  /* Unequal columns */
-  gap: 48px;
-  align-items: center;
-}
-```
-
-### 6. Common Region
-
-Boundaries create groupings. Enclosed areas are perceived as related.
-
-**Application:**
-- Use cards to group related content
-- Use backgrounds or borders to define regions
-- Sections with backgrounds feel grouped
-
-```css
-/* Common Region - boundaries create groupings */
-.card {
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  padding: 24px;
-  background: white;
-  /* Everything inside is perceived as grouped */
-}
-
-.section-with-background {
-  background: var(--gray-50);
-  padding: 48px;
-  border-radius: 12px;
-  /* Content inside is grouped */
-}
-```
-
-## Practical Refactoring: From Cluttered to Clear
-
-### Before: Cluttered Interface
-
-```css
-/* Dense, hard to scan */
-.old-interface {
-  padding: 8px;
-  margin: 4px;
-}
-
-.old-interface h2 {
-  font-size: 16px;
-  font-weight: 400;  /* Not bold */
-  color: #666;  /* Medium grey */
-  margin-bottom: 4px;
-}
-
-.old-interface p {
-  font-size: 14px;
-  color: #999;  /* Light grey */
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-```
-
-### After: Clear Hierarchy
-
-```css
-/* Spacious, easy to scan */
-.new-interface {
-  padding: 48px;
-  margin: 32px;
-}
-
-.new-interface h2 {
-  font-size: 32px;
-  font-weight: 700;  /* Bold */
-  color: var(--gray-900);  /* Dark */
-  margin-bottom: 16px;
-}
-
-.new-interface p {
-  font-size: 16px;
-  color: var(--gray-700);  /* Darker grey */
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-```
-
-## How to Use This Skill with Claude Code
-
-### Audit Visual Hierarchy
+Deliver code plus this audit:
 
 ```
-"I'm using the visual-hierarchy-refactoring skill. Can you audit my interface?
-- Is my whitespace generous or cramped?
-- Are my size differences clear?
-- Am I using tinted greys or true greys?
-- Do I apply Gestalt principles effectively?
-- What's one thing I could improve immediately?"
+## Hierarchy audit — [screen name]
+| Element | Intended | Was | Problem | Change |
+| Submit button | P1 | quiet (same as Cancel) | competing siblings | solid brand bg; Cancel → ghost |
+| Section labels | P3 | loud (bold, dark) | emphasis inflation | weight 400, gray-500 |
+| Card metadata | P3 | medium | too prominent | text-sm, gray-500 |
+| ... every element with a mismatch |
+
+## Refactored code
+[full component/CSS — same styling system, tokens only]
+
+## What changed and why (≤5 bullets)
+- [pass applied → effect, e.g. "Doubled inter-group spacing (space-4 → space-8): groups now scannable"]
+
+## Scan test
+First / second / third thing the eye hits now: [P1] → [P2] → [P2]. Matches intent: [yes / remaining gap]
 ```
 
-### Refactor Cluttered Interfaces
+## Quality bar (check before delivering)
 
-```
-"Can you help me refactor this cluttered interface using visual hierarchy principles?
-- Increase whitespace
-- Establish clear size hierarchy
-- Use tinted greys instead of true greys
-- Apply Gestalt principles for grouping
-- Show me before/after comparison"
-```
+- [ ] Exactly one P1 per screen, and it wins the 5-second scan
+- [ ] ≤3 emphasized elements per screen; everything else visibly quiet
+- [ ] Gap between unrelated groups ≥2× gap within a group; all spacing on the token scale
+- [ ] ≤3 font weights in the result; bold never applied to whole paragraphs
+- [ ] Text ladder uses lightness steps of tinted greys; no `#808080`, no `#000`, no new hues introduced for emphasis
+- [ ] De-emphasized text still meets WCAG AA (4.5:1) — quiet ≠ illegible; P3 may go 3:1 only at large size
+- [ ] Adjacent size levels differ ≥1.25×; no two levels within 10%
+- [ ] Borders/boxes removed wherever spacing alone groups the content
+- [ ] Every change references a token — zero new magic numbers
 
-### Build a Color Weight System
+## Integration
 
-```
-"Can you help me build a color weight system?
-- Create 8-10 shades for my brand color
-- Create tinted greys for my brand
-- Show me how to use them for hierarchy
-- Provide CSS variables"
-```
+- Consumes: tokens from `skills/frontend-design/design-foundation`, type scale from `skills/frontend-design/typography-system`, grey ramp from `skills/frontend-design/color-system`, page structure from `skills/frontend-design/layout-system`.
+- Produces: refactored components that `skills/frontend-design/component-architecture` generalizes into the library; contrast decisions verified by `skills/frontend-design/accessibility-excellence`.
+- In `skills/frontend-design/frontend-orchestrator` paths, this runs after tokens exist (Path B step 2) or as margin-level refinement (Path C).
 
-## Integration with Other Skills
+## References
 
-- **design-foundation** — Design tokens for spacing and color
-- **typography-system** — Size and weight hierarchy
-- **color-system** — Color weight system and tinted greys
-- **component-architecture** — Hierarchy in components
-- **accessibility-excellence** — Contrast and readability
-
-## Key Principles
-
-**1. Size, Weight, Contrast First**
-Establish hierarchy through these before using color.
-
-**2. Whitespace is Active**
-Generous spacing signals confidence and improves scannability.
-
-**3. Tinted Greys, Not True Greys**
-Colors should feel cohesive with your brand.
-
-**4. Gestalt Principles Guide Perception**
-Use proximity, similarity, and grouping to organize information.
-
-**5. Hierarchy Should Be Obvious**
-If you have to explain it, it's not clear enough.
-
-## Checklist: Is Your Visual Hierarchy Ready?
-
-- [ ] Whitespace is generous (not cramped)
-- [ ] Size differences are clear (1.5-2x between levels)
-- [ ] Weight hierarchy is consistent (2-3 weights max)
-- [ ] Contrast hierarchy is clear (dark for primary, lighter for secondary)
-- [ ] Greys are tinted to your brand (not true grey)
-- [ ] Color is used sparingly (interactive elements only)
-- [ ] Gestalt principles are applied (proximity, similarity, grouping)
-- [ ] Information is easy to scan
-- [ ] Hierarchy is obvious without explanation
-- [ ] Interfaces feel spacious, not cramped
-
-Clear visual hierarchy transforms interfaces from confusing to intuitive.
+- `references/gestalt-principles.md` — all six Gestalt principles (proximity, similarity, figure/ground, closure, symmetry, common region) with CSS applications, plus extended before/after refactor examples. Read when a grouping problem isn't solved by proximity alone or you need more worked examples.

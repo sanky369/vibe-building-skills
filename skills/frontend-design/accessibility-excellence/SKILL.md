@@ -1,623 +1,117 @@
 ---
 name: accessibility-excellence
-description: Master web accessibility (A11y) to ensure your product is usable by everyone, including people with disabilities. Covers WCAG standards, semantic HTML, keyboard navigation, screen readers, color contrast, and inclusive design practices. Accessibility is not a feature—it's a fundamental requirement.
+description: "Audit a frontend against WCAG and fix what fails: semantic HTML, keyboard navigation, focus management, screen-reader support (ARIA), color contrast, forms, and media alternatives. Use when the user asks 'is this accessible', 'make this WCAG/AA compliant', 'add keyboard navigation', 'fix screen reader support', 'a11y audit', 'we got an accessibility complaint/legal notice', or whenever building/reviewing UI components with interactive behavior — even if accessibility isn't mentioned. Produces a prioritized accessibility audit (issue × WCAG criterion × severity × fix) plus the implemented fixes in code."
 ---
 
 # Accessibility Excellence
 
-## Overview
+Make the product usable by everyone — keyboard-only users, screen-reader users, low-vision users — by auditing real code against WCAG checkpoints and fixing the failures in priority order. **The prime directive: semantic HTML first; ARIA only fills gaps native elements can't. Most accessibility bugs are the wrong element doing the right job.** Deliver a prioritized audit plus implemented fixes — never a compliance lecture.
 
-Accessibility is the practice of making your product usable by everyone, including people with disabilities. It's not a feature to be added later—it's a fundamental requirement that should be built into every decision you make.
+## When to use / when not to
 
-This skill teaches you to think about accessibility systematically: understanding WCAG standards, implementing semantic HTML, ensuring keyboard navigation, supporting screen readers, and designing inclusively.
+Use for: accessibility audits, WCAG conformance work, keyboard/focus behavior, ARIA and screen-reader support, contrast failures, accessible forms/modals/menus, alt text and captions.
 
-## Core Philosophy: Accessibility is Inclusion
+Hand off instead when the real need is:
+- Designing the color palette itself (accessible-by-construction tokens) → `skills/frontend-design/color-system`
+- Reduced-motion and animation safety in depth → `skills/frontend-design/interaction-physics` (this skill audits it; that one implements the motion layer)
+- Error-message UX beyond ARIA wiring → `skills/frontend-design/error-handling-recovery`
+- Restructuring messy components before making them accessible → `skills/frontend-design/component-architecture`
 
-Accessibility benefits everyone, not just people with disabilities:
+## Step 0 — Inspect the codebase, then ask only what's left
 
-- **Captions** help people in noisy environments, not just deaf people
-- **Keyboard navigation** helps people with motor disabilities, but also power users
-- **Clear language** helps people with cognitive disabilities, but also non-native speakers
-- **High contrast** helps people with low vision, but also people in bright sunlight
-- **Transcripts** help deaf people, but also people who prefer reading
+1. Measure current ARIA/semantics usage: grep for `aria-`, `role=`, `alt=`, `tabIndex`, `<main`, `<nav`, `<button`, `onClick` on `div`/`span`, `outline: none`, `label`/`htmlFor`. The ratio of clickable divs to real buttons is a fast health signal.
+2. Inventory the interactive surface: forms, modals/dialogs, menus/dropdowns, tabs, tooltips, custom widgets (drag-drop, sliders, comboboxes) — these carry most keyboard/ARIA risk.
+3. Check heading structure (one `h1`, no skipped levels), landmark usage, `<html lang>`, skip link, image alt coverage, video captions.
+4. If a runnable environment exists, run an automated scan (axe-core / Lighthouse a11y) for a baseline — but treat it as ~a third to half of real issues, never the whole audit.
+5. Note the component stack: headless a11y libraries already present (Radix, React Aria, Headless UI, native `<dialog>`) mean fix-by-adoption beats hand-rolling.
 
-When you design for accessibility, you design for everyone.
+**Choose the WCAG target by context — don't ask unless genuinely ambiguous:** default to **WCAG 2.2 AA** (the norm for legal/regulatory contexts — ADA, EAA, Section 508 references AA). Government/public-sector/education → AA mandatory, consider select AAA criteria. AAA as a blanket target is impractical — apply specific AAA criteria (e.g. 7:1 contrast) only when the user serves a low-vision-heavy audience or asks. Ask the user only: whether there's a compliance deadline/driver, and which flows are most critical if the app is large. Otherwise state "auditing to WCAG 2.2 AA" and proceed.
 
-## WCAG Standards
+## Workflow
 
-The Web Content Accessibility Guidelines (WCAG) define accessibility standards. There are three levels:
+### 1. Audit against the POUR checkpoints
 
-**WCAG 2.1 Levels:**
-- **Level A** — Basic accessibility
-- **Level AA** — Enhanced accessibility (recommended minimum)
-- **Level AAA** — Advanced accessibility (ideal, but not always practical)
+Work through the four principles using the checkpoint tables in `references/checkpoints.md` (read it when running the audit). Key AA thresholds to apply — these are the real numbers, don't approximate:
 
-### The Four Principles (POUR)
+- **Contrast:** normal text ≥ 4.5:1; large text (≥24px, or ≥18.66px bold) ≥ 3:1; non-text UI components and focus indicators ≥ 3:1. (AAA: 7:1 / 4.5:1.)
+- **Target size (WCAG 2.2 AA):** pointer targets ≥ 24×24 CSS px; 44×44 is the AAA/mobile-HIG bar.
+- **Keyboard:** every action operable via keyboard; visible focus everywhere; no `tabindex` > 0; no traps (except intentional, escapable modal traps).
+- **Flashing:** nothing flashes more than 3×/second.
 
-**1. Perceivable**
-Information must be perceivable to users. It can't be invisible to all senses.
+### 2. Severity-rank every finding
 
-**Guideline 1.1: Text Alternatives**
-Provide text alternatives for all non-text content (images, videos, etc.).
+- **Blocker** — a user population cannot complete a core task (unreachable control, focus trap, unlabeled form in checkout, missing keyboard path).
+- **Serious** — task completable but badly degraded (missing announcements, contrast failures on primary text, wrong reading order).
+- **Moderate** — friction (vague link text, redundant announcements, minor contrast on secondary text).
+- **Minor** — polish (decorative images with verbose alt, missing `aria-current`).
 
-```html
-<!-- Good -->
-<img src="chart.png" alt="Sales increased 25% in Q4" />
+Fix order: blockers → serious → moderate. Present the ranked list; for large codebases have the user confirm scope before mass fixes, otherwise proceed.
 
-<!-- Bad -->
-<img src="chart.png" alt="chart" />
-<img src="chart.png" /> <!-- No alt text -->
-```
+### 3. Fix with these decision rules
 
-**Guideline 1.4: Distinguishable**
-Make it easy to see and hear content. Ensure sufficient contrast, readable text, and clear audio.
+- **Native element vs ARIA retrofit:** if a `<div onClick>` behaves like a button/link/checkbox, replace it with the native element — that one change fixes role, keyboard, and focus at once. Only add `role`/`tabIndex`/key handlers when a native element genuinely can't work.
+- **Custom widget vs library:** for modals, menus, comboboxes, tabs — adopt the project's existing headless library or native `<dialog>` before hand-rolling focus traps and arrow-key logic. Hand-roll only when no library is present and adding one is unwelcome.
+- **Contrast fixes:** adjust the token, not one instance — find where the failing color is defined and fix it at the source (coordinate with `skills/frontend-design/color-system` if a palette redesign is implied).
+- **Announcements:** task-blocking errors → `role="alert"`; background status → `aria-live="polite"` (region must pre-exist in the DOM); moving focus is for navigation-sized context changes only.
+- **Labels:** visible `<label for>` beats `aria-label` beats `aria-labelledby` chains; placeholder is never a label.
 
-```css
-/* Good - 4.5:1 contrast ratio (WCAG AA) */
-color: #030712; /* dark text */
-background-color: #F9FAFB; /* light background */
+Canonical patterns (focus trap, skip link, live regions, field-error wiring, expected keys per widget): `references/checkpoints.md`.
 
-/* Bad - 2.5:1 contrast ratio (fails WCAG AA) */
-color: #9CA3AF; /* medium gray text */
-background-color: #F9FAFB; /* light background */
-```
+### 4. Verify
 
-**2. Operable**
-Users must be able to navigate and interact with your product. All functionality must be available from the keyboard.
+Minimum verification pass on touched flows: full keyboard walk-through (reach, operate, see focus, escape), automated re-scan if available, zoom to 200%, and confirm announcements/names by inspecting the accessibility tree. State plainly what you could not verify (e.g. real screen-reader testing on VoiceOver/NVDA) and tell the user to do it — never claim conformance beyond what was checked.
 
-**Guideline 2.1: Keyboard Accessible**
-All functionality must be available from the keyboard.
+## Required output format
 
-```html
-<!-- Good - keyboard accessible -->
-<button onClick={handleClick}>Click Me</button>
+Deliver both artifacts:
 
-<!-- Bad - not keyboard accessible -->
-<div onClick={handleClick}>Click Me</div>
+**1. The code** — implemented fixes (semantic swaps, labels, focus management, ARIA wiring, contrast token changes), respecting existing component conventions.
 
-<!-- Good - keyboard accessible with proper focus management -->
-<div
-  role="button"
-  tabIndex={0}
-  onClick={handleClick}
-  onKeyDown={(e) => e.key === 'Enter' && handleClick()}
->
-  Click Me
-</div>
-```
-
-**Guideline 2.4: Navigable**
-Users must be able to navigate your product easily. Provide clear navigation, focus indicators, and skip links.
-
-```html
-<!-- Good - skip link -->
-<a href="#main-content" class="skip-link">Skip to main content</a>
-
-<!-- Good - clear heading structure -->
-<h1>Page Title</h1>
-<h2>Section 1</h2>
-<h3>Subsection 1.1</h3>
-
-<!-- Good - focus visible -->
-<button style="outline: 2px solid #3B82F6; outline-offset: 2px;">
-  Focused Button
-</button>
-```
-
-**3. Understandable**
-Users must be able to understand your content and how to use your product.
-
-**Guideline 3.1: Readable**
-Make text readable and understandable.
-
-```html
-<!-- Good - clear, simple language -->
-<p>Save your document before closing.</p>
-
-<!-- Bad - jargon, unclear -->
-<p>Persist your artifact prior to terminating the session.</p>
-
-<!-- Good - define abbreviations -->
-<p>The <abbr title="World Wide Web Consortium">W3C</abbr> sets web standards.</p>
-```
-
-**Guideline 3.3: Predictable**
-Make your product predictable. Users should know what will happen when they interact with it.
-
-```html
-<!-- Good - clear form labels -->
-<label for="email">Email Address</label>
-<input id="email" type="email" />
-
-<!-- Bad - unclear labels -->
-<input type="email" placeholder="Enter your email" />
-
-<!-- Good - clear error messages -->
-<input type="email" aria-invalid="true" />
-<span role="alert">Please enter a valid email address.</span>
-
-<!-- Bad - unclear error messages -->
-<input type="email" style="border: 1px solid red;" />
-```
-
-**4. Robust**
-Your product must be robust enough to be interpreted by a wide variety of assistive technologies.
-
-**Guideline 4.1: Compatible**
-Maximize compatibility with assistive technologies. Use semantic HTML and ARIA appropriately.
-
-```html
-<!-- Good - semantic HTML -->
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-  </ul>
-</nav>
-
-<!-- Bad - non-semantic HTML -->
-<div class="nav">
-  <div class="nav-item"><span onclick="navigate('/')">Home</span></div>
-  <div class="nav-item"><span onclick="navigate('/about')">About</span></div>
-</div>
-
-<!-- Good - ARIA for custom components -->
-<div
-  role="button"
-  tabIndex={0}
-  aria-pressed={isPressed}
-  onClick={toggle}
-  onKeyDown={(e) => e.key === 'Enter' && toggle()}
->
-  Toggle
-</div>
-```
-
-## Semantic HTML
-
-Semantic HTML is the foundation of accessibility. Use HTML elements that describe their meaning, not just their appearance.
-
-### Common Semantic Elements
-
-| Element | Purpose | When to Use |
-| :--- | :--- | :--- |
-| `<header>` | Introductory content | Top of page or section |
-| `<nav>` | Navigation links | Main navigation, breadcrumbs |
-| `<main>` | Main content | Primary content area |
-| `<article>` | Self-contained content | Blog posts, news articles |
-| `<section>` | Thematic grouping | Chapters, sections of content |
-| `<aside>` | Tangential content | Sidebars, related links |
-| `<footer>` | Footer content | Bottom of page or section |
-| `<h1>-<h6>` | Headings | Page structure and hierarchy |
-| `<button>` | Clickable button | User actions |
-| `<a>` | Link | Navigation |
-| `<form>` | Form container | Data collection |
-| `<label>` | Form label | Associate text with form input |
-| `<input>` | Form input | User input |
-| `<textarea>` | Multi-line text input | Longer text input |
-| `<select>` | Dropdown menu | Option selection |
-
-### Semantic HTML Example
-
-```html
-<!-- Good - semantic HTML -->
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <article>
-      <h1>Article Title</h1>
-      <p>Article content...</p>
-    </article>
-
-    <aside>
-      <h2>Related Articles</h2>
-      <ul>
-        <li><a href="/article-1">Article 1</a></li>
-        <li><a href="/article-2">Article 2</a></li>
-      </ul>
-    </aside>
-  </main>
-
-  <footer>
-    <p>&copy; 2026 My Company</p>
-  </footer>
-</body>
-```
-
-## Keyboard Navigation
-
-### Tab Order
-
-Ensure a logical tab order through your page. By default, tab order follows the HTML source order.
-
-```html
-<!-- Good - logical tab order -->
-<button>First</button>
-<button>Second</button>
-<button>Third</button>
-
-<!-- Bad - illogical tab order (don't use tabindex > 0) -->
-<button tabIndex={3}>Third</button>
-<button tabIndex={1}>First</button>
-<button tabIndex={2}>Second</button>
-
-<!-- Good - skip interactive elements that aren't visible -->
-<a href="#main-content" className="skip-link">Skip to main content</a>
-<nav><!-- navigation --></nav>
-<main id="main-content"><!-- main content --></main>
-```
-
-### Focus Management
-
-Ensure focus is visible and managed appropriately:
-
-```css
-/* Good - visible focus indicator */
-button:focus-visible {
-  outline: 2px solid #3B82F6;
-  outline-offset: 2px;
-}
-
-/* Bad - no focus indicator */
-button:focus {
-  outline: none;
-}
-
-/* Good - focus trap in modal */
-const Modal = () => {
-  const firstButtonRef = useRef(null);
-  const lastButtonRef = useRef(null);
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Tab') {
-      if (e.shiftKey && document.activeElement === firstButtonRef.current) {
-        e.preventDefault();
-        lastButtonRef.current?.focus();
-      } else if (!e.shiftKey && document.activeElement === lastButtonRef.current) {
-        e.preventDefault();
-        firstButtonRef.current?.focus();
-      }
-    }
-  };
-
-  return (
-    <div role="dialog" onKeyDown={handleKeyDown}>
-      <button ref={firstButtonRef}>First</button>
-      <button>Middle</button>
-      <button ref={lastButtonRef}>Last</button>
-    </div>
-  );
-};
-```
-
-### Keyboard Event Handling
-
-Handle keyboard events appropriately:
-
-```typescript
-// Good - handle both click and keyboard
-const Button = ({ onClick, children }) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onClick?.();
-    }
-  };
-
-  return (
-    <button onClick={onClick} onKeyDown={handleKeyDown}>
-      {children}
-    </button>
-  );
-};
-
-// Good - handle Escape key in modal
-const Modal = ({ onClose }) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      onClose();
-    }
-  };
-
-  return (
-    <div role="dialog" onKeyDown={handleKeyDown}>
-      {/* modal content */}
-    </div>
-  );
-};
-```
-
-## Screen Reader Support
-
-### ARIA (Accessible Rich Internet Applications)
-
-ARIA provides additional semantic information for assistive technologies:
-
-```html
-<!-- Good - ARIA labels -->
-<button aria-label="Close menu">×</button>
-
-<!-- Good - ARIA live regions -->
-<div aria-live="polite" aria-atomic="true">
-  Item added to cart
-</div>
-
-<!-- Good - ARIA roles -->
-<div role="alert">Error: Please fill in all required fields.</div>
-
-<!-- Good - ARIA expanded -->
-<button aria-expanded={isOpen} aria-controls="menu">
-  Menu
-</button>
-<div id="menu" hidden={!isOpen}>
-  {/* menu items */}
-</div>
-
-<!-- Good - ARIA current -->
-<nav>
-  <a href="/" aria-current="page">Home</a>
-  <a href="/about">About</a>
-</nav>
-```
-
-### Screen Reader Testing
-
-Test with actual screen readers:
-
-```html
-<!-- Good - descriptive link text -->
-<a href="/article">Read more about accessibility</a>
-
-<!-- Bad - vague link text -->
-<a href="/article">Read more</a>
-
-<!-- Good - descriptive button text -->
-<button>Delete account</button>
-
-<!-- Bad - vague button text -->
-<button>Delete</button>
-
-<!-- Good - form labels associated with inputs -->
-<label for="email">Email Address</label>
-<input id="email" type="email" />
-
-<!-- Bad - unassociated labels -->
-<label>Email Address</label>
-<input type="email" />
-```
-
-## Color Contrast
-
-### Contrast Ratios
-
-Ensure sufficient contrast between text and background:
-
-```css
-/* WCAG AA - Normal text (4.5:1) */
-color: #030712; /* dark text */
-background-color: #F9FAFB; /* light background */
-/* Contrast ratio: 19:1 ✓ */
-
-/* WCAG AA - Large text (3:1) */
-color: #4B5563; /* medium gray text */
-background-color: #F9FAFB; /* light background */
-/* Contrast ratio: 6.5:1 ✓ */
-
-/* WCAG AAA - Normal text (7:1) */
-color: #030712; /* dark text */
-background-color: #F9FAFB; /* light background */
-/* Contrast ratio: 19:1 ✓ */
-
-/* Fails WCAG AA */
-color: #9CA3AF; /* light gray text */
-background-color: #F9FAFB; /* light background */
-/* Contrast ratio: 2.5:1 ✗ */
-```
-
-### Testing Contrast
-
-Use tools like WebAIM Contrast Checker or Polished:
-
-```javascript
-import { readableColor } from 'polished';
-
-const backgroundColor = '#3B82F6';
-const textColor = readableColor(backgroundColor); // Returns #FFFFFF or #000000
-```
-
-## Inclusive Design Practices
-
-### 1. Don't Rely on Color Alone
-
-Use patterns, icons, or text labels in addition to color:
-
-```html
-<!-- Good - color + icon + text -->
-<span style="color: green;">
-  <CheckIcon />
-  Success
-</span>
-
-<!-- Bad - color alone -->
-<span style="color: green;">Success</span>
-
-<!-- Good - color + pattern -->
-<div style="background: repeating-linear-gradient(45deg, #3B82F6, #3B82F6 10px, #2563EB 10px, #2563EB 20px);">
-  Pattern
-</div>
-
-<!-- Bad - color alone -->
-<div style="background-color: #3B82F6;">Color</div>
-```
-
-### 2. Provide Alternatives for Images
-
-```html
-<!-- Good - descriptive alt text -->
-<img src="chart.png" alt="Sales increased 25% in Q4 2025" />
-
-<!-- Bad - no alt text -->
-<img src="chart.png" />
-
-<!-- Good - alt text for decorative images -->
-<img src="decoration.png" alt="" />
-
-<!-- Good - long description for complex images -->
-<img src="complex-chart.png" alt="Chart showing sales trends" />
-<a href="/chart-description">View detailed chart description</a>
-```
-
-### 3. Provide Captions and Transcripts
-
-```html
-<!-- Good - captions for video -->
-<video controls>
-  <source src="video.mp4" type="video/mp4" />
-  <track kind="captions" src="captions.vtt" srclang="en" label="English" />
-</video>
-
-<!-- Good - transcript for audio -->
-<audio controls>
-  <source src="audio.mp3" type="audio/mpeg" />
-</audio>
-<p><a href="/audio-transcript">Read transcript</a></p>
-```
-
-### 4. Design for Readability
-
-```css
-/* Good - readable font size */
-body {
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* Good - readable line length */
-main {
-  max-width: 65ch;
-}
-
-/* Good - sufficient whitespace */
-section {
-  padding: 2rem;
-}
-
-/* Bad - too small */
-body {
-  font-size: 12px;
-  line-height: 1.2;
-}
-```
-
-## How to Use This Skill with Claude Code
-
-### Audit Accessibility
+**2. Accessibility Audit** (markdown):
 
 ```
-"I'm using the accessibility-excellence skill. Can you audit my product for accessibility?
-- Check WCAG AA compliance
-- Identify keyboard navigation issues
-- Check screen reader compatibility
-- Verify color contrast ratios
-- Check for missing alt text
-- Identify semantic HTML issues"
+## Scope & target
+Pages/flows audited; target: WCAG 2.2 AA; tools used (axe/Lighthouse/manual keyboard).
+
+## Findings
+| # | Severity | Issue | WCAG criterion | Location | Fix | Status |
+| 1 | Blocker | Checkout "Pay" is a div, keyboard-unreachable | 2.1.1 | Checkout.tsx | native <button> | fixed |
+| 2 | Serious | Placeholder-only labels on signup | 3.3.2 | SignupForm.tsx | <label for> added | fixed |
+| 3 | Serious | Body text #9CA3AF on #F9FAFB ≈ 2.5:1 | 1.4.3 | tokens.css | darkened token to pass 4.5:1 | fixed |
+| 4 | Moderate | No skip link | 2.4.1 | layout | added | fixed |
+
+## Verified
+- Keyboard walk-through: [flows] ✓
+- Automated scan: [before → after issue count]
+
+## Not verified — user action required
+- Screen reader pass (VoiceOver/NVDA) on [flows]
+- [anything environment prevented]
+
+## Recurring root causes
+[e.g. "clickable divs pattern-wide — adopt lint rule jsx-a11y"]
 ```
 
-### Implement Accessibility
+## Quality bar (check before delivering)
 
-```
-"Can you help me implement accessibility?
-- Add semantic HTML
-- Add ARIA labels and roles
-- Implement keyboard navigation
-- Ensure focus management
-- Verify color contrast
-- Add alt text to images"
-```
+- [ ] Every finding cites a WCAG criterion and a severity — no vibes-based flags
+- [ ] All blockers fixed or explicitly declined by the user
+- [ ] No new `<div onClick>`, `outline: none` without replacement, positive `tabindex`, or placeholder-as-label introduced anywhere in delivered code
+- [ ] Contrast fixes made at the token/source level and verified with computed values against 4.5:1 / 3:1
+- [ ] Every modal/menu in scope: focus moves in, traps correctly, Escape works, focus returns to trigger
+- [ ] Every form control has a programmatic label; every error is associated via `aria-describedby` and announced
+- [ ] Heading hierarchy valid; landmarks present; `lang` set; skip link first-focusable
+- [ ] "Not verified" section honestly lists untested surface — no conformance overclaim
 
-### Create Accessibility Documentation
+Hard don'ts: don't sprinkle ARIA on native elements that already work; don't claim "WCAG compliant" from an automated scan; don't fix contrast by inventing new one-off colors; don't remove focus outlines, ever, without an equal-or-better visible replacement.
 
-```
-"Can you create accessibility documentation?
-- WCAG AA checklist
-- Keyboard navigation guide
-- Screen reader testing guide
-- Color contrast requirements
-- Accessibility best practices"
-```
+## Integration
 
-### Test Accessibility
+- `skills/frontend-design/component-architecture` → provides the component inventory; fixes land in shared components so they propagate. Feed recurring issues back as component-level conventions.
+- `skills/frontend-design/color-system` → owns palette redesign when contrast failures are systemic rather than one token.
+- `skills/frontend-design/error-handling-recovery` → owns error copy and recovery UX; this skill supplies the `role="alert"`/`aria-invalid`/focus rules it must follow.
+- `skills/frontend-design/interaction-physics` → owns implementing reduced-motion and flash-safety; this skill audits them.
 
-```
-"Can you create an accessibility testing plan?
-- Keyboard navigation testing
-- Screen reader testing
-- Color contrast verification
-- Semantic HTML validation
-- ARIA usage validation"
-```
+## References
 
-## Design Critique: Evaluating Accessibility
-
-Claude Code can critique your accessibility:
-
-```
-"Can you evaluate my accessibility?
-- Are my pages WCAG AA compliant?
-- Is keyboard navigation working?
-- Are my color contrasts sufficient?
-- Is my semantic HTML correct?
-- What's one thing I could improve immediately?"
-```
-
-## Integration with Other Skills
-
-- **design-foundation** — Accessible tokens and design decisions
-- **layout-system** — Accessible layouts and responsive design
-- **typography-system** — Readable font sizes and line heights
-- **color-system** — Sufficient contrast ratios
-- **component-architecture** — Accessible components
-- **interaction-design** — Accessible interactions
-
-## Key Principles
-
-**1. Accessibility is Inclusion**
-Design for everyone, including people with disabilities.
-
-**2. Semantic HTML is Foundation**
-Use semantic HTML elements that describe their meaning.
-
-**3. Keyboard Navigation is Essential**
-All functionality must be available from the keyboard.
-
-**4. Screen Readers Must Work**
-Test with actual screen readers, not just automated tools.
-
-**5. Contrast Matters**
-Ensure sufficient contrast for readability.
-
-## Checklist: Is Your Accessibility Ready?
-
-- [ ] All pages are WCAG AA compliant
-- [ ] Semantic HTML is used throughout
-- [ ] Keyboard navigation works for all functionality
-- [ ] Focus indicators are visible
-- [ ] All images have descriptive alt text
-- [ ] Form labels are associated with inputs
-- [ ] Color contrast meets WCAG AA standards
-- [ ] ARIA is used appropriately
-- [ ] Screen reader testing has been done
-- [ ] Videos have captions and transcripts
-- [ ] Reduced motion preferences are respected
-- [ ] Accessibility is tested regularly
-
-Accessibility is not a feature—it's a fundamental requirement. Make it a priority.
+- `references/checkpoints.md` — full POUR checkpoint tables with WCAG criterion numbers, semantic HTML reference, keyboard patterns (focus trap, skip link, per-widget key expectations), ARIA pattern gallery and common ARIA mistakes, media/content rules, and testing tooling guidance. Read it when running the audit and when writing fixes.

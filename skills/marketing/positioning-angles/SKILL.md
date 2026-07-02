@@ -1,202 +1,120 @@
 ---
 name: positioning-angles
-description: Find your unique market positioning using 8 proven frameworks. Use when developing marketing strategy, creating differentiation, or clarifying why customers should choose you over competitors.
+description: "Find and state a market positioning that differentiates the user's offer: match the message to the market's maturity stage, name the unique mechanism, choose one psychological angle, and pressure-test the result. Use when the user asks 'how do I position this', 'how do I stand out', 'why should anyone pick us', 'write my value prop / tagline / headline claim', 'our marketing sounds like everyone else's', or when any copy or content work stalls because there's no clear core claim — even if they never say the word positioning. Also works in audit mode on an existing positioning. Produces a Positioning Statement: market stage, named mechanism, chosen angle with the claim written out, and a pass/fail test record."
 ---
 
-# Positioning Angles Skill
+# Positioning Angles
 
-## Overview
+Produce a **positioning statement** the rest of the marketing system can repeat: one claim, built from the market's stage, the offer's unique mechanism, and a single psychological angle. Governing principle: **positioning is not being better, it's being different in a way the audience cares about** — and one angle typically outperforms the others by a wide margin, so commit to one and treat it as a bet to test, not a truth.
 
-Positioning is not about being better. It's about being different in a way that matters to your audience. One angle will outperform others 3-10x. Test, don't guess.
+## When to use / when not to
 
-**Keywords**: positioning, differentiation, market positioning, unique value proposition, competitive advantage, messaging strategy, brand positioning
+- Use whenever a core claim is missing, weak, or generic — before landing pages, content strategy, or email work.
+- If the user is unsure the *product itself* is differentiated (not just the message), hand off to `skills/product-strategy/foundation-sprint` — it pressure-tests the underlying bet with a differentiation 2x2; come back here to turn its output into market-facing language.
+- If the claim exists and the user needs it *written into* a page, use `skills/marketing/direct-response-copy`.
+- **Audit mode:** user has positioning but doubts it → skip to Step 4 and run the three tests against it; fix the failing part using the matching step.
 
-## The 4-Step Positioning Process
+## Intake
 
-### Step 1: Match Your Market Stage
+One batch; skip anything already known from context or from `skills/marketing/orchestrator`:
 
-Your positioning approach must match where your market is. Using the wrong approach wastes your message.
+1. What do you sell, in one sentence, and to whom?
+2. What are the 2–3 alternatives your customer actually compares you to (including "do nothing" or a spreadsheet)?
+3. What do you do differently from those alternatives — any step, ingredient, or approach they skip?
+4. How saturated is your market: do you have to explain the category, or is the buyer already drowning in options and skeptical claims?
 
-| Stage | Market Reality | Your Approach | Template |
-|-------|---------------|---------------|----------|
-| **NEW** | Market doesn't know the solution exists | Simple promise | "Now you can [X]" |
-| **GROWING** | Market knows solutions exist, wants results | Bigger claim | "[X] in [specific time]" |
-| **CROWDED** | Many competitors, market is confused | Show mechanism | "The [method] that works" |
-| **JADED** | Market has been burned, skeptical | Prove it | "[Data/proof] that shows" |
-| **MATURE** | Market knows all options, seeks identity | Sell identity | "For [people who are X]" |
+**Don't stall:** if the product and market are recognizable, infer stage and competitors, state assumptions, and proceed.
 
-**How to identify your stage:**
-- **NEW**: You have to explain what the category is
-- **GROWING**: Competitors exist but aren't saturating ads/content
-- **CROWDED**: Multiple well-known players, active advertising
-- **JADED**: Common complaints about the category ("all [X] are scams")
-- **MATURE**: Market has clear leaders, buyers identify with brands
+## Workflow
 
-### Step 2: Find Your Mechanism
+### 1. Diagnose the market stage
+The market's maturity dictates the message form. Classify using the signals, then adopt that stage's approach:
 
-Your mechanism is what you do that competitors skip. It's the "how" behind your results.
+| Stage | Signal (how to identify) | Approach | Template |
+|---|---|---|---|
+| **NEW** | You must explain what the category *is* | Simple promise | "Now you can [X]" |
+| **GROWING** | Competitors exist but aren't saturating ads/content | Bigger claim | "[X] in [specific time]" |
+| **CROWDED** | Multiple well-known players, active advertising | Show mechanism | "The [method] that works" |
+| **JADED** | Buyers say "all [X] are scams"; category has burned people | Prove it | "[Data/proof] that shows [X]" |
+| **MATURE** | Clear leaders; buyers identify with brands | Sell identity | "For [people who are X]" |
 
-**The key question**: What do you do differently that actually creates results?
+Decision rule: when torn between two stages, pick the more mature one — over-claiming into a skeptical market fails harder than under-claiming into a fresh one.
 
-**Naming your mechanism**:
-- Give it a name: "The [X] Method" or "The [X] System"
-- NOT "our approach" or "our process" — those are generic
-- The name should hint at what makes it work
+### 2. Find and name the mechanism
+The mechanism is the "how" behind the results — what the user does that competitors skip.
 
-**Examples**:
-- Generic: "Our coaching methodology"
-- Named: "The 5-4-3-2-1 Accountability System"
-- Generic: "Our hiring process"
-- Named: "The Reverse Interview Method"
+1. List every step in how the offer delivers its result.
+2. Mark the steps competitors skip or do differently.
+3. That difference is the mechanism. **Name it**: "The [X] Method / System" — the name should hint at why it works. Never ship "our approach" or "our process".
 
-**Finding your mechanism**:
-1. List every step in your process
-2. Circle what competitors skip or do differently
-3. That's your mechanism — name it
+Examples of the move: "our coaching methodology" → "The 5-4-3-2-1 Accountability System"; "our hiring process" → "The Reverse Interview Method". If Step 2 turns up nothing competitors skip, say so plainly — the user has a differentiation problem, not a messaging problem; route to `skills/product-strategy/foundation-sprint`.
 
-### Step 3: Pick Your Angle
+### 3. Draft angles — user decides
+Draft **3–5 genuinely distinct candidate claims** across different angle types (don't give five variants of one angle), each written out in full using the templates below, then have the user pick ONE primary.
 
-Choose ONE primary angle. Each has a specific psychological trigger.
+| Angle | Trigger it pulls | Template | Best when |
+|---|---|---|---|
+| **CONTRARIAN** | Doubt in conventional wisdom | "Everything you know about [X] is wrong" | Common approaches are visibly failing people |
+| **TRANSFORMATION** | Desire for the after-state | "From [painful state] to [desired state]" | Clear, emotionally large before/after gap |
+| **ENEMY** | Frustration at a villain | "Stop letting [X] steal your [Y]" | Audience shares anger at a specific entity/problem |
+| **SPEED** | Impatience | "[Outcome] in [time] without [sacrifice]" | You genuinely deliver faster — never otherwise |
+| **SPECIFICITY** | "That's exactly me" | "For [exact person] who wants [exact thing]" | Crowded market where you can own a niche |
 
-#### CONTRARIAN
-Challenge what everyone believes. Works when conventional wisdom is failing people.
+Calibration examples: "From broke freelancer to $20K/month agency owner" (transformation); "Stop letting algorithms steal your reach" (enemy); "Fluent Spanish in 3 months without grammar drills" (speed); "For SaaS founders who want to hit $10K MRR" (specificity).
 
-**Template**: "Everything you know about [X] is wrong"
+Decision rules: JADED market → contrarian or proof-led claims work; enemy angle only if the villain is real and shared; speed angle only if the time claim is honest and deliverable; when nothing else clearly wins, specificity is the safest default in a crowded market.
 
-**Examples**:
-- "Everything you know about dieting is wrong"
-- "Forget everything you learned about cold email"
-- "The productivity advice that's actually hurting you"
+### 4. Test the chosen claim
+All three must pass:
 
-**Best for**: Markets where common approaches aren't working
+| Test | Question | Fails like | Passes like |
+|---|---|---|---|
+| **Specific?** | Concrete numbers, timeframe, or details? | "Get better results" | "Lose 20 lbs in 6 weeks" |
+| **Differentiated?** | Could a competitor paste this claim onto their site? | "Quality marketing services" | "The Reverse Funnel Method for coaches" |
+| **Believable?** | Does the mechanism or proof support it? | "Become a millionaire overnight" | "Add $5K/month with 3 LinkedIn posts a week" |
 
----
+Fix rules: not specific → add numbers/timeframes; not differentiated → lead with the named mechanism; not believable → shrink the claim or attach proof. Re-test after each fix.
 
-#### TRANSFORMATION
-Show the journey from pain to gain. Works when the emotional gap is large.
+### 5. Assemble
+**Formula: [stage-appropriate form] + [named mechanism] + [chosen angle].**
+Worked example: crowded market → show mechanism; mechanism = "The Micro-Launch Method"; angle = speed → **"The Micro-Launch Method: launch your course in 2 weeks without building an audience first."**
 
-**Template**: "From [painful state] to [desired state]"
-
-**Examples**:
-- "From broke freelancer to $20K/month agency owner"
-- "From inbox chaos to zero unread in 30 days"
-- "From dreading Mondays to building your dream business"
-
-**Best for**: Offers with clear before/after states
-
----
-
-#### ENEMY
-Give them something to fight against. Works when there's a clear villain.
-
-**Template**: "Stop letting [X] steal your [Y]"
-
-**Examples**:
-- "Stop letting algorithms steal your reach"
-- "Stop letting meetings steal your deep work"
-- "Stop letting big agencies steal your budget"
-
-**Best for**: Markets with frustration toward a specific problem/entity
-
----
-
-#### SPEED
-Promise results fast without the usual sacrifice. Works when people are impatient.
-
-**Template**: "[Outcome] in [time] without [sacrifice]"
-
-**Examples**:
-- "6-pack abs in 90 days without giving up carbs"
-- "Launch your course in 2 weeks without tech headaches"
-- "Fluent Spanish in 3 months without grammar drills"
-
-**Best for**: Offers that genuinely deliver faster results
-
----
-
-#### SPECIFICITY
-Narrow down to exact person and exact outcome. Works in crowded markets.
-
-**Template**: "For [exact person] who wants [exact thing]"
-
-**Examples**:
-- "For SaaS founders who want to hit $10K MRR"
-- "For busy moms who want to lose 20 lbs before summer"
-- "For developers who want to become tech leads in 2024"
-
-**Best for**: Crowded markets where you can own a niche
-
-### Step 4: Test Your Angle
-
-Before committing, run your positioning through this checklist:
-
-| Test | Question | Bad Example | Good Example |
-|------|----------|-------------|--------------|
-| **Specific?** | Does it include concrete details? | "Get better results" | "Lose 20 lbs in 6 weeks" |
-| **Differentiated?** | Can a competitor claim the same thing? | "Quality marketing services" | "The Reverse Funnel Method for coaches" |
-| **Believable?** | Does your mechanism/proof support it? | "Become a millionaire overnight" | "Add $5K/month with 3 LinkedIn posts per week" |
-
-**All three boxes must be checked.** If any fails:
-- Not specific → Add numbers, timeframes, or details
-- Not differentiated → Lean harder into your mechanism
-- Not believable → Reduce the claim or add proof
-
-## Putting It Together
-
-**Formula**: [Market Stage Approach] + [Your Mechanism] + [Your Angle]
-
-**Example walkthrough**:
-1. **Market Stage**: Crowded (many course platforms exist) → Show mechanism
-2. **Mechanism**: "The Micro-Launch Method" (launching with just 10 people)
-3. **Angle**: Speed → "Launch your course in 2 weeks without building an audience first"
-
-**Final positioning**: "The Micro-Launch Method: Launch your course in 2 weeks without building an audience first"
-
-## Quick Reference Card
+## Required output format
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     POSITIONING ANGLES                          │
-├─────────────────────────────────────────────────────────────────┤
-│ 1. MATCH YOUR MARKET STAGE                                      │
-│                                                                 │
-│    NEW      → Simple promise    "Now you can [X]"               │
-│    GROWING  → Bigger claim      "[X] in [specific time]"        │
-│    CROWDED  → Show mechanism    "The [method] that works"       │
-│    JADED    → Prove it          "[Data/proof] that shows"       │
-│    MATURE   → Sell identity     "For [people who are X]"        │
-│                                                                 │
-│ 2. FIND YOUR MECHANISM                                          │
-│                                                                 │
-│    What do you do that competitors skip?                        │
-│    Name it: "The [X] Method" – not "our approach"               │
-│                                                                 │
-│ 3. PICK YOUR ANGLE                                              │
-│                                                                 │
-│    CONTRARIAN     "Everything you know about [X] is wrong"      │
-│    TRANSFORMATION "From [painful state] to [desired state]"     │
-│    ENEMY          "Stop letting [X] steal your [Y]"             │
-│    SPEED          "[Outcome] in [time] without [sacrifice]"     │
-│    SPECIFICITY    "For [exact person] who wants [exact thing]"  │
-│                                                                 │
-│ 4. TEST IT                                                      │
-│                                                                 │
-│    □ Specific? (not "better results" – "20 lbs in 6 weeks")     │
-│    □ Differentiated? (competitor can't claim the same)          │
-│    □ Believable? (mechanism/proof supports it)                  │
-│                                                                 │
-│    One angle will outperform others 3-10x. Test, don't guess.   │
-└─────────────────────────────────────────────────────────────────┘
+# Positioning Statement — [Offer]
+
+**The claim:** "[final positioning, one sentence, usable as a headline]"
+
+## How it was built
+| Element | Decision | Why |
+|---|---|---|
+| Market stage | NEW/GROWING/CROWDED/JADED/MATURE | [signal observed] |
+| Mechanism | The [name] | [what competitors skip] |
+| Angle | [one of five] | [why this trigger fits this audience] |
+| Runner-up angle | [claim] | [when to switch to it] |
+
+## Test record
+- Specific: PASS/FAIL — [evidence]
+- Differentiated: PASS/FAIL — [evidence]
+- Believable: PASS/FAIL — [mechanism/proof cited]
+
+## Assumptions to validate
+- [each market/competitor inference made, phrased as a testable assumption]
+
+**Next test:** run the primary claim against the runner-up in [cheapest real channel — ad headline test, landing page A/B, 5 customer conversations] before scaling it.
 ```
 
-## Integration with Other Skills
+## Quality bar (check before delivering)
 
-Positioning Angles works with:
-- **Brand Voice** — Your voice delivers your positioning
-- **Keyword Research** — Your positioning guides what to write about
-- **Direct Response Copy** — Your positioning makes copy compelling
-- **Lead Magnet** — Your positioning shapes your offer
+- [ ] Exactly one primary claim; one runner-up kept as backup — never a menu of finalists.
+- [ ] Mechanism has a proper name; "our approach/process" never appears.
+- [ ] All three tests recorded PASS with evidence; no shipping on a FAIL.
+- [ ] Claim matches the diagnosed stage (no bold promises into a JADED market without proof attached).
+- [ ] No invented market facts or statistics — competitor and market reads are labeled assumptions unless verified.
+- [ ] Speed/time claims only where genuinely deliverable.
 
-## Next Steps
+## Integration
 
-Once you've found your positioning angle, move to **Keyword Research** to identify what content to create around your positioning.
+- **Upstream:** `skills/marketing/orchestrator` routes here first on most paths; `skills/product-strategy/foundation-sprint` supplies the differentiation bet when product-level differentiation is unsettled — its founding hypothesis translates directly into Steps 2–3 here.
+- **Downstream:** the positioning statement is consumed by `skills/marketing/brand-voice` (voice must carry this claim), `skills/marketing/keyword-research` (seeds the keyword universe), `skills/marketing/lead-magnet` (shapes the offer), and `skills/marketing/direct-response-copy` (the claim becomes the page's spine). What crosses the boundary is the one-sentence claim plus the named mechanism.

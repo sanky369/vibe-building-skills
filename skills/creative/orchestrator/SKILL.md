@@ -1,478 +1,130 @@
 ---
-name: creative-orchestrator
-description: Master coordinator for all creative skills. Use this skill to orchestrate asset generation, manage workflows, and automate creative production. Integrates with nanobanana pro automation system.
+name: orchestrator
+description: "Dispatcher for the creative suite: diagnoses a multi-asset creative request with a few questions, then routes it through the right sequence of creative skills, naming the artifact each step passes to the next, and wires in the FAL.ai automation (single model fal-ai/nano-banana-pro via docs/creative_cli.py) when available. Use when the user asks for several creative deliverables at once or an outcome that implies them — 'assets for my product launch', 'set up my brand visuals', 'I need a logo, product shots, and social posts', 'a week of content', 'rebrand everything' — or when it's unclear which creative skill applies. Produces a Creative Production Plan: chosen route, ordered skill sequence with hand-off artifacts, generation checklist, and asset output map. For a single obvious asset, skip this and use the specific skill directly."
 ---
 
-# Creative Orchestrator Skill
+# Creative Orchestrator
 
-## Overview
+Route multi-asset creative work through the right skills in the right order, so
+style gets decided once and every downstream asset inherits it. **Prime rule:
+strategy before pixels.** Never let generation start before a style anchor
+exists — assets generated pre-brief get regenerated. You are a dispatcher, not a
+lecturer: diagnose fast, pick one route, name what each step hands to the next.
 
-The Creative Orchestrator is the master coordinator for all creative skills. It tells Claude Code exactly how to generate assets using the automation system, manage workflows, and orchestrate creative production.
+## When to use / when not to
 
-**Keywords**: orchestration, workflow, automation, asset generation, creative production, Claude Code integration
+Use when the request spans multiple asset types, names an outcome rather than an
+asset ("launch assets", "brand refresh", "content for the month"), or the right
+skill is ambiguous. Do NOT use for a single clear asset — route directly:
+one logo → `skills/creative/brand-asset`; one product shot →
+`skills/creative/product-photography`; one Instagram post →
+`skills/creative/social-graphics`; one generic image →
+`skills/creative/image-generation`.
 
-## What This Skill Does
+## Intake (diagnostic — one batch)
 
-The Creative Orchestrator:
+1. **Outcome** — what event/goal are these assets for (launch, rebrand, ongoing
+   content, storefront, video)?
+2. **What exists** — style guide or Creative Direction Brief? Logo/brand assets?
+   Product photos? (Existing artifacts skip their producing step.)
+3. **Deliverables & destinations** — which assets, where they'll live
+   (platforms, store, site)?
+4. **Automation** — is `FAL_API_KEY` (or `FAL_KEY`) set? If unknown, check:
+   `python docs/creative_cli.py test`
 
-1. **Coordinates all creative skills** — Tells Claude which skills to use in which order
-2. **Manages Claude Code integration** — Shows Claude how to run Python code to generate assets
-3. **Automates workflows** — Chains multiple generation tasks together
-4. **Handles file organization** — Manages asset storage and organization
-5. **Provides templates** — Pre-built workflows for common scenarios
+**Don't stall:** with the outcome known, infer the rest from context, state
+assumptions, and present the plan. If automation is unavailable, the plan still
+runs — every step's deliverable becomes prompt specs plus runnable commands
+instead of generated files.
 
-## How Claude Code Uses This Skill
+## Routing table
 
-When you ask Claude to generate creative assets, the Orchestrator tells Claude Code:
+Pick ONE route by the first rule that matches. Sequence is by dependency; each
+arrow names the artifact passed forward.
 
-1. **Where the automation system is** — File paths and imports
-2. **How to set up the environment** — API keys, dependencies
-3. **What Python code to run** — Exact function calls
-4. **How to chain operations** — Multiple assets in sequence
-5. **Where to save results** — Organized folder structure
+**Decision rules**
+- No style anchor exists and >1 asset is needed → every route below starts with
+  `skills/creative/creative-strategist`.
+- Brand marks are among the deliverables → `brand-asset` runs before any skill
+  that reuses the marks.
+- Video deliverables → stills first (they are the video's source material).
 
-### Automatic Skill Invocation
+| Route | Trigger | Sequence (artifact passed forward) |
+|---|---|---|
+| **A — Brand identity from zero** | "new brand", "set up my brand visuals", nothing exists | `creative-strategist` (Creative Direction Brief + style block) → `brand-asset` (approved logo/icons/pattern + guide entries) → `social-graphics` and/or `product-photography` (launch-ready assets using marks + style block) |
+| **B — Product launch, identity exists** | "launch assets", "images for my store/landing page" | `product-photography` (winning shot set) → `social-graphics` (platform posts reusing the shots) → optional `product-video` (script/plan consuming hero stills) |
+| **C — Social campaign / content series** | "week of content", "posts for X", ongoing presence | `creative-strategist` (skip if brief exists) → `social-graphics` (per-platform graphics) → optional `image-generation` (thumbnails, misc visuals via `custom` CLI) |
+| **D — Rebrand / refresh** | "rebrand", "new look", "our visuals feel stale" | `creative-strategist` (revised brief; diff vs old style) → `brand-asset` (regenerated marks) → `social-graphics` (announcement assets) → re-run B for product imagery if it exists |
+| **E — Video-led** | "product video", "presenter video", "animated demo" | prerequisite stills via B or C → `product-video` or `talking-head` (plan/script) → `remotion-script-writer` if it's a coded Remotion video |
+| **F — Web/app design** | "landing page", "app design", responsive UI | `skills/creative/original-design` (this is design, not asset generation); pull imagery needs back into B/C |
 
-After understanding the user's creative needs, **ask if they want you to automatically invoke the relevant creative skills**. For example:
+Cross-cutting rule: `skills/creative/image-generation` is the utility skill for
+any asset the specialists don't cover (thumbnails, infographics, textures) — slot
+it wherever needed; it consumes the style block like everything else.
 
-```
-"For your product launch, I recommend these skills:
-1. creative-strategist (define visual direction)
-2. product-photography (hero shots)
-3. social-graphics (platform assets)
+## Automation wiring (facts, verified against the repo)
 
-Would you like me to run these skills now? I'll invoke each one to guide your asset creation."
-```
+- One model only: **`fal-ai/nano-banana-pro`** on FAL.ai. No fast/quality model
+  variants exist.
+- Scripts at repo root: `docs/fal_api.py` (client), `docs/creative_cli.py` (CLI:
+  `product` / `social` / `brand` / `custom` / `test`), `docs/claude_integration.py`
+  (Python helpers incl. `batch_generate_assets`).
+- Setup: `pip install requests`; `export FAL_API_KEY="..."`;
+  verify with `python docs/creative_cli.py test`.
+- Real knobs: `--num-images` 1–4, `--aspect-ratio` (21:9…9:16), `--resolution`
+  1K/2K/4K, `custom` also `--format png|jpeg|webp` and `--web-search`.
+- Outputs land in `assets/product-photography/…`, `assets/social-graphics/…`,
+  `assets/brand-assets/…`, `assets/<category>/…` automatically.
 
-If the user agrees, **invoke each skill using the /skill-name command** (e.g., `/creative-strategist`, `/product-photography`). Work through them in the recommended order.
+Full reference: `skills/creative/image-generation/references/automation.md` —
+read it before writing any generation command into a plan.
 
-## Setup: Enable Automation System
+## Required output format
 
-### Step 1: Extract Automation System
-
-Copy and Extract `vibe-creative-automation.zip` to your project and add it in gitignore (it is located in the root where this file is):
-
-```
-your-project/
-├── vibe-creative-automation/
-│   ├── fal_api.py
-│   ├── creative_cli.py
-│   ├── claude_integration.py
-│   └── requirements.txt
-└── assets/  (will be created automatically)
-```
-
-### Step 2: Install Dependencies
-
-```bash
-pip install requests
-```
-
-### Step 3: Set API Key
-
-```bash
-export FAL_API_KEY="your_fal_api_key_here"
-```
-
-Or set in your environment:
-
-```bash
-export FAL_KEY="your_fal_api_key_here"
-```
-
-### Step 4: Test Connection
-
-Ask Claude to test the API:
-
-```
-Test my nanobanana pro API connection by generating a simple test image.
-```
-
-Claude will run:
-
-```python
-from fal_api import NanobananProClient
-
-client = NanobananProClient()
-result = client.generate_image(
-    prompt="A red cube on a white background, minimalist, professional quality, 4K",
-    num_images=1,
-    resolution="2K"
-)
-print(f"✅ Generated: {result['images'][0]['url']}")
-```
-
-## Claude Code Integration Patterns
-
-### Pattern 1: Single Asset Generation
-
-```python
-from claude_integration import generate_product
-
-result = generate_product(
-    product_name="Luxury Watch",
-    description="A luxury leather watch with gold accents",
-    style="professional product photography",
-    num_variations=3
-)
-
-for img in result['images']:
-    print(f"Generated: {img}")
-```
-
-### Pattern 2: Social Campaign
-
-```python
-from claude_integration import generate_social
-
-platforms = ["instagram", "linkedin", "twitter"]
-for platform in platforms:
-    result = generate_social(
-        platform=platform,
-        topic="Product Launch",
-        description="Eye-catching post for product launch",
-        num_variations=1
-    )
-    print(f"{platform}: {result['images']}")
-```
-
-### Pattern 3: Brand Identity
-
-```python
-from claude_integration import generate_brand
-
-assets = ["logo", "icon", "pattern"]
-for asset_type in assets:
-    result = generate_brand(
-        brand_name="TechCorp",
-        element_type=asset_type,
-        description=f"Modern {asset_type} for tech company",
-        num_variations=1
-    )
-    print(f"{asset_type}: {result['images']}")
-```
-
-### Pattern 4: Batch Generation
-
-```python
-from claude_integration import batch_generate_assets
-
-assets = [
-    {
-        "type": "product",
-        "name": "Watch",
-        "description": "Luxury leather watch with gold accents",
-        "style": "professional product photography",
-        "num_variations": 2
-    },
-    {
-        "type": "social",
-        "platform": "instagram",
-        "topic": "Product Launch",
-        "description": "Instagram post for launch",
-        "num_variations": 1
-    },
-    {
-        "type": "brand",
-        "brand_name": "TechCorp",
-        "element_type": "logo",
-        "description": "Modern tech logo",
-        "num_variations": 1
-    }
-]
-
-results = batch_generate_assets(assets)
-for result in results:
-    print(f"{result['asset_name']}: {result['images']}")
-```
-
-### Pattern 5: Custom Asset with Web Search
-
-```python
-from claude_integration import generate_asset
-
-result = generate_asset(
-    category="infographics",
-    name="tech-trends-2025",
-    prompt="Create an infographic of top tech trends for 2025 based on current data",
-    num_variations=1,
-    enable_web_search=True
-)
-
-print(f"Generated: {result['images']}")
-```
-
-## Nanobanana Pro Parameters
-
-### Resolution Options
+Deliver the plan, then execute it step by step (invoking each skill in order,
+carrying its artifact forward):
 
 ```
-1K   — Small, fast generation
-2K   — Default, balanced quality
-4K   — Large, maximum detail
+# Creative Production Plan — [outcome]
+
+**Route:** [A–F name] — [one-line why this route]
+**Style anchor:** [existing brief / to be created in step 1 / assumed: ...]
+**Automation:** available (FAL_API_KEY set) | specs-only (no key — commands included)
+
+## Sequence
+| # | Skill (path) | Produces | Feeds forward |
+| 1 | skills/creative/... | [artifact] | [what step 2 consumes] |
+| 2 | ... | ... | ... |
+
+## Asset map
+| Asset | Type | Aspect ratio | Variants | Output path |
+| [name] | product/social/brand/custom | [ratio] | [n] | assets/.../ |
+
+## Checkpoints
+- After step [n]: user picks [what] before [next step] starts.
+
+## First action
+[The single next thing you will do — usually "run step 1 now".]
 ```
 
-### Aspect Ratios
+## Guardrails
 
-```
-21:9  — Ultra-wide
-16:9  — Widescreen
-3:2   — Standard
-4:3   — Square-ish
-5:4   — Square-ish
-1:1   — Square (default)
-4:5   — Portrait
-3:4   — Portrait
-2:3   — Portrait
-9:16  — Mobile portrait
-```
+- **One route.** Commit with a one-line reason; offer at most one alternative if
+  it's genuinely close. No route menus.
+- **Never generate before the style anchor exists** (or is explicitly waived for
+  a throwaway).
+- **User checkpoints at selection points** — after logo concepts, after hero-shot
+  variants — not after every image.
+- **No fake capability.** If `FAL_API_KEY` is missing, say so; deliverables are
+  prompt specs + commands. Never report images that weren't generated.
+- **Don't re-produce what exists.** An existing brief/logo/shot set skips its
+  step; consume it instead.
+- **Facts stay verified.** Model ID, script paths, and CLI flags come from the
+  automation reference — never from memory.
 
-### Output Formats
+## Integration
 
-```
-png   — Lossless, best for graphics (default)
-jpeg  — Compressed, smaller file size
-webp  — Modern format, good compression
-```
-
-### Web Search Integration
-
-Enable Google Search for real-time data:
-
-```python
-result = generate_asset(
-    category="infographics",
-    name="stock-trends",
-    prompt="Visualize current stock market trends",
-    enable_web_search=True
-)
-```
-
-## Workflow Templates
-
-### Workflow 1: E-Commerce Product Launch
-
-```python
-from claude_integration import batch_generate_assets
-
-# Generate complete product launch assets
-assets = [
-    # Product photos
-    {"type": "product", "name": "watch", "description": "Luxury watch", "num_variations": 4},
-    {"type": "product", "name": "wallet", "description": "Premium wallet", "num_variations": 3},
-    
-    # Social graphics
-    {"type": "social", "platform": "instagram", "topic": "launch", "description": "Instagram post", "num_variations": 2},
-    {"type": "social", "platform": "linkedin", "topic": "launch", "description": "LinkedIn post", "num_variations": 1},
-    {"type": "social", "platform": "twitter", "topic": "launch", "description": "Twitter post", "num_variations": 1},
-    
-    # Brand assets
-    {"type": "brand", "brand_name": "MyBrand", "element_type": "logo", "description": "Brand logo", "num_variations": 2},
-]
-
-results = batch_generate_assets(assets)
-print(f"Generated {len(results)} asset groups")
-```
-
-### Workflow 2: Content Creator Series
-
-```python
-from claude_integration import generate_social, generate_asset
-
-# Generate content series for a week
-topics = ["AI Trends", "Web3", "Blockchain", "NFTs", "Metaverse"]
-
-for topic in topics:
-    # Generate thumbnail
-    thumbnail = generate_asset(
-        category="thumbnails",
-        name=f"video-{topic.lower()}",
-        prompt=f"YouTube thumbnail for {topic} video, bold design, eye-catching",
-        num_variations=1
-    )
-    
-    # Generate social post
-    post = generate_social(
-        platform="twitter",
-        topic=topic,
-        description=f"Tweet about {topic}",
-        num_variations=1
-    )
-    
-    print(f"{topic}: thumbnail={thumbnail['images']}, post={post['images']}")
-```
-
-### Workflow 3: Brand Refresh
-
-```python
-from claude_integration import batch_generate_assets
-
-# Complete brand refresh
-assets = [
-    # New brand identity
-    {"type": "brand", "brand_name": "NewBrand", "element_type": "logo", "description": "Modern logo", "num_variations": 3},
-    {"type": "brand", "brand_name": "NewBrand", "element_type": "icon", "description": "App icons", "num_variations": 1},
-    {"type": "brand", "brand_name": "NewBrand", "element_type": "pattern", "description": "Brand pattern", "num_variations": 1},
-    
-    # Marketing graphics
-    {"type": "social", "platform": "instagram", "topic": "rebrand", "description": "Rebrand announcement", "num_variations": 2},
-    {"type": "social", "platform": "linkedin", "topic": "rebrand", "description": "LinkedIn announcement", "num_variations": 1},
-]
-
-results = batch_generate_assets(assets)
-print(f"Brand refresh complete: {len(results)} assets generated")
-```
-
-## Common Prompting Patterns
-
-### Product Photography
-
-```
-A luxury leather watch with gold accents on white background, 
-professional product photography, studio lighting with rim light, 
-centered composition, sharp focus, 4K, highly detailed
-```
-
-### Viral Thumbnail
-
-```
-Design a viral video thumbnail with bold colors, eye-catching text overlay, 
-high contrast, professional quality, 4K, trending design
-```
-
-### Infographic
-
-```
-Create a clean, modern infographic summarizing key information. 
-Include charts, icons, and legible text. 
-Professional quality, 4K, suitable for presentation
-```
-
-### Brand Logo
-
-```
-Modern tech company logo, geometric style, blue and white colors, 
-minimalist design, scalable, professional, clean lines, 
-suitable for all media
-```
-
-### Social Media Graphic
-
-```
-Instagram post graphic for product launch, vibrant colors, 
-eye-catching composition, modern design, professional quality, 
-trending aesthetic
-```
-
-## Troubleshooting
-
-### Problem: API Key Not Found
-
-**Error**: `FAL_API_KEY or FAL_KEY not found`
-
-**Solution**:
-```bash
-export FAL_API_KEY="your_key_here"
-```
-
-Or ask Claude to set it:
-```
-Set my FAL_API_KEY environment variable to [your_key]
-```
-
-### Problem: No Images Generated
-
-**Solution**:
-- Check API key is valid
-- Verify internet connection
-- Try a simpler prompt
-- Check nanobanana pro is available
-
-### Problem: Images Don't Match Style
-
-**Solution**:
-- Add more specific style descriptors
-- Reference your Creative Strategist guide
-- Generate multiple variations
-- Use conversational editing
-
-### Problem: Generation Too Slow
-
-**Solution**:
-- Reduce resolution from 4K to 2K
-- Reduce num_images to 1
-- Use simpler prompts
-
-## Integration with Creative Skills
-
-The Orchestrator works with all creative skills:
-
-- **Creative Strategist** — Defines your visual direction
-- **Image Generation** — Teaches prompting techniques
-- **Product Photography** — Creates product shots
-- **Social Graphics** — Generates social content
-- **Brand Asset** — Creates brand elements
-- **Product Video** — Plans video content
-- **Talking Head** — Plans presenter videos
-
-## Asset Organization
-
-Generated assets are automatically organized:
-
-```
-assets/
-├── product-photography/
-│   ├── luxury-watch/
-│   └── premium-wallet/
-├── social-graphics/
-│   ├── instagram/
-│   ├── linkedin/
-│   └── twitter/
-├── brand-assets/
-│   └── techcorp/
-│       ├── logo/
-│       ├── icon/
-│       └── pattern/
-└── thumbnails/
-    └── video-1/
-```
-
-## Next Steps
-
-1. **Extract automation system** to your project
-2. **Install dependencies**: `pip install requests`
-3. **Set API key**: `export FAL_API_KEY="your_key"`
-4. **Test connection**: Ask Claude to test the API
-5. **Choose your workflow**: Pick a template above
-6. **Generate assets**: Start creating!
-
-## Quick Commands
-
-**Generate product photo:**
-```
-Generate 3 product photos for my luxury watch using nanobanana pro
-```
-
-**Generate social campaign:**
-```
-Generate Instagram, LinkedIn, and Twitter posts for my product launch
-```
-
-**Generate brand identity:**
-```
-Generate a complete brand identity including logo, icons, and patterns
-```
-
-**Batch generate:**
-```
-Generate 10 assets for my e-commerce store including product photos and social graphics
-```
-
-**Test API:**
-```
-Test my nanobanana pro API connection
-```
-
----
-
-**You now have complete automation for creative asset generation with nanobanana pro. Start creating! 🚀**
+Feeds this skill: `skills/product-strategy/foundation-sprint` (positioning and
+differentiators sharpen the brief in step 1 of routes A/D). Consumes its output:
+every `skills/creative/*` skill listed in the routing table — the plan tells
+each one what artifact it receives and what it must hand back.

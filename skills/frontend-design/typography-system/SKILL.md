@@ -1,499 +1,115 @@
 ---
 name: typography-system
-description: Master typography design with font selection, type scales, hierarchy, readability, and accessibility. Create consistent, beautiful typography that works across all devices and contexts. Includes modular scales, fluid typography, variable fonts, and accessibility best practices.
+description: "Build or repair a typography system: a modular type scale, font choices and loading, hierarchy, line-height/line-length, and fluid sizing — delivered as tokens (Tailwind fontSize config or CSS variables) applied to real components. Use when the user says 'the text looks off', 'fonts are inconsistent', 'headings don't stand out', 'pick fonts for me', 'it's hard to read', 'too many font sizes', or when an audit finds font-size sprawl. Chooses the scale ratio from product density (dense app vs marketing vs editorial), verifies contrast and measure, and produces the type tokens plus a migration map from existing rogue sizes."
 ---
 
 # Typography System
 
-## Overview
+Produce a working type scale for this codebase — tokens wired into the existing styling system and applied to real headings/body/UI text — not an essay about type. Governing principle: **sizes come from a modular scale chosen for the product's density; readability constraints (line-height, measure, contrast) are non-negotiable and override aesthetics.**
 
-Typography is the voice of your interface. It communicates hierarchy, establishes tone, and guides users through your content. Great typography is invisible—users don't notice it because it works so well.
+## When to use / handoffs
 
-This skill teaches you to think about typography systematically: choosing fonts with intention, creating scales that feel natural, establishing clear hierarchy, and ensuring readability and accessibility across all contexts.
+- Use for type scales, font selection/loading, heading hierarchy, readability fixes, fluid type.
+- No token infrastructure at all yet → run `skills/frontend-design/design-foundation` first (or create the type tokens as its first slice).
+- Text colors failing contrast is shared ground with `skills/frontend-design/color-system` — fix the pairs you touch here; send palette-wide work there.
+- Headings sized right but the page still scans poorly → `skills/frontend-design/visual-hierarchy-refactoring`.
 
-## Core Methodology: Type Scales and Hierarchy
+## Step 1 — Inspect the codebase
 
-Rather than choosing font sizes arbitrarily, use a **modular scale**—a mathematical progression of sizes that feels harmonious and intentional.
+1. **Count font sizes.** Grep for `font-size:\s*[\d.]+(px|rem)`, Tailwind `text-(xs|sm|base|lg|xl|\dxl)` and arbitrary `text-\[`. Distinct count >8–10 = sprawl; record the list with frequencies.
+2. **Find the fonts.** Grep for `font-family|@font-face|fonts.googleapis|next/font` and check `tailwind.config.*` / `@theme` for `fontFamily`. Count families and loaded weights.
+3. **Check line-height and measure.** Grep `line-height|leading-` and `max-width.*ch|max-w-prose`.
+4. **Check existing tokens.** If `design-foundation` ran, extend its file; never start a parallel system.
+5. **Classify the product's density** from the screens themselves: data tables/dashboards/many controls = dense; landing/marketing = spacious; long-form reading = editorial.
 
-### Modular Scales
+## Step 2 — Intake
 
-A modular scale is a sequence of sizes derived from a base size and a ratio. Common ratios:
+Ask in one batch, only what's missing: **brand feel in a few words** (or "pick for me"), and **keep current fonts or open to change?** Infer density from the code, base size 16px unless dense-data (then 14px body is acceptable). **Don't stall** — with visible screens, state assumptions and build.
 
-| Ratio | Name | Use Case | Example (16px base) |
-| :--- | :--- | :--- | :--- |
-| 1.125 | Major Second | Subtle, minimal | 16, 18, 20, 23, 26, 29, 33, 37, 42, 47 |
-| 1.25 | Major Third | Balanced, harmonious | 16, 20, 25, 31, 39, 49, 61, 76, 95 |
-| 1.5 | Perfect Fifth | Bold, dramatic | 16, 24, 36, 54, 81, 122 |
-| 1.618 | Golden Ratio | Natural, elegant | 16, 26, 42, 68, 110 |
+## Step 3 — Build the scale
 
-**Choosing a Scale:**
-- **1.125 (Major Second)** — For subtle, minimal designs
-- **1.25 (Major Third)** — For balanced, harmonious designs (most common)
-- **1.5 (Perfect Fifth)** — For bold, dramatic designs
-- **1.618 (Golden Ratio)** — For natural, elegant designs
+**Choose the ratio by product density** (the core decision rule):
 
-**Example: Major Third Scale (1.25 ratio)**
-```
-Base: 16px
-Scale: 16, 20, 25, 31, 39, 49, 61, 76, 95
+| Product | Ratio | Why |
+|---|---|---|
+| Dense data app, dashboards, admin | 1.125–1.2 (major second) | Many levels must fit without giant headings |
+| Standard product UI / SaaS | 1.25 (major third) | Balanced; the default when unsure |
+| Marketing site, landing pages | 1.25–1.333 | Headlines need presence |
+| Editorial / brand-heavy, big heroes | 1.414–1.618 | Few levels, dramatic jumps |
 
-Practical sizes:
-- Caption: 12px (smaller than base)
-- Body: 16px (base)
-- Body Large: 18px (between base and next)
-- Heading 6: 20px
-- Heading 5: 25px
-- Heading 4: 31px
-- Heading 3: 39px
-- Heading 2: 49px
-- Heading 1: 61px
-- Display: 76px (for hero sections)
-```
+Generate from base × ratio^n, then **snap to sensible pixels** (a 1.25 scale from 16px → 16, 20, 25, 31, 39, 49, 61; round as needed). Add `xs`(12) and `sm`(14) below base for captions/labels. Cap the scale at the largest size actually used — don't ship a 76px display token to a settings app.
 
-### Implementing Type Scales in Tailwind
+**Pair line-height inversely with size:** body 1.5–1.7, subheads 1.3, large headings 1.1–1.2, captions/labels 1.4. Ship line-height inside the size token (Tailwind fontSize tuples do this natively).
+
+**Fluid headings:** for sizes ≥ ~31px, use `clamp(min, preferred vw formula, max)` instead of per-breakpoint overrides. Body text stays fixed (16px) — never fluid below the base.
+
+**Fonts:** limit to ≤2 families, 3–4 weights (400/500/600/700 subset). If choosing: pick a workhorse UI sans (variable font if available) for body, optionally one display font for headings that matches the stated feel. Load via the framework's optimizer (`next/font` etc.) or `preload` + `font-display: swap`. Pairing table and font-feature details: `references/type-details.md`.
+
+### Canonical shape (Tailwind v3; adapt to detected stack)
 
 ```javascript
-module.exports = {
-  theme: {
-    fontSize: {
-      // Captions and small text
-      'xs': ['12px', { lineHeight: '1.5' }],
-      'sm': ['14px', { lineHeight: '1.5' }],
-      
-      // Body text
-      'base': ['16px', { lineHeight: '1.6' }],
-      'lg': ['18px', { lineHeight: '1.6' }],
-      
-      // Headings (modular scale 1.25)
-      'h6': ['20px', { lineHeight: '1.3', fontWeight: '600' }],
-      'h5': ['25px', { lineHeight: '1.3', fontWeight: '600' }],
-      'h4': ['31px', { lineHeight: '1.2', fontWeight: '700' }],
-      'h3': ['39px', { lineHeight: '1.2', fontWeight: '700' }],
-      'h2': ['49px', { lineHeight: '1.1', fontWeight: '700' }],
-      'h1': ['61px', { lineHeight: '1.1', fontWeight: '700' }],
-      
-      // Display (for hero sections)
-      'display': ['76px', { lineHeight: '1', fontWeight: '800' }],
-    },
-  },
-};
-```
-
-## Font Selection
-
-### Choosing Fonts
-
-**Font Pairing Principles:**
-1. **Contrast** — Pair fonts with different characteristics (serif + sans-serif, or geometric + humanist)
-2. **Personality Match** — Fonts should match your brand personality
-3. **Readability** — Prioritize readability over style
-4. **Versatility** — Fonts should work across sizes and weights
-
-### Common Font Pairings
-
-| Heading Font | Body Font | Personality | Use Case |
-| :--- | :--- | :--- | :--- |
-| Playfair Display | Inter | Elegant, sophisticated | Luxury, editorial |
-| Montserrat | Open Sans | Modern, geometric | Tech, SaaS |
-| Merriweather | Lato | Warm, friendly | Publishing, lifestyle |
-| Space Mono | Space Grotesk | Futuristic, technical | Developer tools, tech |
-| Poppins | Poppins | Contemporary, friendly | Startups, consumer apps |
-
-### Font Loading Strategy
-
-Use system fonts first, then web fonts as fallback:
-
-```css
-/* System fonts (fast, no network request) */
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-
-/* Or use web fonts (Google Fonts, Typekit, etc.) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
+fontSize: {
+  xs:   ['0.75rem',  { lineHeight: '1.4' }],           // 12 — captions, labels
+  sm:   ['0.875rem', { lineHeight: '1.5' }],           // 14 — secondary UI text
+  base: ['1rem',     { lineHeight: '1.6' }],           // 16 — body
+  lg:   ['1.125rem', { lineHeight: '1.6' }],           // 18 — lead paragraphs
+  xl:   ['1.25rem',  { lineHeight: '1.3', fontWeight: '600' }],  // 20 — h4/h5
+  '2xl': ['1.5625rem', { lineHeight: '1.3', fontWeight: '600' }], // 25 — h3
+  '3xl': ['clamp(1.6rem, 1.2rem + 1.6vw, 1.9375rem)', { lineHeight: '1.2', fontWeight: '700' }], // h2
+  '4xl': ['clamp(1.9rem, 1.3rem + 2.4vw, 2.4375rem)', { lineHeight: '1.1', fontWeight: '700' }], // h1
 }
 ```
 
-**Font Loading Best Practices:**
-- Use `font-display: swap` to avoid invisible text while fonts load
-- Preload critical fonts: `<link rel="preload" as="font" href="font.woff2" crossorigin>`
-- Limit to 2-3 font families and 3-4 weights
-- Use variable fonts to reduce file size
+## Step 4 — Apply and migrate
 
-## Hierarchy and Emphasis
+1. Write the tokens into the project's system (Tailwind config / `@theme` / CSS variables).
+2. Apply to the base elements or shared components (headings, `p`, labels, buttons) — not one-off classes per page.
+3. Constrain prose: `max-width: 65ch` on long-form containers.
+4. Migrate the top rogue sizes from Step 1 in 1–3 high-traffic files; map the rest.
 
-### Creating Visual Hierarchy
+## Required output format
 
-Use these properties to create hierarchy:
-
-1. **Size** — Larger text is more prominent
-2. **Weight** — Bolder text is more prominent
-3. **Color** — Brighter or more saturated colors are more prominent
-4. **Spacing** — More space around text makes it more prominent
-5. **Position** — Top-left is more prominent than bottom-right
-
-**Example: Hierarchy in a Card**
-```html
-<div class="card">
-  <h2 class="card-title">Card Title</h2>
-  <p class="card-description">This is a description of the card content.</p>
-  <p class="card-meta">Published on January 16, 2026</p>
-</div>
-```
-
-```css
-.card-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.card-description {
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--text-primary);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.card-meta {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-```
-
-### Emphasis Techniques
-
-- **Bold** — Use for emphasis, not entire paragraphs
-- **Italic** — Use for citations, asides, or emphasis
-- **Color** — Use to highlight important information
-- **ALL CAPS** — Use sparingly for labels or buttons
-- **Underline** — Use only for links (to avoid confusion)
-
-## Readability and Accessibility
-
-### Line Height
-
-Line height affects readability. Tighter line heights for headings, looser for body text:
-
-```css
-h1, h2, h3 {
-  line-height: 1.2; /* Tight for headings */
-}
-
-p, li {
-  line-height: 1.6; /* Loose for body text */
-}
-
-.caption {
-  line-height: 1.4; /* Medium for captions */
-}
-```
-
-### Line Length
-
-Optimal line length is 50-75 characters. Too long and reading becomes difficult:
-
-```css
-main {
-  max-width: 65ch; /* ~65 characters */
-}
-```
-
-### Letter Spacing
-
-Adjust letter spacing for different contexts:
-
-```css
-h1 {
-  letter-spacing: -0.02em; /* Tighter for large headings */
-}
-
-.label {
-  letter-spacing: 0.05em; /* Looser for labels */
-}
-
-.caption {
-  letter-spacing: 0; /* Normal for body text */
-}
-```
-
-### Text Contrast
-
-Ensure sufficient contrast for readability (WCAG AA: 4.5:1 for normal text, 3:1 for large text):
-
-```css
-/* Good contrast */
-color: #030712; /* dark text */
-background-color: #F9FAFB; /* light background */
-/* Contrast ratio: 19:1 ✓ */
-
-/* Poor contrast */
-color: #9CA3AF; /* medium gray text */
-background-color: #F9FAFB; /* light background */
-/* Contrast ratio: 2.5:1 ✗ */
-```
-
-### Responsive Typography
-
-Use fluid typography to scale smoothly across devices:
-
-```css
-/* Fixed sizes (old approach) */
-h1 {
-  font-size: 24px; /* mobile */
-}
-
-@media (min-width: 768px) {
-  h1 {
-    font-size: 32px; /* tablet */
-  }
-}
-
-@media (min-width: 1024px) {
-  h1 {
-    font-size: 40px; /* desktop */
-  }
-}
-
-/* Fluid typography (modern approach) */
-h1 {
-  font-size: clamp(24px, 5vw, 40px);
-  /* min: 24px, preferred: 5% of viewport width, max: 40px */
-}
-```
-
-## Advanced Typography Techniques
-
-### Variable Fonts
-
-Variable fonts allow multiple weights and styles in a single file:
-
-```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
-body {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-}
-
-strong {
-  font-weight: 600;
-}
-
-.light {
-  font-weight: 300;
-}
-```
-
-### Font Features
-
-Use OpenType features for advanced typography:
-
-```css
-/* Ligatures (fi, fl, etc.) */
-body {
-  font-feature-settings: 'liga' 1;
-}
-
-/* Tabular numbers (for tables) */
-.table {
-  font-feature-settings: 'tnum' 1;
-}
-
-/* Small caps */
-.label {
-  font-feature-settings: 'smcp' 1;
-}
-```
-
-## Common Typography Patterns
-
-### Pattern 1: Article Typography
-```css
-article {
-  font-size: 18px;
-  line-height: 1.7;
-  max-width: 65ch;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-article h1 {
-  font-size: 49px;
-  line-height: 1.1;
-  margin-bottom: 1rem;
-  margin-top: 2rem;
-}
-
-article h2 {
-  font-size: 39px;
-  line-height: 1.2;
-  margin-bottom: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-article p {
-  margin-bottom: 1.5rem;
-}
-
-article a {
-  color: var(--interactive-primary);
-  text-decoration: underline;
-}
-```
-
-### Pattern 2: UI Typography
-```css
-/* Buttons */
-button {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: 0;
-}
-
-/* Labels */
-label {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.05em;
-}
-
-/* Captions */
-.caption {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--text-secondary);
-}
-```
-
-### Pattern 3: Responsive Headings
-```css
-h1 {
-  font-size: clamp(24px, 5vw, 61px);
-  line-height: 1.1;
-  font-weight: 700;
-}
-
-h2 {
-  font-size: clamp(20px, 4vw, 49px);
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-h3 {
-  font-size: clamp(18px, 3vw, 39px);
-  line-height: 1.2;
-  font-weight: 600;
-}
-```
-
-## How to Use This Skill with Claude Code
-
-### Create a Type Scale
+Deliver code plus this summary:
 
 ```
-"I'm using the typography-system skill. Can you create a type scale for me?
-- Base font size: 16px
-- Ratio: 1.25 (Major Third)
-- Font family: Inter for body, Playfair Display for headings
-- Include sizes for: captions, body, headings, display
-- Ensure accessibility (contrast, line height, line length)"
+## Type tokens
+[file path + full code in the project's system]
+
+## Scale decision
+- Density: [dense/standard/marketing/editorial] — evidence: [what you saw]
+- Ratio: [x] · Base: [16px] · Levels: [list, snapped px values]
+- Fonts: [family/weights] — [kept existing / chosen because …] · Loading: [mechanism]
+
+## Migration map
+| Found | Count | Replace with |
+| text-[15px], 15px | 12 | text-sm (14px) |
+| ... |
+
+## Applied now
+[components/files actually restyled]
+
+## Verify
+[Contrast pairs checked with ratios; measure per breakpoint]
 ```
 
-### Audit Your Typography
+## Quality bar (check before delivering)
 
-```
-"Can you audit my current typography?
-- Are my font sizes following a modular scale?
-- Is my line height appropriate?
-- Is my line length too long?
-- Are my color contrasts sufficient?
-- Are my fonts accessible?
-- What improvements would you suggest?"
-```
+- [ ] ≤8–10 total sizes, all on the scale; every migrated value maps to exactly one token
+- [ ] Body ≥16px (≥14px only in dense data UI, and never for long-form)
+- [ ] Line-height: body 1.5–1.7, headings 1.1–1.3, nothing below 1.1
+- [ ] Measure 45–75ch for body text at every breakpoint
+- [ ] Text/background contrast ≥4.5:1 normal, ≥3:1 large (≥24px, or ≥18.7px bold) — state the ratios you computed
+- [ ] ≤2 font families, ≤4 weights actually loaded; `font-display: swap` or framework equivalent
+- [ ] Heading levels distinguishable at a glance (adjacent levels differ by ratio step AND/OR weight)
+- [ ] Fluid `clamp()` on large headings only; body size fixed
+- [ ] Letter-spacing: slightly negative on ≥39px headings (−0.01 to −0.02em), slightly positive on all-caps labels (+0.05em)
 
-### Implement Responsive Typography
+## Integration
 
-```
-"Can you help me implement responsive typography?
-- Create fluid typography using clamp()
-- Ensure readability at all breakpoints
-- Test at mobile (320px), tablet (768px), desktop (1024px)
-- Provide CSS code I can use"
-```
+- Consumes: tokens file from `skills/frontend-design/design-foundation` (extends its typography slice); layout containers from `skills/frontend-design/layout-system` (measure lives there).
+- Produces: type tokens consumed by `skills/frontend-design/visual-hierarchy-refactoring` (size/weight hierarchy) and `skills/frontend-design/component-architecture` (component text styles).
+- Contrast pairs feed `skills/frontend-design/color-system` and are audited by `skills/frontend-design/accessibility-excellence`.
 
-### Create Typography Documentation
+## References
 
-```
-"Can you create comprehensive typography documentation?
-- Type scale with all sizes
-- Font pairings and usage
-- Hierarchy guidelines
-- Accessibility guidelines
-- Code examples for each style
-- Responsive behavior"
-```
-
-## Design Critique: Evaluating Your Typography
-
-Claude Code can critique your typography:
-
-```
-"Can you evaluate my typography?
-- Is my type scale harmonious?
-- Is my hierarchy clear?
-- Is my readability good?
-- Are my color contrasts sufficient?
-- Are my fonts accessible?
-- What's one thing I could improve immediately?"
-```
-
-## Integration with Other Skills
-
-- **design-foundation** — Typography tokens and scales
-- **layout-system** — Responsive typography scales
-- **color-system** — Text color and contrast
-- **component-architecture** — Typography in components
-- **accessibility-excellence** — Font sizes, contrast, line height
-- **interaction-design** — Typography in animations
-
-## Key Principles
-
-**1. Type Scale Brings Harmony**
-A modular scale feels natural and intentional. It's the foundation of great typography.
-
-**2. Hierarchy Guides Users**
-Clear hierarchy helps users understand what's important and what to read next.
-
-**3. Readability is Non-Negotiable**
-Beautiful typography that's hard to read is not beautiful. Readability comes first.
-
-**4. Accessibility is Foundational**
-Font sizes, contrast, and line height must meet accessibility standards.
-
-**5. Consistency Builds Trust**
-Consistent typography across your product builds trust and reduces cognitive load.
-
-## Checklist: Is Your Typography System Ready?
-
-- [ ] Type scale is defined and modular
-- [ ] Font families are chosen with intention
-- [ ] Font sizes are consistent across components
-- [ ] Line heights are appropriate for context
-- [ ] Line length is 50-75 characters for body text
-- [ ] Color contrast meets WCAG AA standards
-- [ ] Hierarchy is clear and intentional
-- [ ] Responsive typography uses fluid scaling
-- [ ] Fonts are loaded efficiently
-- [ ] Typography works well on all devices
-- [ ] Typography is documented and shared with the team
-
-Great typography is the voice of your interface. Make it count.
+- `references/type-details.md` — font pairing table by personality, variable fonts, OpenType features (tabular numbers, small caps), full article/UI typography patterns, and the complete ratio → scale tables. Read when choosing fonts or styling long-form content.

@@ -12,12 +12,13 @@ Thanks for improving Vibe Building Skills. This repo is meant to stay practical,
 
 ## Skill Guidelines
 
-Each skill should:
+Every skill must meet the authoring standard in [`docs/SKILL_SPEC.md`](docs/SKILL_SPEC.md) — a skill is an operating procedure an AI agent executes, not documentation a human reads. In short, each skill should:
 
 - Live in its own directory under `skills/<category>/<skill-name>/`
-- Include a `SKILL.md` file with `name` and `description` frontmatter
+- Include a `SKILL.md` file with `name` and `description` frontmatter, where the description is a trigger contract (what it does, when to invoke it, what it produces)
+- Be written to the agent in imperative voice, with intake questions, a workflow with decision rules, a required output format, and a quality bar
+- Keep `SKILL.md` lean (≤ ~350 lines) and move deep material to `references/*.md` with when-to-read pointers
 - Be usable on its own without requiring the reader to inspect unrelated skills
-- Prefer concrete workflows, checklists, examples, and decision points
 - Avoid hardcoded secrets, tokens, private URLs, or personal credentials
 
 ## Before Opening a Pull Request

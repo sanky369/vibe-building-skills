@@ -1,201 +1,136 @@
 ---
 name: content-atomizer
-description: Repurpose one piece of content into 15+ pieces for different platforms. Use when maximizing content reach, building social media presence, or getting more value from your content creation.
+description: "Turn one piece of long-form content (blog post, video/podcast transcript, guide, talk) into a ready-to-post multi-platform content pack: LinkedIn posts, X/Twitter thread, newsletter item, short-video scripts, carousel outlines, quote pulls, and more — each natively adapted, not copy-pasted. Use when the user says 'repurpose this post', 'turn this into social content', 'atomize this', 'get more mileage out of my content', 'make LinkedIn posts from my article', or shares long-form content wanting distribution. Produces an idea inventory plus a per-platform atomization pack with a suggested posting order."
 ---
 
-# Content Atomizer Skill
+# Content Atomizer
 
-## Overview
+Break one substantial piece of content into many platform-native pieces. **Prime directive: adapt, never excerpt** — each atomic piece must stand alone as if written for that platform on purpose, carrying the user's voice, while format and length obey the platform. The second rule: atomize ideas, not paragraphs — you extract the content's core ideas first, then re-express each idea per platform.
 
-Content Atomizer is the skill of taking one piece of content and breaking it into many pieces for different platforms. This skill teaches you to maximize content reach.
+## When to use / when not to
 
-**Keywords**: content repurposing, content distribution, social media content, multi-channel content, content strategy, content multiplication
+- Use when there is existing long-form source content and the goal is distribution across channels.
+- If the user needs the long-form piece written first, use `skills/marketing/seo-content` — then come back.
+- If the user wants one great tweet/thread crafted and researched from scratch (not derived from source content), use `skills/marketing/tweet-writer` — it does niche research this skill skips.
+- If the user wants a full newsletter issue (not just an item), hand the source to `skills/marketing/newsletter`.
 
-## Core Methodology
+## Intake
 
-The principle is simple: **One piece of content, many formats and platforms.**
+Ask in one batch, only what's missing:
 
-A 2,000-word blog post can become:
-- 10 social media posts
-- 1 email newsletter
-- 3 short-form videos
-- 1 infographic
-- 1 podcast episode
-- 1 slide deck
-- 5 LinkedIn posts
-- 1 Twitter thread
+1. **The seed content** — the actual text/transcript (or link). Verify it's substantial enough: multiple distinct ideas and a point of view. If it's thin (one idea, <~500 words), say so and offer a single-platform adaptation instead of a pack.
+2. **Active platforms** — where does the user actually publish, and which 1–2 matter most?
+3. **Goal** — reach/followers, traffic back to the source, or list growth? (This sets the CTAs.)
+4. **Voice** — brand-voice guide or sample posts (use `skills/marketing/brand-voice` output if it exists).
 
-Your voice stays consistent, but the format and length adapt to each platform.
+Don't ask which formats they want — that's your job to propose in Step 3. If platforms are unknown, default to LinkedIn + X + newsletter item and say so. State assumptions and proceed — don't stall.
 
-## The 15 Content Formats
+## Workflow
 
-### Format 1: LinkedIn Posts (5-7 posts)
+### 1. Extract the idea inventory
 
-**Length**: 100-200 words  
-**Format**: Text + 1-2 images/video  
-**Structure**: Hook + Story/Insight + Lesson + CTA
+Read the seed content and pull 5–10 discrete ideas, each tagged by type — the type determines which formats it can power:
 
-### Format 2: Twitter/X Threads (2-3 threads)
+- **Core concept** — the piece's main argument
+- **Framework/process** — anything with steps or named parts (best carousel/thread material)
+- **Story/example** — narratives and cases (best LinkedIn/newsletter material)
+- **Surprising insight or contrarian take** — the counterintuitive bits (best hook material)
+- **Actionable tip** — standalone do-this-today advice (best short-video/single-post material)
+- **Quotable line** — sentences that sting (quote graphics, thread closers)
 
-**Length**: 5-10 tweets per thread  
-**Format**: Text  
-**Structure**: Hook tweet + Explanation tweets + Conclusion
+If you can't find at least 4 distinct ideas, the content is too thin for a full pack — tell the user and scale scope down.
 
-### Format 3: Instagram Captions (3-5 posts)
+### 2. Select formats
 
-**Length**: 100-150 words  
-**Format**: Image + Caption  
-**Structure**: Hook + Story/Insight + Lesson + CTA
+Pick 5–7 formats, never all 15 — quality over coverage (heuristic: a strong pack on the user's 2 priority platforms beats a thin spray across 8). Decision rules:
 
-### Format 4: TikTok/Short-Form Video Scripts (3-5 videos)
+- B2B / professional audience → weight LinkedIn posts + carousel; consumer/creator audience → weight short-video scripts + X.
+- Goal = traffic/list growth → include the newsletter item and give posts link-out CTAs; goal = reach → engagement CTAs, links in replies/comments.
+- Framework-type ideas present → include a carousel or thread; strong story present → include a story-post; no visual asset capacity → skip infographic/quote graphics, deliver text specs only.
 
-**Length**: 30-60 seconds  
-**Format**: Video script  
-**Structure**: Hook (3s) + Problem (5-10s) + Insight (10-15s) + CTA (3-5s)
+Format spec table (length and structure per format):
 
-### Format 5: Email Newsletter (1 email)
+| Format | Yield from one seed | Spec |
+|---|---|---|
+| LinkedIn posts | 3–5 | 100–200 words; hook line → story/insight → lesson → question or CTA; line breaks for scannability |
+| X/Twitter thread | 1–2 | 5–10 tweets; hook tweet ≤250 chars; one idea per tweet; closer with CTA (full craft: `skills/marketing/tweet-writer`) |
+| Single tweets | 3–5 | ≤110 chars preferred; sharpest standalone insights |
+| Newsletter item | 1 | 300–500 words; hook → insight → lesson → link to full piece |
+| Short-video scripts (TikTok/Reels/Shorts) | 2–3 | 30–60s; hook (≤3s) → problem → insight → CTA; write as spoken lines with [B-ROLL] notes |
+| Carousel outline | 1–2 | 5–10 slides; slide 1 = hook, one point per slide, last slide = CTA; text per slide ≤25 words |
+| Quote graphics (specs) | 3–5 | One pulled quote + attribution; supply exact text, no design |
+| Instagram captions | 2–3 | 100–150 words; hook first line (feed truncates), story → lesson → CTA |
+| Slide deck outline | 1 | 10–15 slides: title → problem → 3–5 content → conclusion → CTA |
+| FAQ/explainer | 1 | 5–10 Q&As, 40–80 word answers (feeds SEO FAQ blocks) |
+| Case study | 1 | 1,000–1,500 words; situation → action → result → lesson (only if seed contains a real result) |
+| Webinar/talk outline | 1 | Timed outline: intro → problem → solution → examples → Q&A → CTA (only on request) |
 
-**Length**: 300-500 words  
-**Format**: Email  
-**Structure**: Hook + Story/Insight + Lesson + CTA
+### 3. Propose the pack, then generate
 
-### Format 6: Podcast Episode Clips (2-3 clips)
+Show the user a one-screen plan first: idea inventory + chosen formats + which idea powers which piece. Get a quick confirm (or proceed if they said "just do it"). Then write **every piece in full** — no "you could write a post about X" stubs. While generating:
 
-**Length**: 30-90 seconds  
-**Format**: Audio clip + Transcript  
-**Structure**: Hook + Insight + Takeaway
+- Rewrite hooks natively per platform; never reuse the seed's opening line verbatim across pieces.
+- Keep facts and claims within what the seed content supports — atomizing must not amplify a hedge into a certainty or invent numbers.
+- Apply the one-CTA rule per piece, CTAs set by the goal from intake.
 
-### Format 7: YouTube Shorts (3-5 videos)
+### 4. Sequence the distribution
 
-**Length**: 15-60 seconds  
-**Format**: Vertical video  
-**Structure**: Hook (2s) + Content + CTA (3s)
+Order the pieces for posting: lead with the strongest hook on the priority platform, don't post two derivatives of the same idea on the same platform back-to-back, thread/carousel mid-pack when early pieces have tested the angle. Present as a numbered posting order (the user maps it to their own dates/scheduler — no calendar prescriptions).
 
-### Format 8: Infographic (1 infographic)
-
-**Format**: Visual representation  
-**Content**: Main headline + 3-5 key points + Visual elements
-
-### Format 9: Slide Deck (1 deck)
-
-**Length**: 10-15 slides  
-**Structure**: Title + Problem + 3-5 Content Slides + Conclusion + CTA
-
-### Format 10: Quote Graphics (5-10 graphics)
-
-**Format**: Image + Quote text  
-**Content**: One key quote + Attribution + Branded design
-
-### Format 11: Carousel Posts (2-3 carousels)
-
-**Length**: 5-10 slides per carousel  
-**Format**: Multi-slide post  
-**Structure**: Hook + 3-5 Content Slides + CTA
-
-### Format 12: Blog Post Snippets (3-5 snippets)
-
-**Length**: 300-500 words each  
-**Format**: Extracted section  
-**Content**: One key section + Link to full post
-
-### Format 13: Case Study (1 case study)
-
-**Length**: 1,000-1,500 words  
-**Format**: Detailed story  
-**Structure**: Situation + Action + Result + Lesson
-
-### Format 14: FAQ/Explainer (1 document)
-
-**Length**: 500-1,000 words  
-**Format**: Q&A format  
-**Structure**: 5-10 questions + Clear answers
-
-### Format 15: Webinar Outline (1 outline)
-
-**Length**: 45-60 minute webinar  
-**Format**: Detailed outline  
-**Structure**: Intro (5m) + Problem (10m) + Solution (20m) + Examples (10m) + Q&A (10m) + CTA (5m)
-
-## The Atomization Process
-
-### Step 1: Choose Your Seed Content
-
-Pick one piece of content that:
-- Is substantial and valuable
-- Reflects your positioning and voice
-- Has multiple key ideas
-
-### Step 2: Extract Core Ideas
-
-Break your content into 5-10 core ideas:
+## Required output format
 
 ```
-Idea 1: [Main concept]
-Idea 2: [Key framework]
-Idea 3: [Example or story]
-Idea 4: [Surprising insight]
-Idea 5: [Actionable takeaway]
+# Atomization Pack — [seed content title]
+
+## Idea inventory
+| # | Idea (one line) | Type | Powers |
+| 1 | ... | framework | Carousel, LinkedIn #2 |
+(5–10 rows)
+
+## Pack plan
+Formats chosen: [list] — [one-line rationale tied to platforms/goal]
+Skipped: [notable exclusions + why]
+
+## Pieces
+
+### LinkedIn Post 1 — [idea #]
+[Full post text, ready to paste]
+CTA: [the one ask]
+
+### X Thread — [idea #s]
+1/ [tweet]
+2/ [tweet]
+...
+(char count noted per tweet)
+
+### [Every other piece, fully written, grouped by platform]
+
+## Posting order
+1. [Piece] — [platform] — [why first]
+2. ...
+(strongest hook first; same-idea derivatives spaced apart)
+
+## Leftovers
+[Ideas from the inventory not yet used — future seed material]
 ```
 
-### Step 3: Plan Your Atomization
+## Quality bar
 
-Decide which formats to use:
+Check every piece before delivering:
 
-```
-LinkedIn Posts: 5 posts (Ideas 1-5)
-Twitter Threads: 2 threads (Ideas 1-2, 3-4)
-Email: 1 email (All ideas)
-TikTok: 3 videos (Ideas 1, 3, 5)
-Quote Graphics: 5 graphics (Key quotes)
-```
+- [ ] Every piece is fully written and paste-ready — zero outlines-as-deliverables (except formats that *are* outlines: carousel, deck, webinar)
+- [ ] No two pieces share an opening line; no piece is a copy-paste excerpt of the seed
+- [ ] Each piece within its format's length spec (count characters for tweets: ≤110 single, ≤250 per thread tweet)
+- [ ] Exactly one CTA per piece, aligned with the intake goal
+- [ ] Every claim/number traceable to the seed content or the user — nothing invented in translation
+- [ ] Voice consistent across all pieces — read three at random; they must sound like the same person
+- [ ] 5–7 formats, not more; each chosen format justified by a platform the user actually uses
+- [ ] Posting order spaces out same-idea derivatives
 
-### Step 4: Create Your Atomic Content
+## Integration
 
-Use prompts with Claude to generate all formats at once.
-
-### Step 5: Distribute Across Platforms
-
-Schedule your atomic content:
-
-```
-Monday: LinkedIn Post 1
-Tuesday: Twitter Thread 1
-Wednesday: Email Newsletter
-Thursday: TikTok Video 1
-Friday: LinkedIn Post 2
-Saturday: Instagram Post 1
-Sunday: Quote Graphic 1
-```
-
-## How to Use This Skill
-
-1. **First Time**: Choose one blog post or video and atomize it
-2. **With Claude**: Use prompts to create all atomic content
-3. **In Projects**: Reference this framework for every piece
-4. **Refinement**: Track which formats drive most engagement
-
-## Integration with Other Skills
-
-Content Atomizer works with:
-- **SEO Content** — Your blog posts become seed content
-- **Brand Voice** — Your voice stays consistent
-- **Newsletter** — Your newsletter content gets repurposed
-- **Email Sequences** — Your email content gets repurposed
-
-## Common Pitfalls
-
-**Exact Duplication** — Don't copy-paste. Adapt for each platform.  
-**Wrong Format** — A 500-word essay doesn't work on TikTok.  
-**Losing Your Voice** — Adapt format, not voice.  
-**Too Much Content** — You don't need all 15 formats. Pick 5-7.  
-**No Consistency** — Atomize regularly to build momentum.
-
-## Time Savings
-
-**Traditional**: 7.5 hours for 5 pieces  
-**Atomization**: 6 hours for 15+ pieces  
-**Savings**: 1.5 hours per cycle, 78 hours per year
-
-## Next Steps
-
-Once you're consistently atomizing content, move to Skill 10: Orchestrator to manage all skills together.
+- `skills/marketing/seo-content` — primary source of seed articles; atomize each published article as a standard follow-up.
+- `skills/marketing/brand-voice` — supplies the voice guide every piece must pass.
+- `skills/marketing/tweet-writer` — takes over when the X pieces deserve dedicated niche research and hook testing; hand it the idea inventory.
+- `skills/marketing/newsletter` — consumes the newsletter item; strong issues flow back here as seeds.
+- `skills/marketing/email-sequences` — value emails can be atomized into social pieces and vice versa.

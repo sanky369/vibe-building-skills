@@ -1,511 +1,119 @@
 ---
 name: error-handling-recovery
-description: Design error states and recovery workflows that guide users to resolution. Learn context-aware error messages, graceful degradation, and recovery patterns. Use when handling validation errors, network failures, permission issues, or system errors. Triggers on "error handling", "error message", "error state", "recovery", "validation error", "network error".
+description: "Audit and implement an app's error UX end-to-end: rewrite error messages, place them correctly, add recovery actions, and build error states for validation, network, permission, system, and 404 failures. Use when the user says 'improve my error handling', 'my error messages suck', 'users get stuck when something fails', 'add form validation errors', 'handle offline/network errors', 'design a 404 page', or when a review finds bare 'Something went wrong' strings, silent failures, or errors with no way forward. Produces an error-state matrix (every failure mode × message × recovery action) plus the implemented error components and copy."
 ---
 
 # Error Handling & Recovery
 
-## Overview
+Turn every failure into a guided path forward: find each way the app can fail, give it a specific human message, a correct placement, and at least one recovery action. **The prime directive: never blame the user, and never leave them at a dead end — every error state ships with a way out.** Deliver an error-state matrix covering the failure modes plus the implemented components and copy — not messaging guidelines alone.
 
-Errors are inevitable. The difference between a frustrating product and a caring one is how you handle them. This skill teaches you to design error states that guide users to resolution rather than leaving them stranded.
+## When to use / when not to
 
-## Core Philosophy: Never Blame the User
+Use for: error message copy, validation UX, network/offline failure handling, permission-denied and 404 pages, recovery workflows, graceful degradation, error accessibility.
 
-The first principle of error design is **never blame the user**. Errors are opportunities to help, not to criticize.
+Hand off instead when the real need is:
+- Preventing the wait/failure in the first place (retries as performance, optimistic rollback mechanics) → `skills/frontend-design/performance-optimization`
+- The loading half of the async lifecycle (skeletons, spinners, empty states) → `skills/frontend-design/loading-states` — this skill owns what happens when loading *fails*
+- Error animation timing → `skills/frontend-design/interaction-physics`
+- Full accessibility audit beyond error surfaces → `skills/frontend-design/accessibility-excellence`
 
-**Bad Error Messages:**
-- "Invalid input"
-- "Error 404"
-- "Something went wrong"
+## Step 0 — Inspect the codebase, then ask only what's left
 
-**Good Error Messages:**
-- "Please enter a valid email address (e.g., user@example.com)"
-- "We couldn't find that page. Try searching instead."
-- "Your connection was lost. We saved your work. Reconnect when ready."
+1. Harvest existing error surfaces: grep for `catch`, `.catch(`, `onError`, `error` state variables, `toast.error`, `alert(`, error boundary components, and string literals like "error", "failed", "wrong", "invalid". Collect the actual message strings — the current copy is your before-picture.
+2. Map failure classes present in the app: forms (validation), API calls (network/server), auth'd resources (permission), routing (404), plus anything domain-specific (payment declines, quota limits, file-type rejections).
+3. Find the gaps: catch blocks that swallow errors silently, fetches with no error branch, forms that only style the border red, missing error boundaries around independent sections, no offline handling.
+4. Check a11y wiring: search for `role="alert"`, `aria-live`, `aria-invalid`, `aria-describedby`. Absence = automatic fix items.
 
-## Error Message Anatomy
+Ask the user (one batch, only if not inferable): the support channel to point to (email/help center — needed for system-error copy), and whether any operations are high-stakes (payments, destructive actions) needing extra-careful recovery. If unanswerable, use a placeholder support link, flag it, and proceed.
 
-### The Four Components
+## Workflow
 
-Every error message should include:
+### 1. Build the error-state matrix
 
-1. **What happened** — Clear, specific description
-2. **Why it happened** — Context for the user
-3. **What to do** — Actionable next steps
-4. **Where to get help** — Support resources if needed
+For every failure mode found in Step 0, fill one row: **failure mode → what the user was doing → message (what happened / why / what to do) → placement → recovery action(s) → a11y wiring**. This matrix is the audit deliverable and the implementation checklist.
 
-### Example: Complete Error Message
+### 2. Write each message with the four-part anatomy
+
+1. **What happened** — specific, plain language ("Email already in use", not "Invalid input")
+2. **Why** — one line of context, no jargon (never surface "CORS policy violation" to a user)
+3. **What to do** — the concrete next step(s)
+4. **Where to get help** — support pointer for system errors, with an error/reference ID when the backend provides one
+
+Copy rules: never blame ("you entered an invalid…" → "please enter a…"); state the fix, not just the rule; keep the user's data intact in the message's promises only if the app actually preserves it — never claim "we saved your work" unless it's true.
+
+### 3. Decide placement and recovery per failure class
+
+| Class | Placement | Timing | Recovery |
+|---|---|---|---|
+| Validation | Inline, adjacent to the field | On blur or submit — never on each keystroke of an incomplete entry; clear immediately once fixed | Fix guidance; shortcut when it exists ("Sign in instead") |
+| Network | Section-level state or toast; full state if the whole view failed | On failure | Retry button; preserve entered data; offline continuation if supported |
+| Permission | Full state replacing the blocked content | On load/action | Explain why + "Request access" or path to the owner |
+| System/5xx | Section or page state | On failure | Retry + support contact + error ID |
+| 404 | Dedicated page | On route | Search + links to key destinations |
+
+Fork rules:
+- **Inline vs modal vs page:** field-scoped → inline; a blocking, high-stakes failure mid-flow (payment declined) → modal recovery; the whole resource unavailable → full page/section state. Toasts only for failures unrelated to the user's current focus — never for form validation.
+- **Auto-retry vs manual:** idempotent reads may retry automatically with backoff; mutations get an explicit user-triggered retry only (never silently resubmit a payment or post).
+- **Degrade, don't break:** an unavailable feature is disabled with an explanation, not hidden and not a crash. Wrap independent UI regions in error boundaries so one failure can't blank the page.
+
+### 4. Implement with accessibility built in
+
+- Dynamic errors announce via `role="alert"` (task-blocking) or `aria-live="polite"` (background).
+- Fields: `aria-invalid="true"` + `aria-describedby` pointing at the message element.
+- On submit failure, move focus to the first invalid field or an error summary linking to each.
+- Icon + text + color on every indicator — never color alone.
+- Canonical markup/CSS for every class and the recovery patterns: `references/patterns.md` — read it when writing the code.
+
+### 5. Verify
+
+Force each failure (invalid input, network offline in devtools, a 500 via bad endpoint, an unknown route) and confirm: message renders in the right place, recovery action works, entered data survives, screen reader announcement fires (or the wiring is present), nothing fails silently.
+
+## Required output format
+
+Deliver both artifacts:
+
+**1. The code** — implemented error components, copy strings, error boundaries, and a11y wiring, edited into the app's existing component and styling conventions.
+
+**2. Error-State Matrix** (markdown):
 
 ```
-❌ Email already in use
+## Error-state matrix
+| # | Failure mode | Class | Message (final copy) | Placement | Recovery | A11y | Status |
+| 1 | Signup email taken | validation | "Email already in use…" | inline under field | "Sign in instead" link | aria-invalid + describedby + role=alert | implemented |
+| 2 | Feed fetch fails | network | "We couldn't load your feed…" | section state | Retry | polite live region | implemented |
+| 3 | Card declined | system | "Your card was declined…" | modal | Try again / other method | alertdialog, focus trapped | implemented |
 
-This email is already associated with an account. 
+## Silent failures fixed
+| Location | Was | Now |
 
-Try:
-- Sign in with this email instead
-- Use a different email address
-- Reset your password if you forgot it
+## Copy changes
+| Before | After |
 
-Need help? Contact support@example.com
+## Assumptions
+[Support contact used, failure modes you could not reproduce, etc.]
 ```
 
-## Error Message Design Principles
+## Quality bar (check before delivering)
 
-### 1. Be Specific, Not Generic
+- [ ] Every row in the matrix has a recovery action — zero dead ends
+- [ ] No message blames the user; no raw technical jargon (stack traces, status codes, CORS) shown to users
+- [ ] Every message states what to do, not only what went wrong
+- [ ] Validation fires on blur/submit and clears on fix; no keystroke-nagging
+- [ ] Errors sit adjacent to their cause (no orphaned error summaries without field links)
+- [ ] All indicators use icon/text + color, never color alone
+- [ ] `role="alert"`/`aria-live`, `aria-invalid`, `aria-describedby`, and focus management implemented
+- [ ] No `catch` block in touched code swallows an error without a user-facing or logged consequence
+- [ ] Mutations never auto-retry; user data is preserved across failures in touched flows
 
-```html
-<!-- Bad - Generic -->
-<div class="error">Error: Invalid field</div>
+Hard don'ts: don't promise recovery the app can't deliver ("your work is saved" without persistence); don't use humor for destructive or payment failures; don't add error UI that hides the actual error from developers — keep console/telemetry logging intact.
 
-<!-- Good - Specific -->
-<div class="error">
-  <strong>Password must be at least 8 characters</strong>
-  <p>Include uppercase, lowercase, and numbers</p>
-</div>
-```
+## Integration
 
-### 2. Use Friendly, Human Language
+- `skills/frontend-design/loading-states` → hands you its error-empty placements; you expand them into full messages + recovery. The loading→error transition should reuse the same layout slot.
+- `skills/frontend-design/performance-optimization` → optimistic-UI rollbacks from that skill need your failure toasts/messages when a background sync fails.
+- `skills/frontend-design/component-architecture` → provides the form/input components you add error variants to; add ErrorState as a shared component there.
+- `skills/frontend-design/accessibility-excellence` ← audits your live-region and focus behavior; build to its standards up front.
 
-```html
-<!-- Bad - Technical jargon -->
-<div class="error">CORS policy violation detected</div>
+## References
 
-<!-- Good - Human language -->
-<div class="error">
-  We couldn't connect to the server. Check your internet and try again.
-</div>
-```
-
-### 3. Place Errors Next to the Problem
-
-```html
-<!-- Bad - Error far from input -->
-<div class="error-summary">Email is invalid</div>
-<form>
-  <input type="email" />
-</form>
-
-<!-- Good - Error next to input -->
-<form>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input id="email" type="email" />
-    <div class="error">Please enter a valid email</div>
-  </div>
-</form>
-```
-
-### 4. Use Visual Indicators (Not Color Alone)
-
-```css
-/* Bad - Color only */
-.error-input {
-  border-color: red;
-}
-
-/* Good - Icon + color + text */
-.error-input {
-  border-color: var(--error-color);
-  border-width: 2px;
-}
-
-.error-input::before {
-  content: '⚠️';
-  margin-right: 8px;
-}
-```
-
-### 5. Provide Constructive Guidance
-
-```html
-<!-- Bad - Just says what's wrong -->
-<div class="error">Password too weak</div>
-
-<!-- Good - Explains how to fix -->
-<div class="error">
-  <strong>Password too weak</strong>
-  <ul>
-    <li>✓ At least 8 characters</li>
-    <li>✗ At least one uppercase letter</li>
-    <li>✓ At least one number</li>
-    <li>✓ At least one special character</li>
-  </ul>
-</div>
-```
-
-## Error Types and Patterns
-
-### 1. Validation Errors
-
-Errors that occur when user input doesn't meet requirements.
-
-**Timing:** Show after user leaves the field (blur event)
-
-```javascript
-// Good - Validate on blur, not while typing
-const handleBlur = (e) => {
-  const value = e.target.value;
-  if (!isValidEmail(value)) {
-    showError('Please enter a valid email');
-  }
-};
-
-// Bad - Validate while typing
-const handleChange = (e) => {
-  if (!isValidEmail(e.target.value)) {
-    showError('Invalid email');  // Too aggressive
-  }
-};
-```
-
-### 2. Network Errors
-
-Errors that occur when the server is unreachable or requests fail.
-
-**Pattern:** Show error, offer retry, allow offline continuation
-
-```html
-<div class="error-state">
-  <span class="error-icon">📡</span>
-  <h3>Connection Lost</h3>
-  <p>We couldn't reach the server. Your changes are saved locally.</p>
-  <button class="button-primary">Retry</button>
-  <button class="button-secondary">Continue Offline</button>
-</div>
-```
-
-### 3. Permission Errors
-
-Errors that occur when user lacks permission to perform an action.
-
-**Pattern:** Explain why, offer alternatives, suggest next steps
-
-```html
-<div class="error-state">
-  <span class="error-icon">🔒</span>
-  <h3>Permission Denied</h3>
-  <p>You don't have permission to edit this document.</p>
-  <p>Ask the owner to give you edit access.</p>
-  <button class="button-secondary">Request Access</button>
-</div>
-```
-
-### 4. System Errors
-
-Errors that occur due to system failures or unexpected issues.
-
-**Pattern:** Apologize, explain impact, offer workarounds
-
-```html
-<div class="error-state">
-  <span class="error-icon">⚠️</span>
-  <h3>Something Went Wrong</h3>
-  <p>We're having trouble processing your request. Our team has been notified.</p>
-  <p>Error ID: #12345 (share this if contacting support)</p>
-  <button class="button-primary">Try Again</button>
-  <button class="button-secondary">Contact Support</button>
-</div>
-```
-
-### 5. 404 Errors
-
-Errors that occur when requested resource doesn't exist.
-
-**Pattern:** Acknowledge, explain, guide to alternatives
-
-```html
-<div class="error-state">
-  <h1>404 - Page Not Found</h1>
-  <p>The page you're looking for doesn't exist or has been moved.</p>
-  <form class="search-form">
-    <input type="search" placeholder="Search for what you need..." />
-    <button type="submit">Search</button>
-  </form>
-  <nav class="error-nav">
-    <a href="/">Home</a>
-    <a href="/help">Help Center</a>
-    <a href="/contact">Contact Us</a>
-  </nav>
-</div>
-```
-
-## Error Message Styling
-
-### CSS for Error States
-
-```css
-/* Error container */
-.error-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-  text-align: center;
-  background: var(--error-bg);
-  border-radius: 8px;
-  border-left: 4px solid var(--error-color);
-}
-
-/* Error icon */
-.error-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-}
-
-/* Error title */
-.error-state h3 {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--error-color);
-  margin-bottom: 8px;
-}
-
-/* Error description */
-.error-state p {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
-  max-width: 400px;
-}
-
-/* Error input */
-.error-input {
-  border-color: var(--error-color);
-  border-width: 2px;
-  background-color: var(--error-bg);
-}
-
-.error-input:focus {
-  border-color: var(--error-color);
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
-
-/* Error message below input */
-.error-message {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
-  font-size: 14px;
-  color: var(--error-color);
-  animation: slideDown 300ms ease-out;
-}
-
-.error-message::before {
-  content: '⚠️';
-  margin-right: 8px;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-```
-
-## Recovery Workflows
-
-### Pattern 1: Inline Recovery
-
-For simple errors, provide recovery action inline.
-
-```html
-<div class="form-group">
-  <label for="email">Email</label>
-  <input id="email" type="email" />
-  <div class="error">
-    This email is already registered.
-    <button class="link-button">Sign in instead</button>
-  </div>
-</div>
-```
-
-### Pattern 2: Modal Recovery
-
-For critical errors, use a modal to guide recovery.
-
-```html
-<div class="modal error-modal">
-  <div class="modal-content">
-    <h2>Payment Failed</h2>
-    <p>Your card was declined. Please try another payment method.</p>
-    <form>
-      <div class="form-group">
-        <label>Card Number</label>
-        <input type="text" placeholder="1234 5678 9012 3456" />
-      </div>
-      <button class="button-primary">Try Again</button>
-      <button class="button-secondary">Use Different Method</button>
-    </form>
-  </div>
-</div>
-```
-
-### Pattern 3: Progressive Recovery
-
-For complex errors, guide users through steps.
-
-```html
-<div class="recovery-steps">
-  <div class="step active">
-    <h3>Step 1: Check Connection</h3>
-    <p>Make sure you're connected to the internet.</p>
-    <button class="button-primary">Retry</button>
-  </div>
-  <div class="step">
-    <h3>Step 2: Clear Cache</h3>
-    <p>Clear your browser cache and try again.</p>
-    <button class="button-secondary">Learn How</button>
-  </div>
-  <div class="step">
-    <h3>Step 3: Contact Support</h3>
-    <p>If the problem persists, contact our support team.</p>
-    <button class="button-secondary">Contact Support</button>
-  </div>
-</div>
-```
-
-## Graceful Degradation
-
-When features fail, degrade gracefully rather than breaking the entire interface.
-
-### Example: Image Loading Error
-
-```html
-<!-- Show fallback when image fails -->
-<img 
-  src="image.jpg" 
-  alt="Product photo"
-  onerror="this.src='placeholder.jpg'"
-/>
-```
-
-### Example: Feature Unavailable
-
-```html
-<!-- Disable feature, explain why -->
-<button disabled title="Feature unavailable in offline mode">
-  Share
-</button>
-<p class="help-text">
-  You're offline. Sharing will be available when you reconnect.
-</p>
-```
-
-## Accessibility in Error Handling
-
-### 1. Announce Errors to Screen Readers
-
-```html
-<div role="alert" aria-live="polite">
-  Please enter a valid email address
-</div>
-```
-
-### 2. Use ARIA Attributes
-
-```html
-<input 
-  type="email" 
-  aria-invalid="true"
-  aria-describedby="email-error"
-/>
-<div id="email-error" class="error-message">
-  Please enter a valid email
-</div>
-```
-
-### 3. Don't Rely on Color Alone
-
-```css
-/* Bad - Color only */
-.error-input {
-  border-color: red;
-}
-
-/* Good - Icon + color + text */
-.error-input {
-  border: 2px solid red;
-}
-
-.error-input::after {
-  content: '⚠️';
-}
-```
-
-## How to Use This Skill with Claude Code
-
-### Design Error States
-
-```
-"I'm using the error-handling-recovery skill. Can you help me design error states for:
-- Form validation errors
-- Network failures
-- Permission denied
-- 404 pages
-Include specific error messages and recovery actions"
-```
-
-### Create Error Message Guidelines
-
-```
-"Can you create error message guidelines for my app?
-- Never blame the user
-- Always provide next steps
-- Include error IDs for support
-- Use friendly language"
-```
-
-### Audit Error Handling
-
-```
-"Can you audit my error handling?
-- Are my error messages specific?
-- Do I provide recovery actions?
-- Are errors accessible?
-- Can users recover without support?"
-```
-
-## Integration with Other Skills
-
-- **component-architecture** — Error components
-- **accessibility-excellence** — Accessible error messages
-- **interaction-design** — Error animations and transitions
-- **typography-system** — Error message typography
-
-## Key Principles
-
-**1. Never Blame the User**
-Errors are opportunities to help, not criticize.
-
-**2. Be Specific**
-Generic errors leave users confused and frustrated.
-
-**3. Provide Recovery**
-Always offer a path forward.
-
-**4. Be Human**
-Use friendly, conversational language.
-
-**5. Make It Accessible**
-Errors must be perceivable to everyone.
-
-## Checklist: Is Your Error Handling Ready?
-
-- [ ] Error messages are specific, not generic
-- [ ] Error messages use friendly language
-- [ ] Errors are placed next to the problem
-- [ ] Visual indicators are used (not color alone)
-- [ ] Recovery actions are provided
-- [ ] Errors are announced to screen readers
-- [ ] Error IDs are provided for support
-- [ ] Network errors offer retry options
-- [ ] Permission errors explain why
-- [ ] 404 pages guide to alternatives
-
-Thoughtful error handling transforms frustration into confidence.
+- `references/patterns.md` — bad→good message rewrites, complete markup for each failure class (validation, network, permission, system, 404), inline/modal/progressive recovery patterns, graceful-degradation snippets, error styling CSS, and the a11y wiring blocks. Read it when writing the components and copy.

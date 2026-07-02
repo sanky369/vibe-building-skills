@@ -1,304 +1,134 @@
 ---
 name: product-photography
-description: Generate professional product photography and hero shots using AI. Use when creating product images for e-commerce, landing pages, or marketing materials.
+description: "Produces professional AI product photography — clean e-commerce shots, lifestyle scenes, hero images, macro detail shots, and flat lays — as generation-ready prompt specs, and generates the files via FAL.ai fal-ai/nano-banana-pro when the automation is configured. Use when the user says 'product photos', 'shots of my product', 'images for my store / listing / landing page', 'hero image for my product', 'lifestyle photos', or shares a product needing marketing imagery. Produces one prompt-spec block per shot (shot type, lighting, background, composition, aspect ratio, negative constraints) with a shot list, variant plan, and file-naming conventions; runs docs/creative_cli.py product when FAL_API_KEY is set."
 ---
 
-# Product Photography Skill
+# Product Photography
 
-## Overview
+Turn a product description into a coherent **shot list** of prompt specs that
+generate commerce-grade product imagery. **Prime rule: one product, one visual
+world.** Every shot in a set shares the brand's lighting, palette, and treatment
+so listings, landing pages, and social posts read as one brand — a stunning hero
+next to a mismatched lifestyle shot is worse than two average matching ones.
 
-Product Photography generates professional-quality product shots using Image Generation. This skill teaches you to create hero shots and e-commerce photography.
+## When to use / when not to
 
-**Keywords**: product photography, product shots, e-commerce photography, hero images, product marketing, visual commerce, AI photography
+Use for any imagery whose subject is a product: e-commerce listings, landing-page
+heroes, marketing shots, detail close-ups. Hand off instead when:
 
-## Core Methodology
+- The asset is a platform-sized post *about* the product (text overlays, promo
+  layouts) → `skills/creative/social-graphics`
+- The user needs a logo/icon/pattern → `skills/creative/brand-asset`
+- It's a general image with no product subject → `skills/creative/image-generation`
+- No visual direction exists and multiple assets are coming →
+  `skills/creative/creative-strategist` first; consume its style block here
+- The product should move → `skills/creative/product-video` (stills from this
+  skill are its source frames)
 
-Professional product photography has three elements:
+## Intake
 
-1. **Product Presentation** — How the product is shown
-2. **Lighting and Composition** — Professional visual treatment
-3. **Context and Lifestyle** — Where/how the product is used
+Ask in one batch, only what's missing:
 
-## Product Photography Types
+1. **Product** — what is it, exactly? Materials, colors, distinguishing details.
+   (If a real photo exists, ask for it as reference for accuracy.)
+2. **Destination** — listing, landing page, ads, social? (drives shot types and
+   aspect ratios)
+3. **Positioning** — premium/luxury, accessible, playful, technical?
+4. **Style anchor** — Creative Direction Brief / style block, or brand colors?
+5. **Automation** — `FAL_API_KEY` set, or deliver specs only?
 
-### Type 1: Clean Product Shot
-**Use For**: E-commerce listings, product pages, catalogs
+Infer, don't ask: aspect ratios from destination (listing → `1:1`, landing hero →
+`16:9`, social feed → `4:5`); resolution `2K` default, `4K` for heroes.
+**Don't stall:** with product + destination known, assume the rest, label it, go.
 
-**Prompt Template**:
+## Workflow
+
+1. **Build the shot list.** Map destination → shot types (decision rules):
+   - E-commerce listing → 1 clean shot + 1–2 detail shots (+ 1 lifestyle if the
+     platform allows gallery images)
+   - Landing page → 1 hero shot + 1 lifestyle + 1 detail
+   - Social/ads → 1–2 lifestyle + 1 flat lay (product families) or hero
+   - "Just one image" → pick the single type that serves the stated use; say why
+2. **Fix the shared treatment.** Choose one lighting style and palette for the
+   whole set from the style block (or infer from positioning: premium → dramatic
+   or studio; approachable → natural golden hour; minimal brand → high-key).
+   Every spec in the set uses it.
+3. **Write one prompt spec per shot** using the templates in
+   `references/shot-library.md` — read it now; it has the five shot-type
+   templates plus the lighting/background/composition prompt language. Name
+   colors in words and hex. Always state what must NOT appear (no watermark, no
+   invented logos or label text unless the exact text is supplied, no clutter).
+4. **Variants.** Hero and clean shots get 3–4 variants (`--num-images 3` or
+   distinct specs varying composition/background); detail and lifestyle shots
+   get 2. The user picks winners.
+5. **Generate or deliver.** If `FAL_API_KEY` (or `FAL_KEY`) is set:
+
+   ```bash
+   python docs/creative_cli.py product \
+     --product-name "Luxury Watch" \
+     --prompt "<full prompt>" \
+     --aspect-ratio 1:1 --resolution 2K --num-images 3
+   ```
+
+   Images save to `assets/product-photography/<product-slug>/` as
+   `<product>_<n>_<timestamp>.png`. If no key, deliver the specs plus the exact
+   commands — never claim generation happened. Full parameter reference:
+   `skills/creative/image-generation/references/automation.md`.
+6. **Review against the quality bar**, fix misses with the fix-it phrases in
+   `references/shot-library.md` (one iteration round), then present winners with
+   file paths and a one-line recommendation per slot.
+
+## Required output format
+
+Deliver a shot list of these blocks (one per shot):
+
 ```
-[Product name], professional product photography, white background, 
-studio lighting, sharp focus, 4K, centered composition, [color palette], 
-clean aesthetic, high-end product photography, trending on [platform]
-```
-
-**Example**:
-```
-Luxury leather wallet, professional product photography, white background, 
-studio lighting, sharp focus, 4K, centered composition, brown and gold tones, 
-clean aesthetic, high-end product photography, trending on behance
-```
-
-### Type 2: Lifestyle Shot
-**Use For**: Social media, marketing, lifestyle branding
-
-**Prompt Template**:
-```
-[Product] in use, lifestyle photography, [setting], natural lighting, 
-[composition], [mood], professional quality, 4K, [color palette], 
-magazine quality photography
-```
-
-**Example**:
-```
-Coffee cup in use on a wooden desk, lifestyle photography, morning setting, 
-natural golden hour lighting, rule of thirds composition, warm and inviting mood, 
-professional quality, 4K, warm brown and cream tones, magazine quality photography
-```
-
-### Type 3: Hero Shot
-**Use For**: Landing pages, main product images, featured content
-
-**Prompt Template**:
-```
-[Product] hero shot, dramatic professional photography, [background], 
-cinematic lighting, dynamic composition, [mood], 4K, [color palette], 
-award-winning photography, trending on awwwards
-```
-
-**Example**:
-```
-Smartphone hero shot, dramatic professional photography, gradient background, 
-cinematic lighting, dynamic composition, premium mood, 4K, blue and silver tones, 
-award-winning photography, trending on awwwards
-```
-
-### Type 4: Detail Shot
-**Use For**: Showcasing features, close-ups, texture details
-
-**Prompt Template**:
-```
-Close-up of [product detail], macro photography, sharp focus, professional lighting, 
-[mood], 4K, [color palette], studio quality, high detail, trending on [platform]
-```
-
-**Example**:
-```
-Close-up of watch face, macro photography, sharp focus, professional studio lighting, 
-luxury mood, 4K, gold and black tones, studio quality, high detail, trending on behance
-```
-
-### Type 5: Flat Lay
-**Use For**: Social media, lifestyle content, styled shots
-
-**Prompt Template**:
-```
-Flat lay of [product and accessories], styled photography, [background], 
-natural lighting, overhead composition, [mood], 4K, [color palette], 
-professional styling, magazine quality
-```
-
-**Example**:
-```
-Flat lay of skincare products and accessories, styled photography, marble background, 
-natural soft lighting, overhead composition, luxury mood, 4K, white and rose gold tones, 
-professional styling, magazine quality
+## Shot Spec — [shot name, e.g. hero-01]
+- **Shot type:** clean / lifestyle / hero / detail / flat lay
+- **Destination:** [listing / landing hero / ad / social]
+- **Subject:** [product, concretely — materials, colors, orientation]
+- **Setting / background:** [white / gradient X→Y / lifestyle setting / textured]
+- **Lighting:** [studio / natural golden hour / dramatic rim / high-key]
+- **Composition:** [centered / rule of thirds / negative space / overhead]
+- **Mood:** [2–3 adjectives, from the style block]
+- **Aspect ratio:** [ratio] · **Resolution:** [1K/2K/4K] · **Format:** png
+- **Negative constraints:** [no watermark, no invented label text, ...]
+- **Prompt (final, paste-ready):**
+  > [single flowing prompt]
+- **Variants:** [n] — [what varies]
+- **File naming:** assets/product-photography/<product-slug>/<product>_<n>_<timestamp>.png
+- **Generate with:** `python docs/creative_cli.py product --product-name "..." --prompt "..." --aspect-ratio ... --resolution ... --num-images n`
 ```
 
-## Lighting Techniques
+Close with a **Set summary**: shared lighting/palette line, shot count per type,
+and (if generated) recommended winner per slot with saved paths.
 
-### Lighting Style 1: Studio Lighting
-```
-"Studio lighting, professional setup, controlled lighting, 
-even illumination, no harsh shadows, clean aesthetic"
-```
+## Quality bar
 
-**Best For**: Product shots, clean presentations
+- [ ] Every shot in the set shares one lighting style and palette (the set reads as one brand)
+- [ ] Each spec names shot type, background, lighting, composition, and mood explicitly
+- [ ] Aspect ratio matches the destination, not the `1:1` default by inertia
+- [ ] Product details (materials, colors) match what the user described — no invented features, engravings, or label text
+- [ ] Negative constraints present on every spec
+- [ ] Hero/clean shots have 3+ variants; nothing shipped as a single take
+- [ ] Only real automation parameters used (model is `fal-ai/nano-banana-pro`; no size/steps/guidance knobs exist)
 
-### Lighting Style 2: Natural Lighting
-```
-"Natural lighting, golden hour, soft diffused light, 
-warm tones, gentle shadows"
-```
+Hard don'ts: never render readable brand/label text unless the user supplied the
+exact string; never mix premium dramatic lighting and casual snapshot styles in
+one set; never present AI shots as real photographs of the user's actual unit —
+if fidelity to the exact physical product matters, say so and recommend
+compositing or a reference-photo workflow.
 
-**Best For**: Lifestyle shots, authentic feel
+## Integration
 
-### Lighting Style 3: Dramatic Lighting
-```
-"Dramatic lighting, rim lighting, moody atmosphere, 
-cinematic shadows, high contrast"
-```
-
-**Best For**: Hero shots, premium positioning
-
-### Lighting Style 4: Minimalist Lighting
-```
-"Minimalist lighting, soft key light, subtle shadows, 
-clean and simple, high-key lighting"
-```
-
-**Best For**: Minimalist brands, clean aesthetics
-
-## Background Options
-
-### Background 1: White/Clean
-```
-"White background, clean aesthetic, minimal, professional"
-```
-
-### Background 2: Gradient
-```
-"Gradient background, [color1] to [color2], smooth transition, 
-modern aesthetic"
-```
-
-### Background 3: Textured
-```
-"Textured background, [material], subtle texture, professional, 
-[color]"
-```
-
-### Background 4: Lifestyle
-```
-"[Setting] background, lifestyle context, natural environment, 
-[mood]"
-```
-
-### Background 5: Blurred
-```
-"Blurred background, bokeh, depth of field, focus on product, 
-[color] tones"
-```
-
-## Composition Techniques
-
-### Composition 1: Centered
-```
-"Centered composition, symmetrical, product in center, 
-balanced, professional"
-```
-
-**Best For**: Clean product shots, e-commerce
-
-### Composition 2: Rule of Thirds
-```
-"Rule of thirds composition, product positioned at intersection, 
-dynamic, professional"
-```
-
-**Best For**: More interesting, professional photography
-
-### Composition 3: Leading Lines
-```
-"Leading lines composition, lines guide eye to product, 
-dynamic, professional"
-```
-
-**Best For**: Lifestyle shots, storytelling
-
-### Composition 4: Negative Space
-```
-"Lots of negative space, product in corner, minimalist, 
-clean aesthetic"
-```
-
-**Best For**: Minimalist brands, luxury positioning
-
-## Complete Product Photography Prompts
-
-### E-Commerce Product Shot
-```
-Professional product photography of [product name], white background, 
-studio lighting, sharp focus, 4K, centered composition, [specific colors], 
-clean aesthetic, high-end product photography, no shadows, trending on amazon
-```
-
-### Lifestyle Marketing Shot
-```
-[Product] in lifestyle setting, professional photography, [setting], 
-natural golden hour lighting, rule of thirds, [mood], 4K, [color palette], 
-magazine quality, authentic, professional styling
-```
-
-### Premium Hero Image
-```
-[Product] hero shot, dramatic cinematic photography, gradient [color1] to [color2] 
-background, professional lighting, dynamic composition, luxury aesthetic, 4K, 
-award-winning photography, trending on awwwards, premium quality
-```
-
-### Social Media Product Post
-```
-Product photography for Instagram, [product], [background], professional lighting, 
-eye-catching composition, [color palette], 1080x1080, high contrast, modern aesthetic, 
-trending on instagram, professional quality
-```
-
-### Detail/Feature Showcase
-```
-Close-up detail shot of [product feature], macro photography, sharp focus, 
-professional studio lighting, [mood], 4K, [color palette], high detail, 
-showcase quality, trending on behance
-```
-
-## How to Use This Skill
-
-1. **Choose Your Photography Type** — Which type matches your need?
-2. **Select Your Lighting** — What lighting style fits your brand?
-3. **Choose Your Background** — What background works best?
-4. **Pick Your Composition** — How should the product be positioned?
-5. **Build Your Prompt** — Combine all elements
-6. **Generate Image** — Use Image Generation skill
-7. **Refine** — Iterate based on results
-
-## Integration with Other Skills
-
-Product Photography works with:
-- **Creative Strategist** — Your style guide informs photography style
-- **Image Generation** — Uses FAL.ai to create images
-- **Social Graphics** — Product photos become social assets
-- **Brand Asset** — Product shots become brand elements
-
-## Pro Tips
-
-**Consistency**: Use same lighting and composition for product series  
-**Color Accuracy**: Match your Creative Strategist color palette  
-**Quality**: Use 1024x1024 or larger for product photography  
-**Multiple Angles**: Generate same product from different angles  
-**Testing**: Generate variations before choosing final  
-**Styling**: Include relevant accessories in lifestyle shots  
-**Context**: Show product in use or in relevant environment
-
-## Common Pitfalls
-
-**Poor Lighting** — Lighting is crucial. Be specific about lighting style.  
-**Inconsistent Style** — Products don't look like they're from same brand.  
-**Cluttered Background** — Background competes with product.  
-**Wrong Composition** — Product positioning doesn't draw eye.  
-**Low Quality** — Use high image size and quality descriptors.  
-**Missing Context** — Lifestyle shots need clear setting and mood.
-
-## Troubleshooting
-
-### Product Looks Cheap
-- Add "premium," "luxury," "high-end" to prompt
-- Use dramatic lighting instead of flat lighting
-- Add quality descriptors: "professional," "award-winning"
-
-### Background Distracts from Product
-- Use white or gradient background instead
-- Add "minimal background," "focus on product"
-- Increase negative space
-
-### Lighting Looks Unnatural
-- Specify exact lighting type: "studio," "natural," "golden hour"
-- Add "professional lighting," "cinematic"
-- Use "soft," "diffused," "even illumination"
-
-### Product Doesn't Match Brand Colors
-- Add specific color names to prompt
-- Reference your Creative Strategist color palette
-- Use color hex codes if possible
-
-## Next Steps
-
-Once you're creating product photography, move to Skill 04: Product Video to bring your products to life with animation.
+- `skills/creative/creative-strategist` → upstream; its style block sets this
+  set's lighting, palette, and mood fields.
+- `skills/creative/image-generation` → shared automation and prompt discipline;
+  `skills/creative/image-generation/references/automation.md` is the parameter
+  source of truth.
+- `skills/creative/social-graphics` → consumes winning shots as raw material for
+  platform posts.
+- `skills/creative/product-video` → consumes the hero/lifestyle stills as frames
+  and art direction.
+- `references/shot-library.md` — full shot-type templates, lighting/background/
+  composition prompt language, and fix-it phrases. Read before writing specs.

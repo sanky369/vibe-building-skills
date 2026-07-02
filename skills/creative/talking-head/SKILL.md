@@ -1,342 +1,130 @@
 ---
 name: talking-head
-description: Create presenter and UGC-style video content. Use when creating educational videos, testimonials, product demos, or personal brand content.
+description: "Plan presenter-led and UGC-style videos: choose the presenter archetype, define styling, setting, lighting, and framing, write the hook/body/CTA script skeleton, and produce keyframe prompts for the repo's FAL.ai pipeline. Use whenever the user wants a talking-head video, presenter video, UGC ad, testimonial, founder video, explainer with a person on camera, spokesperson content, or 'someone talking about my product' — even if they just say 'I need a video of a person explaining this'. Produces a Talking Head Video Spec: presenter definition, look/setting/lighting/framing decisions, timed script skeleton, and generation-ready keyframe prompts for fal-ai/nano-banana-pro."
 ---
 
-# Talking Head Skill
+# Talking Head
+
+Turn a message and an audience into a complete **Talking Head Video Spec** — one presenter archetype fully specified (styling, setting, lighting, framing), a timed hook/body/CTA script skeleton, and keyframe prompts ready for `fal-ai/nano-banana-pro`. The governing principle: **credibility is cast, not scripted** — the presenter's look, setting, and register must match what the audience already trusts for this kind of message (a polished studio expert selling "authentic user review" reads as an ad and dies). You produce the plan and still keyframes; voice, motion, and editing happen downstream.
+
+## When to use / when not to
+
+- Use for any video fronted by a person: testimonials, UGC-style ads, educational/explainer videos, founder updates, product demos with a presenter, corporate training.
+- Product-only motion (no person) → `skills/creative/product-video`.
+- Programmatic/animated videos rendered in Remotion → `skills/creative/remotion-script-writer`.
+- Static social assets → `skills/creative/social-graphics`.
+- No brand style defined and consistency matters → run `skills/creative/creative-strategist` first; its style guide feeds presenter styling.
+
+## Intake
+
+Ask in one tight batch, only what's missing:
+
+1. **Message and goal** — what is the presenter saying, and what should the viewer do after (CTA)?
+2. **Audience and platform** — who watches, and where (TikTok/Reels, YouTube, landing page, internal training)?
+3. **Trust mode** — should this feel like a peer's recommendation (authentic/UGC) or an expert's word (authority/polished)?
+4. **Constraints** — real person to feature (founder, customer) or generated/hired presenter? Brand style guide from `skills/creative/creative-strategist`?
+
+Infer instead of asking: platform → length and framing; product category → default trust mode (consumer social ad → UGC; B2B/finance/health → authority). **Don't stall:** with message + audience known, state assumptions ("Assuming UGC style, 30s, vertical — say otherwise") and proceed.
+
+## Workflow
+
+### 1. Cast the presenter (decision rule)
+
+| If the content is… | Archetype | Register | Default setting |
+|---|---|---|---|
+| Educational, corporate, product demo | **Professional Presenter** | polished, business casual/formal, direct eye contact, confident | studio or professional office |
+| Testimonial, social ad, relatable pitch | **UGC Creator** | casual clothes, natural look, authentic energy, imperfect is good | home, car, casual real-world spot |
+| Thought leadership, reviews, authority claims | **Expert / Influencer** | polished but approachable, credible, high production | professional office or branded studio |
+| Lifestyle content, product-in-life, aspirational | **Lifestyle Creator** | stylish, aspirational, engaging | lifestyle location matching the product |
+
+Commit to one archetype with a one-line reason. Mismatches to catch: authority archetype for a "real customer" message (reads fake); UGC archetype for high-stakes B2B claims (reads unserious).
+
+### 2. Lock the look — one choice per row
+
+| Dimension | Options (pick one, driven by archetype + brand) |
+|---|---|
+| **Clothing** | business professional (suit) · business casual (blazer) · casual · stylish casual · industry-specific attire |
+| **Background** | studio (neutral, clean) · office (blurred, modern) · home office · lifestyle setting · branded (brand colors/elements) |
+| **Lighting** | studio (key + fill, even, no harsh shadows) · natural (soft, diffused, warm) · cinematic (dramatic, moody) |
+| **Framing** | close-up (head/shoulders — intimacy, hooks) · medium (head-to-waist — default, allows gesture) · wide (full body — environment storytelling) |
+
+Decision rules: UGC → casual clothing + natural lighting + close-up/handheld feel. Authority → business casual + studio lighting + medium shot. Clothing must contrast with the background color. Vertical platforms default to close-up or tight medium; landscape/YouTube tolerates medium and wide.
+
+### 3. Write the script skeleton with hard timing
+
+- **Hook (0–3s):** open with the viewer's problem, a bold claim, or the result — never "Hi, I'm…" on social. One sentence, ≤15 words.
+- **Body (3s → CTA):** one core message, max 3 supporting points, spoken language (read it aloud — if a sentence can't be said in one breath, split it). Product shown on camera if relevant.
+- **CTA (final 5s):** one action, stated once, plainly.
+
+Length by platform: social ads/organic 15–60s; landing page 30–90s; training as needed. ~2.5 words/second is a workable speaking-pace heuristic for timing the script.
+
+### 4. Write keyframe prompts
+
+One keyframe per script section (hook, each body beat, CTA). Prompt formula: `[archetype] presenter, [clothing], [appearance/expression for this beat], [engaging with camera / demonstrating product], [background], [lighting], [framing], professional quality, 4K`. Keep presenter description, background, and lighting **identical across all frames** — only expression, gesture, and any product prop change; drift here breaks the illusion of one continuous video.
+
+If `FAL_API_KEY` (or `FAL_KEY`) is set, generate via the repo CLI (`docs/fal_api.py`, model `fal-ai/nano-banana-pro`):
+
+```bash
+python docs/creative_cli.py custom \
+  --category "talking-head" --name "hook-frame" \
+  --prompt "<keyframe prompt>" --aspect-ratio 9:16 --resolution 2K
+```
+
+Otherwise deliver prompts as ready-to-run commands. Note: this produces still frames for casting/storyboarding — voice, lip-sync, and motion come from downstream tools or a real shoot; audio quality is out of scope but flag to the user that it makes or breaks the video.
+
+### 5. Self-check against the quality bar, deliver the spec.
+
+## Required output format
+
+Always deliver this structure:
+
+```markdown
+# Talking Head Video Spec — [Topic]
 
 ## Overview
+- **Message (one sentence):** ...
+- **Archetype:** Professional | UGC Creator | Expert | Lifestyle — [one-line reason]
+- **Platform:** ... · **Aspect ratio:** ... · **Length:** ...s · **CTA:** ...
 
-Talking Head creates presenter and user-generated content (UGC) style videos featuring people. This skill teaches you to plan and conceptualize talking head videos.
+## Presenter definition
+- Clothing: ... · Appearance: ... · Background: ... · Lighting: ... · Framing: ...
+- Real person or generated: ... · Brand elements in frame: ...
 
-**Keywords**: talking head, presenter video, UGC video, testimonial, educational video, personal brand, video content, presenter styling
+## Script skeleton
+| Section | Time | Spoken line(s) | On camera |
+|---|---|---|---|
+| Hook | 0–3s | "..." (≤15 words) | [expression/action] |
+| Body 1 | 3–Xs | "..." | ... |
+| Body 2 | ... | "..." | ... |
+| CTA | last 5s | "..." | ... |
 
-## Core Methodology
+## Keyframes
+### KF-hook
+> [full prompt — archetype, clothing, expression, background, lighting, framing, quality tags]
+`python docs/creative_cli.py custom --category "talking-head" --name "kf-hook" --prompt "..." --aspect-ratio [x] --resolution 2K`
+(one per section; presenter/background/lighting identical across all)
 
-Talking head videos have three components:
-
-1. **Presenter Styling** — How the presenter looks
-2. **Background and Setting** — Video environment
-3. **Framing and Composition** — Camera positioning
-
-## Presenter Types
-
-### Type 1: Professional Presenter
-**Use For**: Educational content, corporate videos, product demos
-
-**Characteristics**:
-- Professional attire (business casual or formal)
-- Polished appearance
-- Direct eye contact
-- Confident demeanor
-- Studio or professional setting
-
-**Prompt Template**:
-```
-Professional presenter, [clothing description], [hair/makeup style], 
-direct eye contact with camera, confident expression, [background], 
-professional lighting, cinematic quality, 4K, high-end production
+## Production notes
+- Audio: [clean VO essential; mic/recording note]
+- Downstream: [real shoot / avatar tool / editor] · B-roll or product inserts: ...
 ```
 
-### Type 2: UGC Creator
-**Use For**: Testimonials, authentic content, relatable messaging
+## Quality bar (check before delivering)
 
-**Characteristics**:
-- Casual attire
-- Natural appearance
-- Authentic expression
-- Relatable demeanor
-- Natural or casual setting
+- Archetype matches the trust mode — no polished studio look on a "real customer" testimonial, no sloppy UGC for high-stakes authority claims.
+- Hook ≤15 words and contains no self-introduction (for social); value stated in the first 3 seconds.
+- One core message, ≤3 supporting points; every line survives being read aloud.
+- Clothing contrasts with background; lighting style named explicitly (never left implicit).
+- Keyframe prompts share identical presenter, background, and lighting descriptors — only expression/gesture varies.
+- Direct eye contact specified in every keyframe unless the beat deliberately breaks it.
+- Timings sum to the stated length; CTA is one action, stated once.
+- No invented performance claims about formats or hooks; pacing guidance is heuristic.
 
-**Prompt Template**:
-```
-UGC creator, [casual clothing], natural appearance, authentic expression, 
-engaging with camera, [background], natural lighting, professional quality, 4K
-```
+## Integration
 
-### Type 3: Expert/Influencer
-**Use For**: Authority content, thought leadership, reviews
-
-**Characteristics**:
-- Polished but approachable
-- Confident presence
-- Professional setting
-- Authoritative demeanor
-- High production quality
-
-**Prompt Template**:
-```
-Expert presenter, [professional casual clothing], polished appearance, 
-confident expression, engaging with camera, [professional background], 
-professional lighting, cinematic quality, 4K, high-end production
-```
-
-### Type 4: Lifestyle Creator
-**Use For**: Lifestyle content, product usage, day-in-the-life
-
-**Characteristics**:
-- Stylish, aspirational attire
-- Polished appearance
-- Engaging expression
-- Lifestyle setting
-- Aesthetic focus
-
-**Prompt Template**:
-```
-Lifestyle creator, [stylish clothing], polished appearance, 
-engaging expression, [lifestyle setting], aesthetic lighting, 
-professional quality, 4K, Instagram-worthy
-```
-
-## Clothing and Styling
-
-### Clothing Style 1: Business Professional
-```
-"Business suit, dress shirt, tie, professional appearance, 
-corporate aesthetic, polished, formal"
-```
-
-### Clothing Style 2: Business Casual
-```
-"Business casual, blazer, dress shirt, professional appearance, 
-approachable, polished"
-```
-
-### Clothing Style 3: Casual
-```
-"Casual clothing, comfortable, relatable, authentic appearance, 
-approachable, friendly"
-```
-
-### Clothing Style 4: Stylish Casual
-```
-"Stylish casual, fashionable clothing, polished appearance, 
-aspirational, modern aesthetic"
-```
-
-### Clothing Style 5: Industry-Specific
-```
-"[Industry] attire, [specific clothing], professional appearance, 
-credible, authentic to industry"
-```
-
-## Background Options
-
-### Background 1: Studio
-```
-"Professional studio background, neutral gray or white, 
-subtle texture, professional lighting, clean aesthetic"
-```
-
-### Background 2: Office
-```
-"Professional office setting, blurred background, 
-modern office aesthetic, professional environment"
-```
-
-### Background 3: Home Office
-```
-"Home office setting, professional background, 
-modern, clean, organized, professional appearance"
-```
-
-### Background 4: Lifestyle Setting
-```
-"[Specific setting], lifestyle aesthetic, 
-authentic environment, relevant to content"
-```
-
-### Background 5: Branded
-```
-"Branded background, [brand colors], branded elements, 
-professional, consistent with brand"
-```
-
-## Lighting and Composition
-
-### Lighting Style 1: Studio Lighting
-```
-"Professional studio lighting, key light, fill light, 
-even illumination, professional quality, no harsh shadows"
-```
-
-### Lighting Style 2: Natural Lighting
-```
-"Natural lighting, soft diffused light, 
-golden hour if possible, warm tones, professional quality"
-```
-
-### Lighting Style 3: Cinematic Lighting
-```
-"Cinematic lighting, dramatic lighting, 
-professional setup, high-end production, moody aesthetic"
-```
-
-### Framing 1: Close-Up
-```
-"Close-up framing, head and shoulders, 
-intimate, engaging, direct eye contact"
-```
-
-### Framing 2: Medium Shot
-```
-"Medium shot framing, head to waist, 
-professional, engaging, balanced composition"
-```
-
-### Framing 3: Wide Shot
-```
-"Wide shot framing, full body visible, 
-context visible, environmental storytelling"
-```
-
-## Complete Talking Head Prompts
-
-### Professional Educational Video
-```
-Professional presenter, business casual attire, 
-polished appearance, direct eye contact, 
-professional studio background, professional lighting, 
-cinematic quality, 4K, high-end production, 
-confident expression, engaging demeanor
-```
-
-### UGC Testimonial Video
-```
-UGC creator, casual stylish clothing, natural appearance, 
-authentic expression, engaging with camera, 
-home or casual setting, natural lighting, 
-professional quality, 4K, relatable and authentic
-```
-
-### Expert Authority Video
-```
-Expert presenter, professional business casual clothing, 
-polished appearance, confident expression, 
-professional office or studio background, 
-professional lighting, cinematic quality, 4K, 
-authoritative and credible demeanor
-```
-
-### Lifestyle Product Demo
-```
-Lifestyle creator, stylish casual clothing, 
-polished appearance, engaging expression, 
-lifestyle setting, aesthetic lighting, 
-professional quality, 4K, demonstrating product, 
-aspirational mood
-```
-
-### Corporate Training Video
-```
-Corporate presenter, business professional attire, 
-polished appearance, clear expression, 
-corporate office background, professional lighting, 
-high-end production, 4K, educational and clear
-```
-
-## Script Considerations
-
-### Opening Hook (0-3 seconds)
-```
-- Grab attention immediately
-- Establish credibility
-- State clear value proposition
-- Direct eye contact
-```
-
-### Main Content (3-30 seconds)
-```
-- Deliver key message
-- Use gestures naturally
-- Maintain eye contact
-- Speak clearly and confidently
-- Show product/demo if relevant
-```
-
-### Call-to-Action (Last 5 seconds)
-```
-- Clear next step
-- Direct call-to-action
-- Contact information or link
-- Confident closing
-```
-
-## How to Use This Skill
-
-1. **Choose Your Presenter Type** — Which type matches your need?
-2. **Define Clothing and Styling** — What should they wear?
-3. **Select Your Background** — Where should they be?
-4. **Choose Lighting Style** — What lighting fits your brand?
-5. **Plan Your Framing** — How should they be framed?
-6. **Build Your Prompt** — Combine all elements
-7. **Generate Concept** — Use Image Generation for key frames
-8. **Plan Production** — Outline video sequence
-
-## Integration with Other Skills
-
-Talking Head works with:
-- **Creative Strategist** — Your style guide informs presenter styling
-- **Image Generation** — Generate key frames for video
-- **Brand Asset** — Use brand elements in background
-- **Social Graphics** — Video stills become social assets
-
-## Production Tips
-
-**Eye Contact**: Presenter should look directly at camera  
-**Lighting**: Professional lighting is crucial  
-**Audio**: Clear audio is essential (not covered in this skill)  
-**Framing**: Keep presenter in frame, not too close or far  
-**Clothing**: Choose colors that contrast with background  
-**Authenticity**: Match presenter type to content and audience  
-**Length**: Keep videos concise (15-60 seconds for social)
-
-## Pro Tips
-
-**Consistency**: Use same presenter for brand consistency  
-**Branding**: Incorporate brand colors and elements  
-**Authenticity**: Match presenter type to message  
-**Engagement**: Direct eye contact and natural gestures  
-**Quality**: Professional lighting and composition  
-**Pacing**: Match pacing to content type  
-**Testing**: Test different presenter styles and settings
-
-## Common Pitfalls
-
-**Poor Lighting** — Lighting is crucial for professional quality  
-**Wrong Presenter Type** — Match presenter to content and audience  
-**Awkward Framing** — Ensure presenter is properly framed  
-**Inconsistent Styling** — Match to your Creative Strategist guide  
-**Distracting Background** — Background should support, not distract  
-**Low Production Quality** — Invest in professional appearance  
-**Unclear Message** — Make content purpose clear
-
-## Troubleshooting
-
-### Presenter Looks Unprofessional
-- Upgrade clothing to match presenter type
-- Improve lighting and composition
-- Add "professional," "polished," "credible" to prompt
-- Choose appropriate background
-
-### Background Too Distracting
-- Use neutral background instead
-- Blur background more
-- Simplify background elements
-- Focus attention on presenter
-
-### Lighting Looks Harsh
-- Use "soft lighting," "diffused light"
-- Add "professional lighting setup"
-- Specify "no harsh shadows"
-- Use "natural lighting" if appropriate
-
-### Framing Feels Off
-- Adjust framing (close-up, medium, wide)
-- Ensure presenter is centered
-- Check eye line with camera
-- Ensure proper headroom
-
-## Next Steps
-
-Once you've planned your talking head videos, you have completed all 7 creative skills. Use the Orchestrator skill from the marketing package to manage all your creative assets.
+- `skills/creative/creative-strategist` → feeds in: style guide governing presenter styling, palette, and setting.
+- `skills/creative/original-design` → feeds in: a design-language brief when the video must live inside an original visual world (backgrounds, props, overlays).
+- `skills/creative/brand-asset` → feeds in: logos/brand elements placed in the background or as overlays.
+- `skills/creative/image-generation` → consumes: keyframe prompts when the user wants finer generation control than the CLI one-liners.
+- `skills/creative/social-graphics` → consumes: keyframes as thumbnails and supporting post visuals.
+- `skills/creative/orchestrator` → routes campaign work that includes presenter video through this skill.
