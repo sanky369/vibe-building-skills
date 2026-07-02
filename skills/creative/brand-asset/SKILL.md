@@ -131,7 +131,8 @@ results when the API key is absent.
 - `skills/creative/creative-strategist` → upstream; the Creative Direction Brief
   supplies style line, palette, mood, and prohibitions.
 - `skills/creative/image-generation` → shared automation;
-  `references/automation.md` there is the parameter source of truth.
+  `skills/creative/image-generation/references/automation.md` is the parameter
+  source of truth.
 - `skills/creative/social-graphics` and `skills/creative/product-photography` →
   downstream; consume approved logos/patterns as recurring elements.
 - `skills/creative/orchestrator` → sequences this skill inside brand-identity and

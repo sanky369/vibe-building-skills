@@ -124,7 +124,8 @@ compositing or a reference-photo workflow.
 - `skills/creative/creative-strategist` → upstream; its style block sets this
   set's lighting, palette, and mood fields.
 - `skills/creative/image-generation` → shared automation and prompt discipline;
-  its `references/automation.md` is the parameter source of truth.
+  `skills/creative/image-generation/references/automation.md` is the parameter
+  source of truth.
 - `skills/creative/social-graphics` → consumes winning shots as raw material for
   platform posts.
 - `skills/creative/product-video` → consumes the hero/lifestyle stills as frames

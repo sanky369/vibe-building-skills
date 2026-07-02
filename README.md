@@ -44,7 +44,7 @@ Transform your marketing from generic to direct response, from scattered to stra
 
 1. **orchestrator** — Diagnose your marketing situation and sequence skills optimally
 2. **brand-voice** — Define your unique voice and positioning
-3. **positioning-angles** — Find your differentiation with 8 frameworks
+3. **positioning-angles** — Find your differentiation with market-stage analysis, mechanism naming, and 5 proven angles
 4. **keyword-research** — The 6 Circles Method for keyword strategy
 5. **lead-magnet** — Create compelling free offers
 6. **direct-response-copy** — Write copy that converts
@@ -113,6 +113,7 @@ Build design systems and interfaces that feel timeless and loved. Now with 5 add
 
 ### Documentation
 
+- **docs/SKILL_SPEC.md** — The authoring standard every skill in this repo meets: trigger-contract descriptions, agent-addressed workflows, required output formats, quality bars
 - **docs/PHILOSOPHY.md** — The designer's thought process and philosophy of uncommon care
 - **docs/RESEARCH.md** — Expert insights, recommended books, design principles
 - **Creative Automation** — Python CLI and Claude Code integration for asset generation
