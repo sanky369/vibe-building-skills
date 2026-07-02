@@ -1,113 +1,102 @@
 ---
 name: keyword-research
-description: Identify high-impact keywords using the 6 Circles Method. Use when planning content strategy, finding SEO opportunities, or discovering what your audience searches for.
+description: "Build a prioritized keyword cluster map using the 6 Circles Method — keywords at the intersection of positioning alignment, customer language, competitor blind spots, workable search volume, real expertise, and business intent. Use when the user asks 'what keywords should I target', 'what should I write about', 'find SEO opportunities', 'plan my content strategy', 'what does my audience search for', or before any SEO content is written. Produces a Keyword Map: scored keywords grouped into topic clusters, each cluster mapped to the article that should target it, ready to hand to content production."
 ---
 
-# Keyword Research Skill
+# Keyword Research
 
-## Overview
+Produce a **keyword map**: a scored, clustered list of search terms worth targeting, each tied to the content that should win it. Governing principle: **a keyword is only worth targeting if it survives all six circles** — aligned with the positioning, phrased in the customer's language, under-served by competitors, actually searched, winnable with the user's real expertise, and connected to revenue. Traffic that fails circle 6 is vanity.
 
-Keyword Research identifies what your audience searches for. This skill teaches the 6 Circles Method to find keywords aligned with your positioning.
+## When to use / when not to
 
-**Keywords**: keyword research, SEO keywords, search volume, keyword strategy, content planning, search intent, keyword analysis
+- Use before writing SEO content, when planning a content calendar, or when the user wants to know what their audience searches for.
+- If no positioning statement exists, run `skills/marketing/positioning-angles` first (or infer a provisional one and label it) — circle 1 is unworkable without it.
+- If the user wants the *full* organic program — link building, technical SEO, programmatic pages, domain authority — use `skills/marketing/seo-strategy`; this skill is the keyword-selection layer only.
+- If keywords already exist and the user wants the article written, go straight to `skills/marketing/seo-content`.
 
-## Core Methodology
+## Intake
 
-The 6 Circles Method finds keywords at the intersection of:
+One batch; reuse anything already produced by `skills/marketing/orchestrator` or `skills/marketing/positioning-angles`:
 
-1. **Aligned with your positioning** — Keywords that match your angle
-2. **Your customer's language** — How they actually search
-3. **Avoiding competitor blind spots** — Keywords competitors ignore
-4. **Good search volume** — People actually search for these
-5. **You can write about** — You have expertise or perspective
-6. **Drive business results** — Keywords that convert
+1. Your positioning statement (or: what you sell, to whom, and what makes it different).
+2. Your 2–3 closest competitors' websites.
+3. Any sources of raw customer language — support tickets, sales calls, reviews, community threads — or paste examples of how customers describe the problem.
+4. Site status: domain age, roughly how much content published, any current rankings? (Determines how competitive a keyword you can win.)
+5. Access to a keyword tool (Ahrefs, Semrush, Google Keyword Planner)? If yes, the user runs volume lookups when asked; if no, proceed with estimates.
 
-## The 6 Circles Method
+**Don't stall:** with a positioning statement and a recognizable market you can draft the full map from knowledge and web research — label all volumes and difficulty as estimates and list them for the user to verify in a tool.
 
-### Circle 1: Positioning Alignment
+## Workflow — the 6 Circles Method
 
-Start with keywords aligned with your positioning angle.
+Run the circles as sequential filters: generate wide in circles 1–2, then cut in 3–6.
 
-**Example**: If your positioning is "The project management tool for remote teams," your keywords should be about remote work, distributed teams, async communication.
+### Circle 1 — Positioning alignment (seed)
+Expand the positioning statement into 20–40 seed keywords. Take each element of the claim (audience, problem, mechanism, outcome) and list the searches that element implies.
+Rule: **seeds come from the angle, not the category.** "Project management tool for remote teams" seeds *remote-team* keywords (async standups, distributed team communication), not generic *project management* keywords the incumbents own.
 
-**Not**: General project management keywords that competitors dominate.
+### Circle 2 — Customer language (rephrase)
+Rewrite every seed in the words customers actually type, harvested from the intake sources. Kill jargon: if customers say "remote work tools", drop "distributed workforce management solutions". Add the question-form variants ("how do I…", "best X for Y", "X vs Y") — those carry the clearest intent.
 
-### Circle 2: Customer Language
+### Circle 3 — Competitor blind spots (cut or boost)
+Check each surviving keyword against the competitors' content (crawl their blog/sitemap or search `site:competitor.com <keyword>`).
+- Competitors rank with strong, current content → cut, unless the user has a decisively better asset.
+- Competitors ignore it or cover it thinly/outdated → boost priority. These gaps are the map's best entries.
 
-Use the language your customers actually use, not industry jargon.
+### Circle 4 — Search volume (screen)
+Screen for workable volume. Heuristic (label it as such): **target roughly 100–10,000 searches/month** — below ~100 rarely repays an article; above ~10,000 is usually incumbent territory for a young domain.
+Decision rules: established domain with authority (from intake Q4) → the upper bound relaxes; brand-new domain → stay in the low hundreds-to-low-thousands band. If no tool access, estimate from autocomplete breadth, "People also ask" density, and ad presence — and flag every estimate.
 
-**Example**: If your customers say "remote work tools," don't target "distributed workforce management solutions."
+### Circle 5 — Expertise (cut)
+Keep only keywords where the user can honestly out-write the current top results — first-hand experience, proprietary data, a named mechanism, or a sharper niche take. If the user can't add anything the top 3 results lack, cut the keyword regardless of volume.
 
-**How to find**: Review customer conversations, support tickets, social media comments.
+### Circle 6 — Business intent (score)
+Score what remains by distance to revenue:
+- **High:** buying/comparison intent — "best X for Y", "X vs Y", "X pricing", "X alternative".
+- **Medium:** problem-aware how-tos the offer solves — "how to manage remote teams".
+- **Low:** informational adjacency — "remote work statistics". Keep low-intent keywords only as cluster support, never as the cluster head.
 
-### Circle 3: Competitor Blind Spots
+### Cluster and prioritize
+Group survivors into topic clusters (one head keyword + 3–8 supporting keywords that one strong article or hub can cover). Priority order: **high intent + competitor blind spot first**, then high intent + contested, then medium intent gaps. Propose the top 3–5 clusters and have the user confirm the order before content production starts.
 
-Find keywords competitors ignore or underestimate.
-
-**Example**: If competitors target "project management software," target "project management for remote teams" or "async project management."
-
-**How to find**: Analyze competitor content. What keywords do they NOT target?
-
-### Circle 4: Search Volume
-
-Find keywords with meaningful search volume (100+ searches/month).
-
-**Example**: "Project management" (100k+ searches) is too competitive. "Project management for remote teams" (1k searches) is better.
-
-**Rule**: Target keywords with 100-10,000 searches/month for fastest ranking.
-
-### Circle 5: Your Expertise
-
-Only target keywords you can write about better than competitors.
-
-**Example**: If you're a remote work expert, target "remote work" keywords. If you're a productivity expert, target "productivity" keywords.
-
-**Not**: Keywords outside your expertise.
-
-### Circle 6: Business Results
-
-Target keywords that drive revenue, not just traffic.
-
-**Example**: "How to manage remote teams" drives leads. "Remote work statistics" drives traffic but not leads.
-
-**Focus**: Keywords with commercial intent.
-
-## How to Use This Skill
-
-1. **List Your Positioning Keywords** — What keywords align with your positioning?
-2. **Add Customer Language** — How do customers search for this?
-3. **Find Competitor Gaps** — What keywords do competitors miss?
-4. **Check Search Volume** — Which keywords have 100-10,000 searches/month?
-5. **Verify Your Expertise** — Can you write better content than competitors?
-6. **Confirm Business Intent** — Will these keywords drive revenue?
-
-## Keyword Clusters
-
-Organize keywords into clusters:
+## Required output format
 
 ```
-Cluster: Remote Team Management
-- remote team management
-- how to manage remote teams
-- remote team communication
-- distributed team tools
-- async team management
+# Keyword Map — [Brand]
+
+**Positioning it serves:** "[claim from skills/marketing/positioning-angles]"
+**Volume/difficulty source:** [tool name | estimates — user to verify]
+
+## Priority clusters
+### Cluster 1: [name] — Priority: HIGH
+Target article: "[working title]" — intent: [high/med] — feeds: [lead magnet / product page]
+| Keyword | Role | Est. volume | Competition note | Intent |
+|---|---|---|---|---|
+| [head keyword] | Head | ~N/mo | [gap / thin / contested] | High |
+| [supporting] | Support | ... | ... | ... |
+
+### Cluster 2: ...
+(3–5 clusters total)
+
+## Cut list (why keywords were rejected)
+- "[keyword]" — failed circle [n]: [one-line reason]
+(representative sample, not exhaustive)
+
+## Assumptions & verification queue
+- [every estimated volume or inferred competitor read, listed for tool verification]
+
+**Next step:** write Cluster 1's target article via skills/marketing/seo-content.
 ```
 
-## Integration with Other Skills
+## Quality bar (check before delivering)
 
-Keyword Research works with:
-- **SEO Content** — Your keywords guide what to write about
-- **Content Atomizer** — Your keywords inform repurposing strategy
-- **Positioning Angles** — Your positioning guides keyword selection
+- [ ] Every cluster head passed all six circles; the failing circle is named for every cut shown.
+- [ ] No cluster head is a generic category term the incumbents own.
+- [ ] Every keyword uses customer phrasing — zero internal jargon survives.
+- [ ] All volumes labeled with their source; estimates explicitly flagged, never presented as tool data.
+- [ ] Every cluster names the article that targets it and the business asset it feeds.
+- [ ] 3–5 clusters delivered, priority-ordered and user-confirmed — not an undifferentiated keyword dump.
 
-## Common Pitfalls
+## Integration
 
-**Too Competitive** — Targeting keywords with 100k+ searches.  
-**Too Niche** — Targeting keywords with <100 searches/month.  
-**No Business Intent** — Targeting keywords that don't drive revenue.  
-**Outside Your Expertise** — Targeting keywords you can't write about better.
-
-## Next Steps
-
-Once you've identified your keywords, move to Skill 06: SEO Content to create ranking content.
+- **Upstream:** `skills/marketing/positioning-angles` supplies the claim that seeds circle 1; `skills/marketing/orchestrator` routes here on awareness and scale paths.
+- **Downstream:** `skills/marketing/seo-content` consumes the cluster map one cluster at a time (head keyword + supports + working title cross the boundary); `skills/marketing/seo-strategy` consumes it as the keyword layer of a full program; `skills/marketing/content-atomizer` uses cluster themes to steer repurposing.

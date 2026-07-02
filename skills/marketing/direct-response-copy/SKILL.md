@@ -1,162 +1,130 @@
 ---
 name: direct-response-copy
-description: Write persuasive sales copy that converts using proven direct response principles. Use when writing landing pages, sales emails, ads, or any copy designed to drive action.
+description: "Write copy engineered to drive one specific action — landing pages, sales pages, opt-in pages, ads, promotional emails — using an eight-part direct-response architecture (hook, problem, mechanism, solution, proof, objections, CTA, urgency). Use when the user says 'write my landing page / sales page / ad', 'this page isn't converting', 'rewrite my homepage copy', 'write copy for my lead magnet page', or any request for persuasive copy with a measurable action at the end. Produces the full copy draft, section-labeled against the architecture, plus hook alternatives and a conversion checklist."
 ---
 
-# Direct Response Copy Skill
+# Direct Response Copy
 
-## Overview
+Write copy whose only job is to cause **one specific action** — click, signup, purchase, reply. Governing principle: **one page, one reader, one action.** Every section either moves the reader toward that action or gets cut; persuasion comes from a named mechanism and real proof, never from volume or hype.
 
-Direct Response Copy is copy designed to get a specific action (click, signup, purchase). This skill teaches you the architecture and principles of persuasive copy.
+## When to use / when not to
 
-**Keywords**: copywriting, sales copy, persuasion, conversion copy, landing page copy, direct response, copywriting principles
+- Use for any asset with a conversion goal: landing/sales/opt-in pages, ads, promotional emails, upgrade prompts.
+- Requires a positioning claim and a voice. If the positioning is missing or mushy, run `skills/marketing/positioning-angles` first — copy cannot rescue an undifferentiated claim. If a voice guide exists from `skills/marketing/brand-voice`, write within it; if not, sketch voice from intake and proceed.
+- Multi-email automated flows → `skills/marketing/email-sequences` (it reuses this architecture per email). Content meant to rank → `skills/marketing/seo-content`. Recurring relationship email → `skills/marketing/newsletter`.
 
-## Core Methodology
+## Intake
 
-Direct response copy follows a specific architecture:
+One batch; pull answers from existing artifacts (positioning statement, voice guide, lead magnet spec) before asking:
 
-1. **Hook** — Grab attention immediately
-2. **Problem** — Validate their problem
-3. **Mechanism** — Explain your unique mechanism
-4. **Solution** — Present your solution
-5. **Social Proof** — Show proof it works
-6. **Objection Handling** — Address their concerns
-7. **Call-to-Action** — Make the ask clear
-8. **Urgency/Scarcity** — Create urgency
+1. What asset, and what is the ONE action a successful reader takes?
+2. What's the offer, and what does it cost the reader (money, time, email address)?
+3. Who is the reader, and what's the #1 reason they'd hesitate? (If unknown, name the likely objection yourself and flag it.)
+4. What proof exists — testimonials, case studies, numbers, credentials, recognizable customers?
+5. Any *real* deadline, capacity limit, or price change?
 
-## Copy Architecture
+**Don't stall:** with an offer and audience in hand, draft with stated assumptions rather than blocking on Q3–Q5 — but never fill Q4/Q5 gaps with invented material.
 
-### Component 1: The Hook
+## Workflow — build the eight components in order
 
-Your first line must stop them from scrolling.
+### 1. Hook
+Draft **3–5 hooks using different formulas**, present them with one-line rationales, and have the user pick (default to your top pick if they defer):
 
-**Hook Formulas:**
+| Formula | Template |
+|---|---|
+| Curiosity | "The one thing [person] gets wrong about [topic]" |
+| Specificity | "How I [specific result] in [specific timeframe]" |
+| Benefit | "[Specific benefit] without [specific drawback]" |
+| Question | "Are you [specific situation]?" |
+| Bold statement | "[Controversial claim about the industry]" |
 
-**Curiosity**: "The one thing [type of person] gets wrong about [topic]"
+Decision rules: cold traffic → curiosity or bold; warm traffic that knows the problem → benefit or specificity; jaded market → specificity with proof baked in. A specificity hook may only use results that actually happened.
 
-**Specificity**: "How I [specific result] in [specific timeframe]"
+### 2. Problem validation
+Show the reader you understand their situation before selling anything.
+Formula: *"You're [specific situation], and it's frustrating because [specific consequence]."*
+Rule: use the reader's own words (support tickets, reviews, sales calls) when available — felt understanding is what keeps them reading.
 
-**Benefit**: "[Specific benefit] without [specific drawback]"
+### 3. Mechanism
+Explain *how* the result happens, using the named mechanism from the positioning statement.
+Formula: *"Most people try [common approach]. But here's what works: [named mechanism]."*
+Rule: the mechanism must be named ("The Micro-Launch Method"), never "our approach". No mechanism in the positioning → stop and get one from `skills/marketing/positioning-angles`.
 
-**Question**: "Are you [specific situation]?"
+### 4. Solution presentation
+Present the offer as the mechanism made available — inevitable, not salesy.
+Formula: *"That's why we created [offer]. It [specific benefit] by [mechanism]."*
 
-**Bold Statement**: "[Controversial statement about your industry]"
+### 5. Social proof
+Deploy the strongest proof from intake Q4: testimonials → results-bearing case studies → customer counts → awards → metrics.
+**Hard rule: never fabricate testimonials, customer counts, or statistics.** If proof is thin, substitute mechanism logic + a risk reversal (guarantee, free tier, no-card trial) and tell the user proof collection is their highest-leverage next task.
 
-### Component 2: Problem Validation
+### 6. Objection handling
+Take the #1 objection (intake Q3) plus the standard four — *no time, too expensive, tried it before, won't work for me* — and answer the 2–3 that fit this reader.
+Formula: *"You might be thinking [objection]. Here's the truth: [answer]."*
+Rule: answer honestly or reframe; never deny a true cost ("it does take 30 minutes a day — here's why that's the point").
 
-Show you understand their problem deeply.
+### 7. Call-to-action
+One action, stated identically everywhere it appears (long pages: after solution, after proof, at the end).
+Formulas: simple ("Start your free trial"), benefit-focused ("Get the checklist now"), curiosity ("See how it works"), low-friction ("Reply and I'll send it over").
+Decision rules: high-commitment offers → low-friction or curiosity CTA; free offers → benefit-focused. Never two competing actions on one page.
 
-**Formula**: "You're [specific situation], and it's frustrating because [specific consequence]."
+### 8. Urgency
+Use only urgency that is true: a real deadline, real capacity limit, real price change, or the honest cost of waiting ("every week without X costs you Y").
+**Hard rule: no fake countdowns, fake scarcity, or evergreen 'closing soon'.** If nothing real exists, end on the cost of inaction and skip the section.
 
-**Why it works**: When people feel understood, they keep reading.
+### Then: voice pass and pressure test
+Rewrite the draft through the voice guide (or stated voice assumptions), then run the persuasion checklist: specific beats vague ("increase revenue 23%" > "increase revenue" — only with a real number); proof quantified where honest; reciprocity — the page gives value before asking; authority shown, not claimed; consistency — the argument aligns with what the reader already believes about their problem.
 
-### Component 3: Mechanism
+## Required output format
 
-Explain your unique mechanism or method.
+```
+# [Asset type] — [Offer]
+**Goal action:** [the one action] · **Reader:** [who] · **Voice:** [guide reference or stated assumption]
 
-**Formula**: "Most people try [common approach]. But here's what works: [your mechanism]."
+---
+[HOOK]
+...
+[PROBLEM]
+...
+[MECHANISM]
+...
+[SOLUTION]
+...
+[PROOF]
+...
+[OBJECTIONS]
+...
+[CTA]
+...
+[URGENCY]
+...
+---
 
-**Why it works**: People want to know HOW, not just WHAT.
+## Hook alternates
+2. "..." — [formula, when to prefer it]
+3. "..." — ...
 
-### Component 4: Solution Presentation
+## Gaps flagged
+- [missing proof, unverified claims, urgency omitted because nothing real exists]
 
-Present your solution as the natural outcome of your mechanism.
+## Conversion checklist
+[the quality bar below, each item marked PASS/FAIL for this draft]
+```
 
-**Formula**: "That's why we created [your offer]. It [specific benefit] by [your mechanism]."
+Deliver the copy clean (section labels are for the user's review; note they're removable). For ads or short emails, compress: hook, problem/mechanism fused, CTA — same rules, fewer sections.
 
-**Why it works**: Your solution feels inevitable, not sales-y.
+## Quality bar (check before delivering)
 
-### Component 5: Social Proof
+- [ ] One CTA action; every CTA instance asks for exactly the same thing.
+- [ ] Hook works out of context (would stop a scroll with zero surrounding info).
+- [ ] Mechanism is named; the word "approach" or "process" never stands in for it.
+- [ ] Every number, testimonial, and customer count came from the user — zero invented proof.
+- [ ] Urgency is real or absent — never manufactured.
+- [ ] Each objection answered, not dodged; true costs acknowledged.
+- [ ] Voice matches the voice guide (or stated assumption); no generic "marketing voice" drift.
+- [ ] Nothing on the page could be pasted onto a competitor's site unchanged.
 
-Show proof your solution works.
+## Integration
 
-**Types of Proof:**
-- Customer testimonials
-- Case studies with results
-- Number of customers
-- Awards or recognition
-- Results/metrics
-
-### Component 6: Objection Handling
-
-Address the main thing stopping them.
-
-**Formula**: "You might be thinking [objection]. Here's the truth: [answer]."
-
-**Common Objections:**
-- "I don't have time"
-- "It's too expensive"
-- "I've tried this before"
-- "I'm not sure it will work for me"
-
-### Component 7: Call-to-Action
-
-Make the ask clear and specific.
-
-**CTA Formulas:**
-
-**Simple**: "Click here to [specific action]"
-
-**Benefit-Focused**: "Get [specific benefit] now"
-
-**Curiosity**: "See how this works"
-
-**Low-Friction**: "Reply and let me know"
-
-### Component 8: Urgency/Scarcity
-
-Create urgency without being pushy.
-
-**Urgency Types:**
-- Limited time offer
-- Limited spots available
-- Deadline approaching
-- Price increasing soon
-
-## Persuasion Principles
-
-Use these principles to make copy more persuasive:
-
-**Specificity** — "Increase revenue by 23%" beats "Increase revenue"
-
-**Social Proof** — "500+ customers" beats "Many customers"
-
-**Scarcity** — "Only 10 spots left" beats "Limited spots"
-
-**Reciprocity** — Give value first, then ask
-
-**Authority** — Show your expertise and credentials
-
-**Likeability** — Be authentic and relatable
-
-**Consistency** — Align with their existing beliefs
-
-## How to Use This Skill
-
-1. **Understand Your Audience** — What's their main objection?
-2. **Choose Your Hook** — Which hook resonates?
-3. **Write Your Mechanism** — What's unique about your approach?
-4. **Build Your Proof** — What proof do you have?
-5. **Address Objections** — What's stopping them?
-6. **Write Your CTA** — What specific action do you want?
-7. **Add Urgency** — What creates urgency?
-
-## Integration with Other Skills
-
-Direct Response Copy works with:
-- **Brand Voice** — Your voice makes copy authentic
-- **Positioning Angles** — Your positioning makes copy compelling
-- **Lead Magnet** — Your copy sells your lead magnet
-- **Email Sequences** — Your copy drives email conversions
-
-## Common Pitfalls
-
-**Too Salesy** — Copy feels pushy and inauthentic.  
-**No Mechanism** — Copy doesn't explain WHY your solution works.  
-**Weak CTA** — People don't know what to do.  
-**No Proof** — People don't believe your claims.  
-**Generic** — Copy could apply to any offer.
-
-## Next Steps
-
-Once you've written your copy, move to Skill 08: Email Sequences to create email campaigns that convert.
+- **Upstream:** `skills/marketing/positioning-angles` supplies the claim and named mechanism (the page's spine); `skills/marketing/brand-voice` supplies the voice guide; `skills/marketing/lead-magnet` supplies the offer spec when the page sells a magnet.
+- **Downstream:** `skills/marketing/email-sequences` reuses the page's hook/mechanism/objection answers across its emails; `skills/marketing/content-atomizer` can atomize a strong sales page into ad variants and social posts. What crosses the boundary is the finished copy plus the flagged-gaps list.
