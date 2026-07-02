@@ -1,434 +1,134 @@
 ---
 name: image-generation
-description: Generate images using FAL.ai nanobanana pro. Use when creating product shots, social graphics, brand assets, or any visual content. Integrates with automation system for direct asset generation in Claude Code.
+description: "Turns any request for an AI-generated image into precise, generation-ready prompt specs and — when the FAL.ai automation is configured — the generated files themselves, using the single model fal-ai/nano-banana-pro. Use whenever the user asks to 'generate an image', 'make a picture of X', 'create a thumbnail / hero image / illustration / infographic', 'write me a prompt for this image', or any visual that isn't specifically product photography, a social-platform graphic, or a brand mark (hand those to the sibling skills). Produces one prompt-spec block per asset (subject, style, composition, lighting, mood, aspect ratio, negative constraints) plus file-naming and variant conventions, and runs docs/creative_cli.py to generate when a FAL_API_KEY is available."
 ---
 
-# Image Generation Skill
+# Image Generation
 
-## Overview
+Convert a fuzzy image request into prompt specs precise enough that any competent
+image model — and specifically `fal-ai/nano-banana-pro` on FAL.ai, the one model
+this repo's automation uses — renders what the user actually pictured. The prompt
+spec is the deliverable; generated files are the bonus when the automation is
+configured. **Prime rule: never generate from a vague prompt.** A weak prompt
+costs a generation credit and teaches you nothing; a sharp spec is reusable
+forever.
 
-Image Generation uses FAL.ai nanobanana pro to create professional-quality images from text descriptions. This skill teaches you how to craft effective prompts and use the automation system to generate assets directly in Claude Code.
+## When to use / when not to
 
-**Keywords**: image generation, nanobanana pro, prompt engineering, AI art, visual content creation, asset generation, automation
+Use for general-purpose images: hero images, illustrations, thumbnails,
+infographics, textures, concept art, any one-off visual. Hand off instead when
+the request is really:
 
-## Core Models
+- **Product shots for commerce/marketing** → `skills/creative/product-photography`
+- **Platform-sized social content** → `skills/creative/social-graphics`
+- **Logos, icons, patterns, brand marks** → `skills/creative/brand-asset`
+- **No visual direction exists yet and consistency matters** → run
+  `skills/creative/creative-strategist` first and consume its style block
+- **A whole multi-asset campaign** → `skills/creative/orchestrator` routes it
 
-### nanobanana pro — Recommended
-- **Quality**: Highest, most detailed
-- **Speed**: 30-60 seconds
-- **Best For**: Product photography, hero images, final assets
-- **Use Case**: When quality matters most
+## Intake
 
-### nanobanana pro
-- **Quality**: High, good detail
-- **Speed**: 5-15 seconds
-- **Best For**: Testing, iterations, social media
-- **Use Case**: When speed matters
+Ask in one batch, only what's missing:
 
-### nanobanana pro
-- **Quality**: Latest, improved
-- **Speed**: 20-40 seconds
-- **Best For**: Production work
-- **Use Case**: When you want the latest model
+1. **Subject** — what exactly is in the image? (object, scene, people, text?)
+2. **Use** — where does it go? (this decides aspect ratio and resolution)
+3. **Style anchor** — existing style guide / creative-strategist style block,
+   reference images, or 3 adjectives for the mood?
+4. **Automation** — is `FAL_API_KEY` set so you can generate, or deliver specs only?
 
-## Prompt Engineering Framework
+Infer, don't ask: aspect ratio from the stated destination (thumbnail → `16:9`,
+story → `9:16`, feed → `1:1` or `4:5`); resolution from stakes (`2K` default,
+`4K` hero/print, `1K` drafts). **Don't stall:** if subject and use are clear,
+state your assumptions for the rest and proceed.
 
-### The 5-Part Prompt Formula
+## Workflow
 
-Every effective prompt has 5 components:
+1. **Check for a style block.** If the user has run
+   `skills/creative/creative-strategist`, reuse its style block verbatim in every
+   prompt. If not, and this is a one-off, derive a minimal one (style + palette +
+   mood) from context and label it an assumption.
+2. **Draft the prompt with the 5-part formula.** Every prompt contains, in order:
+   **subject** (the main thing, specific: "a luxury leather watch with gold
+   accents", never "a watch") → **descriptive detail** (materials, colors, text
+   to render) → **style** ("professional product photography", "flat modern
+   illustration", "photorealistic") → **technical treatment** (lighting,
+   composition, focus, "4K, highly detailed") → **mood** ("warm and inviting").
+   Add negative constraints as plain prohibitions ("no text overlay", "no
+   watermark", "no busy background").
+3. **Decide variant strategy.** If it's a throwaway draft → 1 image at `1K`. If
+   it's a keeper asset → propose 3–4 genuinely distinct prompt specs (different
+   composition or style angle, not synonym swaps), generate 1 of each or
+   `num_images` 3–4 of the winner, and have the user pick. Never present one
+   option for a hero asset.
+4. **Generate or deliver.** If `FAL_API_KEY` (or `FAL_KEY`) is set:
 
-**1. Subject** — What is the main thing?
-```
-"A luxury leather watch"
-"A modern logo"
-"An Instagram post graphic"
-```
+   ```bash
+   python docs/creative_cli.py custom \
+     --category "<category>" --name "<asset-name>" \
+     --prompt "<full prompt>" \
+     --aspect-ratio 16:9 --resolution 2K --num-images 3
+   ```
 
-**2. Description** — What does it look like?
-```
-"with gold accents and brown leather strap"
-"geometric style, minimalist design"
-"vibrant colors, eye-catching composition"
-```
+   Use `--web-search` only when the image must reflect current real-world data
+   (e.g. "2026 trends infographic"). If no key is set, deliver the prompt-spec
+   blocks and the exact command the user can run later — do not fake results or
+   claim images were generated.
+5. **Review and iterate.** Compare output to the spec's mood/style/negative
+   constraints. Fix misses by editing the prompt (more specific subject, explicit
+   lighting, stronger prohibitions) — there are no other model knobs. One
+   iteration round maximum before checking in with the user.
 
-**3. Style** — What's the artistic style?
-```
-"professional product photography"
-"modern illustration"
-"digital design"
-"photorealistic"
-```
+Read `references/automation.md` before writing any generation command — it has
+the full, verified parameter set, CLI flags, Python helpers, and output layout.
 
-**4. Technical Details** — Quality and format specs
-```
-"studio lighting, sharp focus, 4K, centered composition"
-"high contrast, trending design, professional quality"
-"detailed, well-lit, professional photography"
-```
+## Required output format
 
-**5. Mood/Aesthetic** — What's the feeling?
-```
-"luxury and professional"
-"energetic and modern"
-"clean and minimalist"
-"warm and inviting"
-```
-
-### Complete Prompt Example
-
-```
-A luxury leather watch with gold accents and brown strap, 
-professional product photography, studio lighting with rim light, 
-centered composition, sharp focus, 4K, luxury and professional mood
-```
-
-### Prompt Engineering Techniques
-
-**Technique 1: Be Specific**
-```
-❌ Bad: "A watch"
-✅ Good: "A luxury leather watch with gold accents on white background"
-```
-
-**Technique 2: Use Descriptive Adjectives**
-```
-❌ Bad: "A logo"
-✅ Good: "A modern, geometric, minimalist logo in blue and white"
-```
-
-**Technique 3: Reference Styles**
-```
-❌ Bad: "A nice graphic"
-✅ Good: "A graphic in the style of modern Instagram design trends"
-```
-
-**Technique 4: Specify Quality**
-```
-❌ Bad: "A photo"
-✅ Good: "A professional 4K product photograph with studio lighting"
-```
-
-**Technique 5: Include Composition**
-```
-❌ Bad: "A person"
-✅ Good: "A person in rule of thirds composition, natural lighting, centered"
-```
-
-## Claude Code Integration
-
-### How to Use in Claude Code
-
-Claude Code can directly generate images using the automation system:
-
-```python
-from claude_integration import generate_asset
-
-# Generate a single image
-result = generate_asset(
-    category="product-photos",
-    name="luxury-watch",
-    prompt="A luxury leather watch with gold accents on white background, professional product photography, studio lighting, 4K, sharp focus",
-    size="1024x1024",
-    num_variations=1
-)
-
-print(f"Generated: {result['images']}")
-```
-
-### Setup for Claude Code
-
-**Ensure these files are in your project:**
-```
-your-project/
-├── vibe-creative-automation/
-│   ├── fal_api.py
-│   ├── creative_cli.py
-│   ├── claude_integration.py
-│   └── requirements.txt
-└── assets/  (will be created automatically)
-```
-
-**Set environment variable:**
-```bash
-export FAL_API_KEY="your_key_here"
-```
-
-**Install dependencies:**
-```bash
-pip install requests
-```
-
-### Claude Code Workflow
-
-When you ask Claude: **"Generate 3 variations of a product photo for my watch"**
-
-Claude will:
-
-1. **Read Image Generation skill** to understand prompting
-2. **Read Creative Strategist** to get your style
-3. **Craft the prompt** combining both
-4. **Call automation system** with the prompt
-5. **Generate 3 images** using FLUX model
-6. **Save to folder** like `assets/product-photos/luxury-watch/`
-7. **Show you results** with file paths
-
-### Example: Claude Code Generates Product Photos
-
-```python
-from claude_integration import generate_asset
-
-# Your Creative Strategist style (from your style guide)
-YOUR_STYLE = {
-    "primary_style": "photorealistic",
-    "mood": "professional and luxurious",
-    "lighting": "studio lighting with rim light",
-    "composition": "centered"
-}
-
-# Generate product photo using your style
-prompt = f"""
-A luxury leather watch with gold accents,
-{YOUR_STYLE['primary_style']},
-{YOUR_STYLE['mood']},
-{YOUR_STYLE['lighting']},
-{YOUR_STYLE['composition']},
-white background,
-4K,
-sharp focus,
-professional product photography
-"""
-
-result = generate_asset(
-    category="product-photography",
-    name="luxury-watch",
-    prompt=prompt,
-    size="1024x1024",
-    num_variations=3
-)
-
-for img_path in result['images']:
-    print(f"✅ Generated: {img_path}")
-```
-
-### Batch Generation Example
-
-```python
-from claude_integration import batch_generate_assets
-
-# Generate multiple assets at once
-assets = [
-    {
-        "type": "custom",
-        "category": "product-photos",
-        "name": "watch",
-        "prompt": "Luxury watch, professional photography, studio lighting, 4K"
-    },
-    {
-        "type": "custom",
-        "category": "product-photos",
-        "name": "wallet",
-        "prompt": "Premium leather wallet, professional photography, studio lighting, 4K"
-    },
-    {
-        "type": "custom",
-        "category": "product-photos",
-        "name": "sunglasses",
-        "prompt": "Designer sunglasses, professional photography, studio lighting, 4K"
-    }
-]
-
-results = batch_generate_assets(assets)
-
-for result in results:
-    print(f"{result['asset_name']}: {result['images']}")
-```
-
-## Image Sizes
-
-Choose the right size for your use case:
-
-| Size | Use Case | Speed | Detail |
-|------|----------|-------|--------|
-| 512x512 | Testing, thumbnails | Fast | Good |
-| 768x768 | Social media, web | Medium | Good |
-| 1024x1024 | Product photos, hero images | Medium | Excellent |
-| 1536x1536 | Large prints, high-res | Slow | Excellent |
-| 2048x2048 | 4K, maximum detail | Very Slow | Maximum |
-
-## Generation Parameters
-
-### Guidance Scale (3.5 - 7.5)
-
-Controls how strictly the model follows your prompt:
+Deliver one block per asset (this exact structure, whether or not you generate):
 
 ```
-3.5 — More creative freedom, less literal
-5.0 — Balanced (recommended)
-7.5 — Strict adherence to prompt, more literal
+## Prompt Spec — [asset name]
+- **Use / destination:** [where it will live]
+- **Subject:** [the main thing, concretely]
+- **Style:** [artistic treatment]
+- **Composition:** [framing — centered / rule of thirds / negative space / overhead]
+- **Lighting:** [studio / natural golden hour / dramatic rim / high-key]
+- **Mood:** [2–3 adjectives]
+- **Aspect ratio:** [one of 21:9 16:9 3:2 4:3 5:4 1:1 4:5 3:4 2:3 9:16] · **Resolution:** [1K/2K/4K] · **Format:** [png/jpeg/webp]
+- **Negative constraints:** [what must NOT appear]
+- **Prompt (final, paste-ready):**
+  > [single flowing prompt assembled from the fields above]
+- **Variants:** [n] — [what varies between them]
+- **File naming:** assets/<category>/<asset-name>/<asset_name>_<n>_<timestamp>.png (automation default)
+- **Generate with:** `python docs/creative_cli.py custom --category ... --name ... --prompt "..." --aspect-ratio ... --resolution ... --num-images n`
 ```
 
-**Example:**
-```python
-# More creative
-result = generate_asset(..., guidance_scale=3.5)
+If images were generated, append the saved paths under **Results** and say which
+variant you recommend and why (one line).
 
-# Balanced (default)
-result = generate_asset(..., guidance_scale=5.0)
+## Quality bar
 
-# Strict
-result = generate_asset(..., guidance_scale=7.5)
-```
+Before delivering, verify every spec:
 
-### Inference Steps (20 - 50)
+- [ ] Subject is concrete enough that two strangers would picture the same image
+- [ ] Style, lighting, composition, and mood are each explicitly stated — none left to model default
+- [ ] Aspect ratio matches the stated destination (no `1:1` "because default")
+- [ ] Negative constraints listed (at minimum: no watermark; state text policy explicitly — models mangle long text)
+- [ ] No invented parameters — only the ones in `references/automation.md`; the model is always `fal-ai/nano-banana-pro`
+- [ ] Keeper assets got 3+ distinct variants, not one take
+- [ ] If automation wasn't run, the deliverable says so and includes runnable commands
 
-More steps = higher quality but slower:
+Hard don'ts: never claim an image was generated when it wasn't; never put brand
+color hex codes in quotes and hope — name the colors in words too ("deep navy
+#004E89"); never render paragraphs of text inside an image.
 
-```
-20 — Fast, acceptable quality
-28 — Balanced (default)
-40 — High quality
-50 — Maximum quality
-```
+## Integration
 
-**Example:**
-```python
-# Fast generation
-result = generate_asset(..., inference_steps=20)
-
-# Balanced (default)
-result = generate_asset(..., inference_steps=28)
-
-# High quality
-result = generate_asset(..., inference_steps=40)
-```
-
-## Practical Prompt Examples
-
-### Product Photography
-
-```
-A luxury leather watch with gold accents on white background, 
-professional product photography, studio lighting with rim light, 
-centered composition, sharp focus, 4K, highly detailed
-```
-
-### Social Media Graphic
-
-```
-Instagram post graphic for product launch, vibrant colors, 
-eye-catching composition, modern design, 1080x1080 format, 
-trending aesthetic, professional quality
-```
-
-### Logo Design
-
-```
-Modern tech company logo, geometric style, blue and white colors, 
-minimalist design, scalable, professional, clean lines, 
-suitable for all media
-```
-
-### Illustration
-
-```
-Colorful illustration of a person working at a computer, 
-modern illustration style, bright colors, friendly mood, 
-professional quality, trending design
-```
-
-### Hero Image
-
-```
-A futuristic tech workspace with multiple monitors, 
-professional photography, modern aesthetic, blue and purple lighting, 
-cinematic composition, 4K, highly detailed
-```
-
-## Integration with Other Skills
-
-**Image Generation + Creative Strategist:**
-- Use your style guide to craft better prompts
-- Maintain consistency across all generated images
-
-**Image Generation + Product Photography:**
-- Generate product shots for e-commerce
-- Create lifestyle product photos
-
-**Image Generation + Social Graphics:**
-- Generate graphics for social media
-- Create platform-specific content
-
-**Image Generation + Brand Asset:**
-- Generate logos and icons
-- Create brand illustrations
-
-## Command Line Usage
-
-You can also use the CLI directly:
-
-```bash
-# Generate custom asset
-python creative_cli.py custom \
-  --category "product-photos" \
-  --name "luxury-watch" \
-  --prompt "A luxury leather watch with gold accents on white background, professional product photography, studio lighting, 4K, sharp focus" \
-  --size 1024x1024 \
-  --num-images 3 \
-  --model fal-ai/nano-banana-pro
-```
-
-## Troubleshooting
-
-### Problem: Images don't match my style
-
-**Solution:**
-- Add more specific style descriptors to prompt
-- Reference your Creative Strategist guide
-- Test with different guidance scales
-- Generate multiple variations
-
-### Problem: Generation is too slow
-
-**Solution:**
-- Use `fal-ai/nano-banana-pro` model
-- Reduce image size to 768x768
-- Reduce inference steps to 20
-
-### Problem: Images are too creative/not literal enough
-
-**Solution:**
-- Increase guidance scale to 7.5
-- Be more specific in prompt
-- Add more technical details
-
-### Problem: API errors
-
-**Solution:**
-- Verify FAL_API_KEY is set correctly
-- Check internet connection
-- Verify API key is valid
-- Try again after a moment
-
-## Best Practices
-
-1. **Start with Creative Strategist** — Define your style first
-2. **Be Specific** — More details = better results
-3. **Test Variations** — Generate multiple versions
-4. **Iterate** — Refine based on results
-5. **Use Consistent Prompts** — Similar prompts = consistent style
-6. **Reference Your Style** — Include style descriptors in every prompt
-7. **Batch Generate** — Generate multiple assets at once
-8. **Organize Assets** — Keep generated images organized
-
-## Next Steps
-
-1. **Define Your Style** — Complete Creative Strategist first
-2. **Craft Your Prompt** — Use the 5-part formula
-3. **Test Generation** — Generate a test image
-4. **Iterate** — Refine based on results
-5. **Batch Generate** — Create multiple assets
-6. **Use in Projects** — Integrate with other skills
-
----
-
-**You now have the power to generate professional images with AI. Start creating! 🎨**
+- `skills/creative/creative-strategist` → feeds this skill its **style block**
+  (paste into every prompt's style/mood/lighting fields).
+- `skills/creative/product-photography`, `skills/creative/social-graphics`,
+  `skills/creative/brand-asset` → specialized front-ends that produce their own
+  prompt specs and use the same automation; route there when the request fits.
+- `skills/creative/product-video` and `skills/creative/remotion-script-writer` →
+  consume generated stills as source frames / assets.
+- `references/automation.md` — full FAL.ai client, CLI, and Python-helper
+  reference. Read it whenever you're about to run a generation command.
