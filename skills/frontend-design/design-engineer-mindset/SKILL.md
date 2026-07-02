@@ -1,541 +1,111 @@
 ---
 name: design-engineer-mindset
-description: Understand the Design Engineer role - bridging design and implementation. Learn to think about design as code, understand rendering pipelines, optimize animation performance, and ensure design fidelity through implementation. Use when translating designs to code, optimizing performance, or ensuring quality through development.
+description: "Translate a design (Figma mockup, spec, screenshot, or verbal description) into code with pixel- and motion-level fidelity, using the browser's rendering pipeline as a constraint: exact spacing/timing via tokens, GPU-safe animations, no layout thrashing, 60fps interactions. Use when the user says 'implement this design', 'make it match the mockup', 'it doesn't look like the Figma', 'the animation stutters/drops frames', 'set up design tokens', or when a diff between design and implementation needs to be closed. Produces the faithful implementation plus a fidelity report (design value → implemented value → any deviation and why) and performance notes."
 ---
 
-# The Design Engineer Mindset
+# Design Engineer Mindset
 
-## Overview
+Close the gap between what was designed and what ships: implement designs exactly — real values, real timing, real physics — while treating the browser's rendering pipeline as part of the design material. **The prime directive: fidelity is non-negotiable and measurable. "Approximately the mockup" is a bug; every deviation is either justified in writing or fixed.** Deliver the implementation plus a fidelity report; never eyeball-and-ship.
 
-The **Design Engineer** is a unified role that bridges the traditional gap between design and implementation. Unlike a designer who hands off static mockups, or a developer who approximates designs, the Design Engineer understands that **the medium of digital design is code**.
+## When to use / when not to
 
-This skill teaches you to think like a design engineer: understanding rendering pipelines, animation performance, and the physics of the browser as your design material.
+Use for: design-to-code implementation, closing design/implementation drift, setting up design tokens as code, fixing stuttering animations at the rendering level (layout thrashing, non-compositor properties), frame-budget work.
 
-## The Implementation Gap
+Hand off instead when the real need is:
+- Choosing durations/easings and motion vocabulary → `skills/frontend-design/interaction-physics` (that skill decides the spec; this one implements it faithfully and keeps it at 60fps)
+- Network/perceived latency, Core Web Vitals → `skills/frontend-design/performance-optimization`
+- Structuring the components you're about to build → `skills/frontend-design/component-architecture`
+- Inventing the design itself (no mockup exists) → `skills/frontend-design/design-foundation` and the visual-layer skills
 
-### The Traditional Problem
+## Step 0 — Inspect design and codebase, then ask only what's left
 
-In traditional workflows:
-1. Designer creates static mockup in Figma
-2. Designer hands off to developer
-3. Developer approximates the design in code
-4. Details are lost in translation
+1. Extract exact values from the design source: spacing, sizes, radii, colors, shadows, type styles, animation durations/easings. If it's a Figma link and Figma tooling is available, pull real values; from a screenshot, measure and mark measured values as approximations in the fidelity report.
+2. Inspect the code side: existing token system (CSS variables, Tailwind theme, styled-system)? Map every design value to an existing token first; list values with no token as either new tokens or spec deviations to raise.
+3. Detect the design's underlying system: are spacings multiples of 8 (or 4)? A consistent elevation scale? Duration pattern? Implementing the *system* beats transcribing pixel values.
+4. Check rendering hygiene of code you'll touch: grep for animations on `width/height/top/left/margin`, interleaved DOM reads/writes in handlers, scroll handlers doing layout reads.
 
-**Result:** The final product never matches the design. Subtle animations are removed. Spacing is approximated. Interactions feel wrong.
+Ask the user (one batch, only when the design source doesn't answer): target breakpoints/responsive behavior if the mockup shows one width, and interaction behavior not visible in a static mockup (hover/press/loading states). If unanswerable, implement sensible defaults consistent with the design system and log them as assumptions — don't stall.
 
-### The Design Engineer Solution
+## Workflow
 
-The Design Engineer understands that:
-- The medium is code, not pixels
-- Rendering pipelines matter
-- Animation performance is design
-- Implementation fidelity is non-negotiable
+### 1. Recover intent before transcribing values
 
-**Result:** Design is preserved through implementation. Quality is baked in.
+For each notable value, name its reason (touch target, grid step, elevation level, timing class). Rule: when a value contradicts the design's own system (a stray 13px in an 8-point layout), flag it to the user as a probable spec error rather than silently copying or silently correcting it. Intent table examples: `references/rendering.md`.
 
-## Understanding the Browser as Design Material
+### 2. Implement through tokens, not literals
 
-### The Rendering Pipeline
+- Every color/spacing/size/shadow/duration in your code is a token reference; raw literals appear only when defining tokens.
+- If no token layer exists and more than a handful of values recur, create one (CSS variables, or extend the Tailwind theme if that's the stack) — but keep it minimal and derived from the actual design, not a speculative system.
+- Exactness rule: 44px is 44px, 300ms is 300ms, the easing curve is the specified cubic-bezier — not "close enough" approximations.
 
-To design with code, you must understand how browsers render.
+### 3. Animate within the pipeline's physics
+
+- **Property rule:** animate `transform` and `opacity` only (composite-only). Layout properties (`width/height/top/left`) trigger layout+paint+composite — never animate them; fake shadows via pseudo-element opacity crossfade, size emphasis via `scale()`.
+- **Thrashing rule:** batch DOM reads before writes; in handlers, read geometry first, schedule writes in `requestAnimationFrame`. Interleaved read/write in a loop is an automatic fix.
+- **Frame budget:** 60fps = 16.7ms/frame; budget ~10ms for your JS. When an animation stutters, profile (DevTools Performance) and identify the phase — long JS task, forced reflow, or paint storm — before changing code.
+- **Memoization** (`React.memo`, `useMemo`, `useCallback`) is applied where profiling shows re-render cost, not sprinkled by default.
+
+Canonical patterns (pipeline table, thrash fix, GPU keyframes, FPS meter, token block): `references/rendering.md` — read it when implementing.
+
+### 4. Verify fidelity and performance
+
+- Build the fidelity report: design value → implemented value, side by side, deviation column with a reason for every mismatch. Take a screenshot comparison if the environment supports rendering.
+- Exercise every specified state (hover, press, focus, loading, error, empty) — mockups usually show one; the implementation must cover all, and states you invented get flagged as assumptions.
+- If the project has visual regression tooling (Percy/Chromatic/Storybook), add snapshots for the new states; if not, recommend it once in the report — don't install it uninvited.
+- For animation work: confirm no layout-property animation remains, and profile or reason through the frame cost of the heaviest interaction.
+
+## Required output format
+
+Deliver both artifacts:
+
+**1. The code** — the faithful implementation, token-based, using the project's existing stack and conventions.
+
+**2. Fidelity Report** (markdown):
 
 ```
-1. Parse HTML/CSS/JS
-2. Build DOM tree
-3. Compute styles (CSSOM)
-4. Layout (calculate positions)
-5. Paint (rasterize pixels)
-6. Composite (combine layers)
+## Implementation summary
+What was implemented, from which design source, into which files.
+
+## Fidelity table
+| Property | Design | Implemented | Token | Deviation & why |
+| Button height | 44px | 44px | --size-control-lg | — |
+| Card shadow | y4 b6 10% | same | --shadow-md | — |
+| Modal duration | 300ms ease-out | 300ms cubic-bezier(0.16,1,0.3,1) | --duration-base | curve per motion spec, approved values |
+| Sidebar gap | 13px (off-grid) | 12px | --spacing-sm+xs | flagged: mockup off its own 4pt grid — confirm |
+
+## States implemented
+| State | Source | Notes |
+| hover/press/focus | inferred (not in mockup) | assumption — matches system patterns |
+| loading | mockup frame 3 | — |
+
+## Performance notes
+- All animations on transform/opacity ✓
+- [Any profiling done, frame costs, thrash fixes applied]
+
+## Assumptions & open questions
+[Responsive behavior chosen, off-grid values flagged, unverifiable measurements from screenshots]
 ```
 
-Each step takes time. Understanding this pipeline lets you optimize.
+## Quality bar (check before delivering)
 
-### Layout Thrashing
+- [ ] Every design value either matches exactly or has a written deviation reason — zero silent approximations
+- [ ] No raw magic numbers in component code; all values route through tokens
+- [ ] No animation touches layout properties; no interleaved read/write loops in touched code
+- [ ] All interactive states implemented, with invented ones labeled as assumptions
+- [ ] Off-system values in the mockup flagged, not silently propagated or corrected
+- [ ] Screenshot-derived measurements marked approximate; no false precision
+- [ ] Accessibility not traded for fidelity: focus visibility, contrast, and touch-target minimums (24×24 CSS px WCAG 2.2 AA; 44×44 preferred for touch) survive the implementation
+- [ ] Performance claims (fps, render cost) only stated if actually measured
 
-Avoid reading and writing layout properties in rapid succession.
+Hard don'ts: don't "improve" the design while implementing it — propose changes separately; don't install visual-regression or animation tooling uninvited; don't claim 60fps without profiling; don't build a speculative token architecture beyond what the design actually uses.
 
-```javascript
-// Bad - Layout thrashing
-for (let i = 0; i < 100; i++) {
-  element.style.width = (i * 10) + 'px';  // Triggers layout
-  const width = element.offsetWidth;  // Reads layout
-}
+## Integration
 
-// Good - Batch reads and writes
-const widths = [];
-for (let i = 0; i < 100; i++) {
-  widths.push((i * 10) + 'px');
-}
-widths.forEach((width, i) => {
-  elements[i].style.width = width;  // Batch writes
-});
-```
+- `skills/frontend-design/interaction-physics` → supplies the motion spec (durations/easings) this skill implements at full fidelity and frame rate.
+- `skills/frontend-design/component-architecture` → structures what you build; implement fidelity *inside* its component boundaries and prop conventions.
+- `skills/frontend-design/design-foundation` → owns the token system's design; this skill encodes and consumes it in code.
+- `skills/frontend-design/performance-optimization` → takes over when slowness is network/data-shaped rather than render-shaped; hand it findings about fetch waterfalls you notice.
 
-### GPU Acceleration
+## References
 
-Use transforms and opacity for animations (GPU-accelerated) instead of position/size changes (CPU-intensive).
-
-```css
-/* Bad - CPU-intensive */
-.box {
-  animation: moveLeft 1s;
-}
-
-@keyframes moveLeft {
-  from { left: 0; }
-  to { left: 100px; }
-}
-
-/* Good - GPU-accelerated */
-.box {
-  animation: moveLeft 1s;
-}
-
-@keyframes moveLeft {
-  from { transform: translateX(0); }
-  to { transform: translateX(100px); }
-}
-```
-
-## Animation Performance
-
-### Measuring Animation Performance
-
-Use DevTools to measure frame rate.
-
-```javascript
-// Measure FPS
-let lastTime = performance.now();
-let frames = 0;
-
-const measureFPS = () => {
-  const currentTime = performance.now();
-  if (currentTime >= lastTime + 1000) {
-    console.log(`FPS: ${frames}`);
-    frames = 0;
-    lastTime = currentTime;
-  }
-  frames++;
-  requestAnimationFrame(measureFPS);
-};
-
-measureFPS();
-```
-
-### 60fps Target
-
-Aim for 60 frames per second (16.67ms per frame).
-
-```javascript
-// Use requestAnimationFrame for smooth animations
-const animate = () => {
-  // Do animation work here (must complete in < 16.67ms)
-  requestAnimationFrame(animate);
-};
-
-animate();
-```
-
-### Easing Functions
-
-Choose easing functions that match the physics of the interaction.
-
-```javascript
-// Linear - constant speed
-const linear = (t) => t;
-
-// Ease-out - starts fast, slows down (natural deceleration)
-const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-
-// Ease-in - starts slow, speeds up (natural acceleration)
-const easeIn = (t) => Math.pow(t, 3);
-
-// Ease-in-out - accelerates then decelerates
-const easeInOut = (t) => t < 0.5 
-  ? 4 * t * t * t 
-  : 1 - Math.pow(-2 * t + 2, 3) / 2;
-```
-
-## Design Tokens as Code
-
-### Tokens Define the System
-
-Design tokens are the single source of truth for design decisions.
-
-```javascript
-// Design tokens
-const tokens = {
-  spacing: {
-    xs: '4px',
-    sm: '8px',
-    md: '16px',
-    lg: '24px',
-    xl: '32px',
-    xxl: '48px',
-  },
-  colors: {
-    primary: '#0EA5E9',
-    secondary: '#64748B',
-    error: '#EF4444',
-    success: '#10B981',
-  },
-  typography: {
-    h1: {
-      fontSize: '48px',
-      fontWeight: 700,
-      lineHeight: 1.2,
-    },
-    body: {
-      fontSize: '16px',
-      fontWeight: 400,
-      lineHeight: 1.6,
-    },
-  },
-  shadows: {
-    sm: '0 1px 2px rgba(0, 0, 0, 0.05)',
-    md: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    lg: '0 10px 15px rgba(0, 0, 0, 0.1)',
-  },
-};
-```
-
-### Tokens in CSS
-
-Use CSS variables to implement tokens.
-
-```css
-:root {
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 48px;
-
-  /* Colors */
-  --color-primary: #0EA5E9;
-  --color-secondary: #64748B;
-  --color-error: #EF4444;
-  --color-success: #10B981;
-
-  /* Typography */
-  --font-size-h1: 48px;
-  --font-size-body: 16px;
-  --font-weight-bold: 700;
-  --font-weight-normal: 400;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Use tokens */
-.button {
-  padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--color-primary);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-bold);
-  box-shadow: var(--shadow-md);
-}
-```
-
-## Component Architecture from a Design Engineer Perspective
-
-### Atomic Design with Performance in Mind
-
-```javascript
-// Atoms - Single, indivisible elements
-const Button = ({ variant = 'primary', ...props }) => (
-  <button className={`button button-${variant}`} {...props} />
-);
-
-// Molecules - Simple groups of atoms
-const FormField = ({ label, ...props }) => (
-  <div className="form-field">
-    <label>{label}</label>
-    <input {...props} />
-  </div>
-);
-
-// Organisms - Complex groups of molecules
-const Form = ({ onSubmit, fields }) => (
-  <form onSubmit={onSubmit}>
-    {fields.map(field => <FormField key={field.name} {...field} />)}
-    <Button type="submit">Submit</Button>
-  </form>
-);
-```
-
-### Performance-Conscious Components
-
-```javascript
-// Memoize to prevent unnecessary re-renders
-const MemoizedButton = React.memo(Button);
-
-// Use useCallback to preserve function identity
-const handleClick = useCallback(() => {
-  // Handle click
-}, []);
-
-// Use useMemo for expensive calculations
-const memoizedValue = useMemo(() => {
-  return expensiveCalculation(data);
-}, [data]);
-```
-
-## Interaction Fidelity
-
-### Translating Animations to Code
-
-When a designer creates an animation in Figma, the Design Engineer must translate it to code with precision.
-
-**Designer's Animation:**
-- Duration: 300ms
-- Easing: ease-out
-- From: opacity 0, translateY(-20px)
-- To: opacity 1, translateY(0)
-
-**Design Engineer's Code:**
-
-```css
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.element {
-  animation: slideIn 300ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-### Micro-interactions with Precision
-
-```javascript
-// Precise micro-interaction
-const handleButtonClick = () => {
-  // 1. Immediate visual feedback (ripple effect)
-  showRipple();
-
-  // 2. Optimistic state update
-  setIsLoading(true);
-
-  // 3. Network request
-  fetch('/api/action')
-    .then(() => {
-      // 4. Success feedback
-      showSuccess();
-      setIsLoading(false);
-    })
-    .catch(() => {
-      // 5. Error recovery
-      showError();
-      setIsLoading(false);
-    });
-};
-```
-
-## Design System Implementation
-
-### Living Design Systems
-
-A Design Engineer maintains a living design system where code is the source of truth.
-
-```javascript
-// Design system component library
-export const Button = ({ variant, size, ...props }) => {
-  const variantStyles = {
-    primary: 'bg-blue-600 text-white',
-    secondary: 'bg-gray-200 text-gray-900',
-  };
-
-  const sizeStyles = {
-    sm: 'px-3 py-1 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
-  };
-
-  return (
-    <button
-      className={`${variantStyles[variant]} ${sizeStyles[size]} rounded-lg`}
-      {...props}
-    />
-  );
-};
-
-// Document in Storybook
-export default {
-  title: 'Components/Button',
-  component: Button,
-};
-
-export const Primary = () => <Button variant="primary">Click me</Button>;
-export const Secondary = () => <Button variant="secondary">Click me</Button>;
-```
-
-## Quality Assurance Through Implementation
-
-### Visual Regression Testing
-
-```javascript
-// Use tools like Percy or Chromatic to catch visual regressions
-describe('Button Component', () => {
-  it('should match design', () => {
-    cy.mount(<Button variant="primary">Click me</Button>);
-    cy.percySnapshot('button-primary');
-  });
-});
-```
-
-### Performance Testing
-
-```javascript
-// Measure component performance
-describe('Performance', () => {
-  it('should render in < 16ms', () => {
-    const start = performance.now();
-    render(<LargeList items={1000} />);
-    const duration = performance.now() - start;
-    expect(duration).toBeLessThan(16);
-  });
-});
-```
-
-## The Design Engineer Workflow
-
-### 1. Understand the Design Intent
-
-Before implementing, understand *why* the design is the way it is.
-
-```
-Why is this button 44px tall?
-→ Touch target size (minimum 44x44px)
-
-Why is this animation 300ms?
-→ Fast enough to feel responsive, slow enough to feel intentional
-
-Why is this spacing 24px?
-→ Follows 8-point grid system
-```
-
-### 2. Implement with Fidelity
-
-Implement the design exactly as intended, not approximately.
-
-```css
-/* Exact implementation */
-.button {
-  height: 44px;  /* Not 40px or 48px */
-  padding: 12px 24px;  /* Exact spacing */
-  animation-duration: 300ms;  /* Exact timing */
-  border-radius: 8px;  /* Exact radius */
-}
-```
-
-### 3. Measure and Optimize
-
-Measure performance and optimize without sacrificing quality.
-
-```javascript
-// Measure
-const metrics = measurePerformance();
-
-// Optimize
-if (metrics.fps < 60) {
-  useGPUAcceleration();
-  batchDOMUpdates();
-  reduceComplexity();
-}
-
-// Verify
-const newMetrics = measurePerformance();
-console.assert(newMetrics.fps >= 60);
-```
-
-### 4. Iterate and Refine
-
-Work with designers to refine based on implementation learnings.
-
-```
-Designer: "This animation should feel snappier"
-Engineer: "Let's reduce duration from 300ms to 200ms"
-Both: "Test and verify"
-```
-
-## How to Use This Skill with Claude Code
-
-### Implement with Fidelity
-
-```
-"I'm using the design-engineer-mindset skill. Can you help me:
-- Implement this design exactly as specified
-- Use GPU-accelerated animations
-- Measure and optimize performance
-- Ensure 60fps animations"
-```
-
-### Build a Design System
-
-```
-"Can you help me build a design system?
-- Define design tokens
-- Create component library
-- Document in Storybook
-- Set up visual regression testing"
-```
-
-### Optimize Animation Performance
-
-```
-"Can you optimize these animations?
-- Use transforms instead of position
-- Batch DOM updates
-- Measure FPS
-- Ensure 60fps"
-```
-
-## Integration with Other Skills
-
-- **interaction-physics** — Animation implementation
-- **performance-optimization** — Performance measurement
-- **component-architecture** — Component design
-- **design-foundation** — Design tokens
-
-## Key Principles
-
-**1. Code is Design Material**
-Understand the browser as your design tool.
-
-**2. Fidelity Matters**
-Implement designs exactly, not approximately.
-
-**3. Performance is Design**
-Animation performance affects user perception.
-
-**4. Measure Everything**
-Data-driven optimization.
-
-**5. Iterate and Refine**
-Work with designers to improve through implementation.
-
-## Checklist: Are You Thinking Like a Design Engineer?
-
-- [ ] I understand the rendering pipeline
-- [ ] I use GPU-accelerated animations
-- [ ] I measure FPS and optimize
-- [ ] I implement designs with fidelity
-- [ ] I use design tokens consistently
-- [ ] I batch DOM updates
-- [ ] I prevent layout thrashing
-- [ ] I test visual regressions
-- [ ] I measure performance
-- [ ] I iterate with designers
-
-The Design Engineer mindset transforms implementation from approximation to precision.
+- `references/rendering.md` — the rendering pipeline cost model, layout-thrashing fixes, GPU-safe animation patterns, frame-budget measurement code, the design-token CSS block, React memoization patterns, visual-regression and performance test examples, and the design-intent table. Read it when implementing or when debugging a stuttering interaction.
