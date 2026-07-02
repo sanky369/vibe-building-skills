@@ -1,210 +1,123 @@
 ---
 name: newsletter
-description: Build recurring audience touchpoints with compelling newsletters. Use when building audience loyalty, establishing authority, or creating regular engagement with your subscribers.
+description: "Write a ready-to-send newsletter issue (and, when starting from zero, the recurring format and cadence to commit to): subject line options, preview text, body in one of six proven formats, and a single engagement CTA. Use when the user says 'write my newsletter', 'this week's issue', 'I want to start a newsletter', 'what should I send my list', 'help me email my subscribers regularly', or shares content to turn into an issue. Produces a complete issue draft with subject/preview variants — or a Newsletter Blueprint (format, cadence, section template) plus the first issue when setting one up."
 ---
 
-# Newsletter Skill
+# Newsletter
 
-## Overview
+Write newsletter issues that subscribers open, read, and reply to. A newsletter is a recurring relationship, not a broadcast: it must be **consistent** (same format and cadence every time), **valuable** (useful before promotional), and **personal** (sounds like one human wrote it to one human). **Prime directive: the reader must finish the issue glad they opened it** — value first, promotion never more than a postscript.
 
-A Newsletter is a recurring email that builds relationship and trust with your audience. This skill teaches you 6 newsletter formats to keep your audience engaged.
+## When to use / when not to
 
-**Keywords**: newsletter, email marketing, audience building, subscriber engagement, content distribution, email strategy
+- Use for writing a newsletter issue, designing a new newsletter (format + cadence + template), or fixing a stale one (falling opens, no replies).
+- If the user wants **automated emails triggered by behavior** (welcome series, launch, sales sequence), use `skills/marketing/email-sequences` — a newsletter is a recurring broadcast, not an automation.
+- If the user has no list and no way to get subscribers, route to `skills/marketing/lead-magnet` first.
+- If the source material is a blog post being adapted for many channels at once, use `skills/marketing/content-atomizer` (it can hand the newsletter item back here).
 
-## Core Methodology
+## Intake
 
-A great newsletter has three qualities:
+Ask in one batch, only what's missing:
 
-1. **Consistent** — Sent on a regular schedule
-2. **Valuable** — Provides real value, not just promotion
-3. **Personal** — Reflects your voice and personality
+1. **Audience and list** — who subscribes, roughly how many, and what they signed up expecting.
+2. **This issue's raw material** — a story, lesson, link roundup, data point, or recent piece of content. If nothing, ask for one recent professional observation or lesson; there is always one.
+3. **Voice** — existing issues or a brand-voice guide to match (use `skills/marketing/brand-voice` output if it exists).
+4. **Goal** — pure relationship-building, or is there something to softly promote?
 
-## Newsletter Frequency
+If the user is starting a newsletter from scratch, also ask what they can sustain: writing capacity and how much source material their work naturally generates. Otherwise infer format and cadence from past issues. If enough is known, state assumptions and draft — don't stall.
 
-**Weekly** — High engagement but requires consistent content  
-**Bi-weekly** — Good balance of engagement and workload  
-**Monthly** — Easier to maintain but lower engagement  
+## Workflow
 
-**Recommendation**: Start with bi-weekly or weekly. You can always adjust.
+### 1. If new: lock the format and cadence (the Blueprint)
 
-## The 6 Newsletter Formats
+Pick **one** primary format by decision rule — the user can guest-star other formats occasionally, but the flagship format is what subscribers learn to expect:
 
-### Format 1: Curated Newsletter
+| If the user… | Format | Skeleton |
+|---|---|---|
+| Reads widely, low writing capacity | **Curated** | Personal opening note → 5–10 links, each with 1–2 sentences of *your take* (the commentary is the product) → sign-off |
+| Has rich personal/client experiences | **Story-driven** | Hook → story → the lesson → how the reader applies it → sign-off |
+| Sells expertise (consultant, coach, B2B) | **Educational** | Why this matters → the concept/framework → 2–3 real examples → how to apply → sign-off |
+| Has network access to interesting people | **Interview** | Who + why them → 5–10 Q&As → your key takeaway → sign-off |
+| Works with data or research | **Data-driven** | Surprising finding → the data → what it means → what to do with it → sign-off |
+| Builds in public / personal brand | **Personal update** | Working on → learning → thinking about → one recommendation → sign-off |
 
-Share curated links and insights from around the web.
+Cadence by decision rule: weekly if their work generates material weekly and they'll actually sustain it; otherwise bi-weekly (the default recommendation — heuristic: a kept bi-weekly schedule beats a broken weekly one); monthly only if the format is heavyweight (interview, data-driven). Fix the send day/time and put it in the Blueprint.
 
-**Structure**:
-- Opening: Personal note or insight
-- 5-10 curated links with your commentary
-- Closing: Personal sign-off
+### 2. Extract the issue's one idea
 
-**Best for**: Building authority, staying top-of-mind
+Every issue carries exactly **one** central idea (curated format: one theme unifying the links). From the raw material, pull the single most useful/surprising insight for *this* audience. If the material holds several strong ideas, list them, pick the best for now, and bank the rest as future issue seeds in the delivery notes.
 
-**Time to create**: 30-45 minutes
+### 3. Draft the issue
 
-**Example**: "This week's best articles about remote team management"
+- **Subject line**: write 3 candidates, ≤45 characters each, specific and curiosity- or benefit-driven. No clickbait the body doesn't cash; no ALL CAPS; at most one punctuation flourish.
+- **Preview text**: ≤90 characters that extends (not repeats) the subject.
+- **Opening**: 1–3 sentences, personal and concrete — an observation, moment, or admission. Never "Welcome to another issue" or weather-report throat-clearing.
+- **Body**: follow the format skeleton from Step 1. Short paragraphs (≤3 sentences), subheads or bold lead-ins if the issue runs past ~300 words, written to one reader ("you", never "you all"/"subscribers").
+- **CTA**: exactly one, engagement-first — "Hit reply and tell me X" beats "click here" for relationship-building. If there's a promotion, it rides in the P.S., not the body, unless the user explicitly wants a promotional issue.
+- **Sign-off**: first name + optional P.S. (the P.S. is prime real estate: a bonus link, question, or the soft promo).
 
-### Format 2: Story-Driven Newsletter
+Length target: 300–800 words for original-content formats; curated can run longer but each link blurb stays ≤2 sentences of commentary.
 
-Tell a personal story that teaches a lesson.
+### 4. Self-review and deliver
 
-**Structure**:
-- Hook: Compelling opening
-- Story: Personal experience or observation
-- Lesson: What you learned
-- Application: How they can apply it
-- Closing: Personal sign-off
+Run the quality bar. Then deliver in the required output format, including next-issue seeds so the user never faces a blank page.
 
-**Best for**: Building connection, teaching through narrative
+## Required output format
 
-**Time to create**: 45-60 minutes
-
-**Example**: "How I learned the hard way about delegation"
-
-### Format 3: Educational Newsletter
-
-Teach a specific concept or framework.
-
-**Structure**:
-- Hook: Why this matters
-- Concept: Explain the framework
-- Examples: 2-3 real examples
-- Application: How to use it
-- Closing: Personal sign-off
-
-**Best for**: Establishing authority, providing value
-
-**Time to create**: 60-90 minutes
-
-**Example**: "The 3-Part Framework for Remote Team Communication"
-
-### Format 4: Interview Newsletter
-
-Interview a customer, expert, or team member.
-
-**Structure**:
-- Introduction: Who you're interviewing and why
-- Q&A: 5-10 questions and answers
-- Key Takeaway: What you learned
-- Closing: Personal sign-off
-
-**Best for**: Social proof, diverse perspectives
-
-**Time to create**: 90-120 minutes (including interview)
-
-**Example**: "Interview: How Sarah Built a Remote Team of 50"
-
-### Format 5: Data-Driven Newsletter
-
-Share data, research, or trends.
-
-**Structure**:
-- Hook: Surprising finding or trend
-- Data: Present the data or research
-- Analysis: What it means
-- Application: How to use this insight
-- Closing: Personal sign-off
-
-**Best for**: Establishing authority, providing insights
-
-**Time to create**: 60-90 minutes
-
-**Example**: "2024 Remote Work Trends: What the Data Shows"
-
-### Format 6: Personal Update Newsletter
-
-Share what you're working on, learning, and thinking about.
-
-**Structure**:
-- What I'm working on: Current projects
-- What I'm learning: New insights or skills
-- What I'm thinking about: Observations or questions
-- Recommendation: A resource, tool, or article
-- Closing: Personal sign-off
-
-**Best for**: Building personal connection, authenticity
-
-**Time to create**: 30-45 minutes
-
-**Example**: "This Month: Building, Learning, Thinking"
-
-## Newsletter Structure
-
-### Opening
-
-Start with a personal note or hook:
-
-**Formula**: "[Personal observation] + [Why it matters]"
-
-**Example**: "I was on a call with a client yesterday, and they said something that changed how I think about remote teams..."
-
-### Body
-
-Deliver your main content using one of the 6 formats above.
-
-### Call-to-Action
-
-Include a soft CTA that invites engagement:
-
-**Types**:
-- "Reply and let me know your thoughts"
-- "What's your experience with this?"
-- "Share this with someone who needs to read it"
-- "Click here to learn more"
-
-### Closing
-
-End with a personal sign-off:
-
-**Formula**: "[Your name] + [Personal touch]"
-
-**Example**:
 ```
-Looking forward to hearing from you.
+# Newsletter Issue — [working title]
 
-[Your name]
+## Subject line options
+1. "…" (n chars)
+2. "…" (n chars)
+3. "…" (n chars)
+Recommended: #_ — [one-line reason]
 
-P.S. [Relevant insight, question, or recommendation]
+## Preview text
+"…" (n chars)
+
+## Body
+[Full issue: opening → format-skeleton body → CTA → sign-off → P.S.]
+
+## Send notes
+- Format: [which of the six] · Cadence slot: [day/time]
+- CTA: [the one action asked]
+- Promo present: [none | P.S. only | promotional issue]
+
+## Next-issue seeds
+- [2–3 banked ideas pulled from this material or conversation]
 ```
 
-## Newsletter Best Practices
+When setting up a new newsletter, precede the issue with:
 
-**Consistency** — Send on the same day/time each week
+```
+# Newsletter Blueprint — [name]
 
-**Value-First** — Provide value before asking for anything
+- Audience & promise: [who subscribes and what each issue gives them]
+- Flagship format: [one of six] — [why, per decision rule]
+- Cadence: [weekly/bi-weekly/monthly], sent [day/time]
+- Section template: [the recurring skeleton, so every issue is structurally identical]
+- Voice notes: [3–5 bullets]
+- Metrics to watch: open rate trend, reply count, unsubscribe spikes per issue
+```
 
-**Personal** — Use your voice and personality
+## Quality bar
 
-**Scannable** — Use short paragraphs, bold text, subheadings
+Check every item; fix before delivering:
 
-**Mobile-Friendly** — Format for mobile reading
+- [ ] Every subject line ≤45 characters (count them) and honestly cashed by the body
+- [ ] Preview text ≤90 characters and not a repeat of the subject
+- [ ] Opening is personal/concrete — no "welcome to this week's issue" boilerplate
+- [ ] Exactly one idea; exactly one CTA
+- [ ] Promotion absent or confined to the P.S. (unless explicitly a promo issue)
+- [ ] No paragraph over 3 sentences; issue scannable on a phone
+- [ ] Sounds like the user, not like "a newsletter" — read it aloud; generic sentences get cut
+- [ ] Every factual claim cited, attributable to the user's own experience, or cut; no invented anecdotes presented as the user's
+- [ ] Curated format: every link has a stated reason it earned inclusion
 
-**Engagement** — Invite replies and interaction
+## Integration
 
-## How to Use This Skill
-
-1. **Choose Your Format** — Which format fits your style?
-2. **Set Your Frequency** — Weekly, bi-weekly, or monthly?
-3. **Create Your Template** — Standardize your structure
-4. **Batch Create** — Create 4 newsletters at once
-5. **Schedule** — Set up automation
-6. **Measure** — Track open rates and engagement
-
-## Integration with Other Skills
-
-Newsletter works with:
-- **Brand Voice** — Your voice makes newsletters personal
-- **Content Atomizer** — Your content gets repurposed into newsletters
-- **Email Sequences** — Your newsletter feeds your nurture sequence
-
-## Common Pitfalls
-
-**Too Salesy** — Newsletter is all promotion, no value.  
-**Inconsistent** — You skip weeks or miss your schedule.  
-**Generic** — Newsletter could be from anyone.  
-**Too Long** — Newsletter is overwhelming to read.  
-**No CTA** — People don't know what to do next.
-
-## Next Steps
-
-Once you've launched your newsletter, move to Skill 08: Email Sequences to create targeted email campaigns.
+- `skills/marketing/brand-voice` — supplies the voice guide the issue must match; run it first if the user has no defined voice.
+- `skills/marketing/lead-magnet` — builds the subscriber-acquisition offer; new subscribers flow through `skills/marketing/email-sequences` (welcome) before landing on this newsletter.
+- `skills/marketing/email-sequences` — owns triggered/automated email; the newsletter is the ongoing touchpoint subscribers graduate into.
+- `skills/marketing/content-atomizer` — turns blog/video content into newsletter items, and turns strong newsletter issues back into social posts.
+- `skills/marketing/seo-content` — published articles are recurring issue material; pass title, link, and one-sentence hook.

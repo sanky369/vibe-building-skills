@@ -1,462 +1,138 @@
 ---
 name: seo-content
-description: Create articles that rank in search engines and engage readers. Use when building organic traffic, establishing authority, or creating content that attracts your ideal customers through search.
+description: "Write a publish-ready, search-optimized article for a target keyword: SERP-validated brief, full draft matched to search intent, on-page metadata (title tag, meta description, URL slug), and schema markup. Use when the user says 'write a blog post about X', 'write an article that ranks', 'create SEO content', 'I need content for this keyword', or hands over a keyword/content brief from an SEO plan — even if they never say 'SEO'. Also use to rewrite or upgrade an existing article that isn't ranking. Produces the complete article plus a metadata block and an on-page checklist result."
 ---
 
-# SEO Content Skill
+# SEO Content
 
-## Overview
+Write one article that ranks *and* reads: search-optimized for the target keyword, genuinely useful to the human who typed it. **Prime directive: match search intent exactly** — Google rewards the format searchers want, and the wrong format doesn't rank no matter how good the writing is. The second directive: every article must contain something the current top results don't (an example, data point, angle, or depth), or there is no reason for it to outrank them.
 
-SEO Content is content optimized for search engines that also engages and converts readers. This skill teaches you to write content that ranks and resonates, following modern E-E-A-T principles and topical authority strategies.
+## When to use / when not to
 
-**Keywords**: SEO content, search engine optimization, content marketing, ranking content, organic traffic, search intent, content strategy, E-E-A-T, topical authority
+- Use for writing or rewriting a single search-targeted article (blog post, guide, listicle, comparison).
+- If the user has no keyword and no strategy — asks "what should I even write about?" — run `skills/marketing/seo-strategy` (or `skills/marketing/keyword-research` for just a keyword list) first.
+- If the piece is a landing/sales page where conversion beats ranking, use `skills/marketing/direct-response-copy`.
+- If the user wants social or email derivatives of an article, that's `skills/marketing/content-atomizer`.
 
-**Related**: See `./seo-strategy` for the complete strategic framework and keyword research methodology.
+## Intake
 
----
+Ask in one batch, only what's missing:
 
-## The Modern SEO Content Framework
+1. **Target keyword** (and secondary keywords if they have them).
+2. **Audience and product** — who reads this, and what does the business want the reader to do next (the CTA)?
+3. **Unique material** — first-hand experience, examples, data, or customer stories you can use. This is the E-E-A-T fuel; press for at least one concrete item.
+4. **Voice** — an existing brand-voice guide or 2–3 sample posts to match. If `skills/marketing/brand-voice` output exists, use it.
 
-### Two Layers of Optimization
+If the request arrives from `skills/marketing/seo-strategy` with a keyword, intent, and SERP notes, skip straight to Step 2. If details are missing, state assumptions (audience, intent, CTA) and proceed — don't stall.
 
-1. **For Search Engines** — Technical optimization for ranking
-2. **For People** — Engaging, valuable content that converts
+## Workflow
 
-The best SEO content serves both equally.
+### 1. Validate the SERP and lock the intent
 
-### The E-E-A-T Imperative
+Search the target keyword (use web search when available). Classify intent and let it dictate format:
 
-Google now evaluates all content against E-E-A-T:
+| Intent | Searcher wants | You write |
+|---|---|---|
+| Informational | to learn/do | How-to guide or ultimate guide |
+| Commercial | to compare/choose | Listicle, comparison, review |
+| Transactional | to buy | Product/pricing page → hand off to `skills/marketing/direct-response-copy` |
+| Navigational | a specific brand | Usually skip — you can't outrank the brand |
 
-| Factor | How to Demonstrate |
-|--------|-------------------|
-| **Experience** | First-hand examples, real case studies, personal insights |
-| **Expertise** | Deep knowledge, accurate information, comprehensive coverage |
-| **Authoritativeness** | Credentials, citations, external recognition |
-| **Trustworthiness** | Accuracy, sources, transparency, no misleading claims |
+Note from the top 5 results: content length and depth, structure, subtopics covered, and — most importantly — **the gap**: what's thin, outdated, unanswered, or missing. If you cannot name a gap, tell the user the keyword is a bad bet and suggest returning to `skills/marketing/seo-strategy` for a better target. If web search is unavailable, say so, infer intent from the keyword's grammar, and label the SERP analysis as assumption.
 
-**Action**: Every article should include at least one personal example, cite 2-3 authoritative sources, and demonstrate depth beyond surface-level coverage.
+### 2. Write the brief
 
----
+Fill this in before drafting (it becomes part of the deliverable):
 
-## Layer 1: Search Engine Optimization
+- Primary keyword, secondary keywords, intent, target length
+- Content angle: the one-line reason this article beats the current results
+- H2 outline (5–8 sections for a full article), including an FAQ section
+- E-E-A-T elements: which first-hand example/data goes where
+- Internal links (3–5 pages on the user's site), external links (2–3 authoritative sources)
+- CTA: the single action the reader is asked to take
 
-### Keyword Optimization
+Length by competition (heuristic — comprehensiveness is the real target, padding actively hurts): low competition 1,500–2,000 words; medium 2,000–3,000; high 3,000+. Never exceed what the intent needs.
 
-**Primary Keyword**: Your main target keyword
+### 3. Draft
 
-**Placement Strategy**:
-| Location | Requirement |
-|----------|-------------|
-| Title tag | First 60 characters |
-| H1 heading | Include naturally |
-| First 100 words | Early placement |
-| Body content | 2-3 times naturally |
-| Subheadings | Where relevant |
-| URL slug | Short, keyword-included |
+Read `references/article-templates.md` for the full skeleton of the chosen format (How-To, Listicle, or Ultimate Guide) and follow it. While drafting:
 
-**Secondary Keywords**: Related terms that support the primary keyword
-- Use naturally throughout content
-- Include in H2/H3 headings where relevant
-- Support topical completeness
+- **Open by answering the query** in the first 2–3 sentences, then earn continued reading. No throat-clearing intros.
+- **Keyword placement**: title tag (early), H1, first 100 words, 2–3 natural body uses, URL slug. Secondary keywords in H2s where natural. Never stuff.
+- **Structure**: one H1; H2 every major section; subhead every 200–300 words; paragraphs ≤3 sentences; bullets for any list of 3+; bold the takeaways.
+- **E-E-A-T on the page**: at least one first-hand example or case; cite 2–3 authoritative external sources; concrete numbers over vague claims.
+- **FAQ section**: 4–6 exact-phrasing questions with 40–60 word answers (featured-snippet bait).
+- **Close** with 3–5 bullet takeaways and exactly one CTA.
 
-### Title Tag Formula
+The user supplies lived experience; you supply structure and polish. Never fabricate first-hand experience, testimonials, or statistics — if the user gave no unique material, use clearly-general examples and tell them where to insert their own.
 
-**Requirements**: 50-60 characters, keyword early, compelling
+### 4. Metadata and schema
 
-**Formulas**:
-```
-[Keyword]: [Number] [Benefit/Strategies/Ways] for [Outcome]
-How to [Keyword] in [Year]: [Specific Benefit]
-[Keyword]: The Complete Guide to [Outcome]
-[Number] [Keyword] Tips That [Specific Result]
-```
+Produce: title tag (50–60 chars, keyword early, compelling), meta description (150–160 chars, keyword + soft CTA), URL slug (short, keyword, hyphenated), image alt-text suggestions, and JSON-LD schema (FAQ schema if there's an FAQ; Article schema otherwise — copy-paste blocks in `references/article-templates.md`).
 
-**Examples**:
-- "Remote Team Management: 7 Strategies That Actually Work"
-- "How to Improve Core Web Vitals in 2025: Complete Guide"
+### 5. Self-review, then deliver
 
-### Meta Description
+Run the quality bar below. Fix failures before presenting. Deliver in the required output format, and recommend tracking via Google Search Console (impressions, clicks, CTR, average position) with a check-in after the article has had time to index and settle.
 
-**Requirements**: 150-160 characters, keyword included, compelling CTA
+## Required output format
 
-**Formula**: "[Benefit statement]. Learn [specific outcome] with [unique angle]. [Soft CTA]."
+````
+# [Article Title]
 
-**Example**: "Master remote team management with 7 proven strategies. Learn how top companies boost productivity by 40%. Complete guide inside."
+## Brief
+- Primary keyword: … · Secondary: … · Intent: [type]
+- Angle (why this beats the SERP): …
+- Target length: … · CTA: …
+- Gap exploited: [what top results miss]
 
-### Heading Structure
+## Metadata
+- Title tag (50–60 chars): "…" [char count]
+- Meta description (150–160 chars): "…" [char count]
+- URL slug: /…
+- Schema: [FAQ / Article] (JSON-LD below article)
 
-Use proper hierarchy to signal content structure:
+## Article
+[Full draft, H1 through conclusion, with [INTERNAL LINK: page] and
+[EXTERNAL LINK: source] markers inline, image suggestions as
+[IMAGE: description — alt text: "…"]]
 
-```
-H1: [Main Topic with Primary Keyword]
-  H2: [Major Section 1]
-    H3: [Subsection]
-    H3: [Subsection]
-  H2: [Major Section 2]
-    H3: [Subsection]
-  H2: FAQ (for featured snippets)
-```
-
-**Rules**:
-- One H1 per page
-- H2s for main sections (5-8 for comprehensive articles)
-- H3s for subsections within H2s
-- Include keywords naturally in headings
-
-### Content Length Guidelines
-
-| Keyword Competition | Target Length |
-|--------------------|---------------|
-| Low competition | 1,500-2,000 words |
-| Medium competition | 2,000-3,000 words |
-| High competition | 3,000-5,000+ words |
-
-**Key insight**: Longer content ranks better IF it's comprehensive and valuable. Padding for length hurts rankings.
-
----
-
-## Layer 2: Human Optimization
-
-### Content Structure Template
-
-**1. Opening Hook (First 2-3 sentences)**
-- Answer search intent immediately
-- Create curiosity or promise value
-- Make them want to continue
-
-**Example**:
-> "Most remote teams fail because of one fixable problem: unclear communication protocols. In this guide, you'll learn the exact 7 strategies that helped 500+ companies boost remote productivity by 40%."
-
-**2. Table of Contents**
-- For articles 1,500+ words
-- Improves navigation
-- Helps search engines understand structure
-- Enables jump links in search results
-
-**3. Main Content Sections**
-Each section should:
-- Address one specific subtopic
-- Include practical examples
-- Provide actionable takeaways
-- Use formatting for scannability
-
-**4. FAQ Section**
-- Target featured snippets
-- Answer related questions
-- Use exact question format
-- Keep answers concise (40-60 words)
-
-**5. Conclusion**
-- Summarize key takeaways (3-5 bullets)
-- Include clear call-to-action
-- Link to related content
-- Reinforce main value proposition
-
-### Search Intent Alignment
-
-**Critical**: Match your content format to searcher intent.
-
-| Intent Type | What They Want | Content Format |
-|-------------|----------------|----------------|
-| Informational | "How to manage remote teams" | Comprehensive tutorial/guide |
-| Commercial | "Best remote team tools" | Comparison, reviews, rankings |
-| Transactional | "Asana pricing" | Pricing page, product page |
-| Navigational | "Slack login" | Direct page, comparison to alternatives |
-
-**Wrong format = no ranking**, regardless of content quality.
-
-### Readability Standards
-
-- **Paragraphs**: 2-3 sentences max
-- **Sentences**: Under 20 words preferred
-- **Subheadings**: Every 200-300 words
-- **Bullet points**: For lists of 3+ items
-- **Bold text**: Key phrases and takeaways
-- **White space**: Generous margins and padding
-
-### Engagement Elements
-
-Include these to increase dwell time and reduce bounce:
-
-| Element | Purpose | Frequency |
-|---------|---------|-----------|
-| Real examples | Demonstrate expertise | Every major section |
-| Data/statistics | Build credibility | 3-5 per article |
-| Images/visuals | Break up text, illustrate points | Every 300-500 words |
-| Actionable tips | Provide immediate value | Throughout |
-| Case studies | Show proof of concepts | 1-2 per article |
-| Pull quotes | Highlight key insights | 2-3 per article |
-
----
-
-## The Complete SEO Content Process
-
-### Step 1: Keyword Research & Validation
-
-Before writing, confirm:
-- [ ] Search volume: 100-10,000/month for long-tails
-- [ ] Search intent: What format does Google reward?
-- [ ] Competition: Can you realistically rank?
-- [ ] SERP analysis: What's missing from current results?
-
-### Step 2: Competitor Analysis
-
-Analyze top 5 ranking pages:
-- Content length and depth
-- Headings and structure
-- Topics covered (and gaps)
-- Media and visuals used
-- E-E-A-T signals present
-
-**Find the gap**: What can you cover that they don't?
-
-### Step 3: Create Content Brief
-
-**Brief Template**:
-```
-Primary Keyword: [keyword]
-Secondary Keywords: [list]
-Search Intent: [informational/commercial/etc.]
-Target Length: [word count]
-Target Audience: [who]
-Content Angle: [unique perspective]
-Key Sections: [H2 outline]
-Competitor Gaps: [what to add]
-E-E-A-T Elements: [how to demonstrate]
-Internal Links: [pages to link]
-CTA: [desired action]
-```
-
-### Step 4: Write with AI Assistance
-
-**The 80/20 Approach**:
-- AI handles: Outlines, first drafts, research summaries, metadata
-- You handle: Unique insights, examples, fact-checking, voice refinement
-
-**Process**:
-1. Generate outline from brief
-2. Expand each section
-3. Add your unique examples and insights
-4. Refine voice and tone
-5. Fact-check all claims
-
-### Step 5: On-Page SEO Checklist
-
-- [ ] Title tag: 50-60 chars, keyword, compelling
-- [ ] Meta description: 150-160 chars, keyword, CTA
-- [ ] H1: Includes primary keyword
-- [ ] H2s: 5-8 main sections with keywords
-- [ ] First 100 words: Primary keyword included
-- [ ] Images: Compressed, descriptive alt text
-- [ ] Internal links: 3-5 to relevant pages
-- [ ] External links: 2-3 to authoritative sources
-- [ ] URL: Short, descriptive, keyword-included
-- [ ] Schema markup: FAQ, Article, or appropriate type
-
-### Step 6: Quality Review Checklist
-
-- [ ] E-E-A-T signals present (experience, expertise, authority, trust)
-- [ ] Search intent fully satisfied
-- [ ] Unique value vs. competitors
-- [ ] Formatting clean and scannable
-- [ ] All facts verified and sourced
-- [ ] Brand voice consistent
-- [ ] CTA clear and relevant
-- [ ] No keyword stuffing
-- [ ] Mobile-friendly layout
-
----
-
-## Content Templates
-
-### Template 1: How-To Guide
-
-```
-H1: How to [Achieve Outcome] in [Year]: [Benefit]
-
-[Hook: State the problem and promise the solution]
-
-Table of Contents
-
-H2: Why [Topic] Matters
-[Context and stakes]
-
-H2: Step 1: [First Action]
-[Instructions + example]
-
-H2: Step 2: [Second Action]
-[Instructions + example]
-
-[Continue for all steps]
-
-H2: Common Mistakes to Avoid
-[3-5 pitfalls with solutions]
-
-H2: FAQ
-[4-6 questions in Q&A format]
-
-H2: Conclusion
-[Summary + CTA]
-```
-
-### Template 2: Listicle/Roundup
-
-```
-H1: [Number] Best [Category] for [Outcome] in [Year]
-
-[Hook: Why this matters + selection criteria]
-
-Table of Contents
-
-H2: Quick Comparison
-[Summary table of all items]
-
-H2: 1. [Item Name] - Best for [Use Case]
-[Overview, features, pros/cons, who it's for]
-
-[Continue for all items]
-
-H2: How to Choose the Right [Category]
-[Decision framework]
-
-H2: FAQ
-[4-6 questions]
-
-H2: Conclusion
-[Top picks summary + CTA]
-```
-
-### Template 3: Ultimate Guide
-
-```
-H1: The Complete Guide to [Topic]: Everything You Need to Know
-
-[Hook: Scope of guide + who it's for]
-
-Table of Contents
-
-H2: What is [Topic]?
-[Definition + context]
-
-H2: Why [Topic] Matters
-[Benefits + stakes]
-
-H2: How [Topic] Works
-[Detailed explanation]
-
-H2: [Major Subtopic 1]
-H3: [Aspect 1]
-H3: [Aspect 2]
-
-[Continue for all subtopics]
-
-H2: Best Practices
-[5-10 actionable tips]
-
-H2: Common Mistakes
-[Pitfalls to avoid]
-
-H2: Tools and Resources
-[Recommended tools]
-
-H2: FAQ
-[6-10 questions]
-
-H2: Conclusion
-[Key takeaways + next steps]
-```
-
----
-
-## Schema Markup Implementation
-
-### FAQ Schema (for featured snippets)
-
+## Schema markup
 ```json
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [{
-    "@type": "Question",
-    "name": "Your question here?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Your answer here (40-60 words)."
-    }
-  }]
-}
+[JSON-LD block]
 ```
 
-### Article Schema
+## On-page checklist
+[Each quality-bar item with pass/fail]
 
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Your Title",
-  "author": {
-    "@type": "Person",
-    "name": "Author Name"
-  },
-  "datePublished": "2025-01-15",
-  "dateModified": "2025-01-15",
-  "image": "https://yoursite.com/image.jpg"
-}
-```
+## Next steps
+- Insert your own examples at: [marked spots, if any]
+- Track in GSC: [what to watch, and the decision each signal triggers]
+````
 
----
+## Quality bar
 
-## Integration with Other Skills
+Check every item; fix before delivering:
 
-| Skill | Integration |
-|-------|-------------|
-| **seo-strategy** | Provides keyword research and overall strategy |
-| **keyword-research** | Feeds target keywords for content |
-| **brand-voice** | Ensures consistent tone and personality |
-| **direct-response-copy** | Makes content convert better |
-| **content-atomizer** | Repurposes content across platforms |
-| **newsletter** | Drives subscriber growth from SEO traffic |
+- [ ] Format matches validated search intent
+- [ ] Title tag 50–60 chars with keyword; meta description 150–160 chars — count the characters, don't eyeball
+- [ ] Exactly one H1, containing the primary keyword; keyword in first 100 words
+- [ ] Primary keyword used 2–3× in body — no more (stuffing check: read headings aloud; if they sound robotic, rewrite)
+- [ ] Named gap vs. top results is actually filled in the draft
+- [ ] ≥1 first-hand example or clearly-marked placeholder for one; every statistic cited or removed; no invented experience or testimonials
+- [ ] 3–5 internal link markers, 2–3 authoritative external link markers
+- [ ] FAQ answers 40–60 words each
+- [ ] Exactly one CTA
+- [ ] Scannable: no paragraph >3 sentences, subhead every 200–300 words
 
----
+## Integration
 
-## Common Pitfalls
+- `skills/marketing/seo-strategy` — feeds this skill the keyword, intent, cluster, and SERP notes; return the published-article slug so internal linking stays current.
+- `skills/marketing/keyword-research` — alternative lighter-weight source of the target keyword.
+- `skills/marketing/brand-voice` — supplies the voice guide applied in Step 3.
+- `skills/marketing/direct-response-copy` — takes over for transactional-intent pages and CTA-heavy sections.
+- `skills/marketing/content-atomizer` — consumes the finished article as seed content for social posts, threads, and newsletter items.
+- `skills/marketing/newsletter` — the article is a natural feature item; pass the title, link, and one-sentence hook.
 
-| Pitfall | Problem | Solution |
-|---------|---------|----------|
-| Keyword stuffing | Unreadable, hurts rankings | Use keywords naturally, 2-3x max |
-| Thin content | Not comprehensive enough | Match/exceed competitor depth |
-| Wrong format | Misaligned with search intent | Analyze SERP before writing |
-| No examples | Theoretical, not practical | Include real examples in each section |
-| Missing E-E-A-T | Generic, no expertise shown | Add credentials, sources, experience |
-| Poor structure | Hard to navigate | Use clear heading hierarchy |
-| No internal links | Missed ranking opportunity | Link 3-5 relevant internal pages |
+## References
 
----
-
-## Metrics to Track
-
-After publishing, monitor via Google Search Console:
-
-| Metric | What It Tells You | Target |
-|--------|-------------------|--------|
-| Impressions | Visibility in search | Increasing trend |
-| Clicks | Traffic from search | Growing |
-| CTR | Title/description effectiveness | >3% |
-| Average position | Ranking progress | Top 10 |
-| Dwell time (GA) | Content engagement | >2 minutes |
-
----
-
-## How to Use This Skill
-
-1. **Get keyword from user** — What are they targeting?
-2. **Validate with seo-strategy** — Is it winnable?
-3. **Analyze SERP** — What's the intent? What's missing?
-4. **Create content brief** — Structure the article
-5. **Write with templates** — Use appropriate format
-6. **Apply checklists** — On-page SEO + quality review
-7. **Add schema markup** — FAQ or Article
-8. **Recommend tracking** — GSC metrics to monitor
-
-For complete keyword research methodology and 90-day SEO plans, use the `/seo-strategy` skill.
+- `references/article-templates.md` — full H1→conclusion skeletons for the How-To Guide, Listicle/Roundup, and Ultimate Guide formats, plus copy-paste FAQ and Article JSON-LD schema. Read it at Step 3, before drafting.

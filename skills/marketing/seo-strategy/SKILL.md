@@ -1,378 +1,150 @@
 ---
 name: seo-strategy
-description: Complete DIY SEO strategy based on agency secrets. Covers winnable keyword research, programmatic content at scale, link building, technical SEO, and 90-day action plans. Reference the Complete_SEO_Playbook.md in references folder for deep dives.
+description: "Build a complete, prioritized SEO strategy for a site: topical authority map, winnable-keyword shortlist, content production pipeline, link-building plan, and technical baseline. Use when the user wants to grow organic traffic, asks 'how do I rank on Google', 'why isn't my site getting traffic', 'build me an SEO plan/strategy', 'what keywords should I target', 'how do I get backlinks', or wants to audit or scale their SEO — even if they never say the word 'strategy'. Produces an SEO Strategy Document with a scored keyword shortlist, a phased action plan sequenced by dependency, and a measurement plan."
 ---
 
-# SEO Strategy Skill
+# SEO Strategy
 
-## Overview
+Produce a written SEO strategy the user can execute immediately: where they can win (topical authority map + winnable keywords), what to publish (content pipeline), how to earn authority (links), and what technical floor must hold. **Prime directive: only recommend fights the site can win.** A "low difficulty" score is not the same as a winnable keyword — every recommendation must survive a manual SERP check.
 
-This skill provides a complete SEO strategy framework based on what top agencies actually do to achieve dramatic results—from increasing domain authority from 13 to 36 in four months, to scaling from 3-4 clients per month to 200+.
+## When to use / when not to
 
-**Keywords**: SEO strategy, keyword research, link building, domain authority, programmatic SEO, topical authority, E-E-A-T, content strategy
+- Use for site-level strategy: keyword targeting, content roadmaps, link building, SEO audits, "grow my organic traffic."
+- If the user needs **one article written**, hand off to `skills/marketing/seo-content` (bring the target keyword and intent with you).
+- If the user only needs **a keyword list**, not a full strategy, use `skills/marketing/keyword-research`.
+- If the user's real problem is messaging or conversion, not traffic, route to `skills/marketing/positioning-angles` or `skills/marketing/direct-response-copy`.
 
-**Reference Document**: See `references/Complete_SEO_Playbook.md` for the full detailed playbook with all tactics, metrics, and step-by-step processes.
+## Intake
 
----
+Ask in one batch, only what's missing:
 
-## The Three Pillars of Modern SEO (2025+)
+1. **Site URL and what the business sells** (and to whom).
+2. **Current state** — roughly how much organic traffic, any existing content, domain age. Access to Google Search Console data if available.
+3. **Topics of genuine expertise** — what could they credibly write 20+ articles about?
+4. **Constraints** — content capacity (articles per month they can realistically produce/review) and budget for tools or outreach.
 
-### 1. Topical Authority Over Scattered Keywords
-Google no longer ranks individual pages in isolation. It ranks entire websites that demonstrate comprehensive expertise in specific topics. Build **topic clusters**, not random articles.
+Infer from the site itself whenever you can (crawl/fetch it, inspect existing pages). If the user gives a URL and a one-line goal, state your assumptions about the rest and proceed — don't stall.
 
-### 2. E-E-A-T as Core Ranking Signal
-Google evaluates content based on:
-- **Experience**: First-hand knowledge
-- **Expertise**: Deep subject matter knowledge
-- **Authoritativeness**: Recognition from others
-- **Trustworthiness**: Accuracy and reliability
+## Workflow
 
-### 3. AI as Force Multiplier
-AI handles 80% of repetitive SEO tasks—keyword research, content generation, on-page optimization. You focus on strategy and quality control.
+### 1. Situate the site
 
----
+Classify the site, because it changes everything downstream:
 
-## The Winnable Keyword Framework
+- **New/weak site** (little content, few links) → strategy is long-tail winnable keywords only (KGR-qualified), heavy topical clustering, foundational links.
+- **Established site with content that doesn't rank** → strategy leads with a content audit: fix intent mismatches, consolidate cannibalizing pages, internal linking, then expand.
+- **Ranking site that plateaued** → strategy leads with link building and topical gap-filling against the top competitor.
 
-**Critical Insight**: A "low difficulty" keyword is NOT the same as a "winnable" keyword.
+Identify the 2–3 organic competitors actually occupying the SERPs the user wants (not who the user *thinks* competes with them).
 
-### What Makes a Keyword Winnable
+### 2. Build the topical authority map
 
-| Factor | What to Look For |
-|--------|-----------------|
-| SERP Quality | Forums, Quora, thin listicles ranking on page 1 |
-| Content Gaps | Top results are thin, outdated, or don't fully answer query |
-| Backlink Profile | Top-ranking pages have few or weak backlinks |
-| Intent Clarity | Search intent is clear and underserved |
-| Long-tail | 3-6 words with niche modifiers |
+Google ranks sites that demonstrate comprehensive expertise in a topic, not isolated pages. Define 3–5 core topics where the user has genuine expertise (E-E-A-T: experience, expertise, authoritativeness, trust), and for each, 10–30 supporting subtopics. Each core topic = one pillar page + supporting cluster articles interlinked to it. If the user can't credibly cover a topic in depth, cut it — a thin cluster is worse than no cluster.
 
-### The 7-Step Keyword Research Process
+### 3. Qualify winnable keywords
 
-**Step 1: Define Topical Authority**
-- Identify 5-10 core topics where you have genuine expertise
-- For each, identify 15-30 supporting subtopics
-- This becomes your content roadmap
+For each cluster, expand candidates (Google Autocomplete, People Also Ask, Reddit/forum questions, Google Keyword Planner, Search Console queries the site almost ranks for). Then qualify — **never trust a tool's difficulty score alone**:
 
-**Step 2: Expand with Free Tools**
-- Google Autocomplete (what people actually search)
-- People Also Ask boxes (long-tail opportunities)
-- Google Trends (seasonal patterns)
-- Reddit/niche forums (real questions)
+- **Manual SERP check**: forums, Quora, thin listicles, or outdated pages on page 1 = opportunity. All big brands with exact-match titles = skip.
+- **KGR (Keyword Golden Ratio)** for new/weak sites: `allintitle count ÷ monthly search volume`. KGR < 0.25 = prime target. (Heuristic, not law — still eyeball the SERP.)
+- **Intent**: classify each keyword as informational / commercial / transactional / navigational and note the content format Google is rewarding. Wrong format = no ranking regardless of quality.
+- **Score** each surviving keyword 1–5 on: intent match to the business, winnability, business value, SERP opportunity. Shortlist those scoring 14+/20; the shortlist goes in the output document.
 
-**Step 3: Gather Metrics**
+### 4. Design the content pipeline
 
-| Tool | Cost | Purpose |
-|------|------|---------|
-| Google Keyword Planner | Free | Volume, related terms |
-| Keywords Everywhere | $10/mo | Real-time data in search |
-| AnswerThePublic | Free tier | Question-based keywords |
-| Google Search Console | Free | Your current rankings |
+Match pipeline ambition to the user's stated capacity — never plan more than they can review for quality:
 
-**Step 4: Manually Evaluate SERP**
-Don't trust KD scores alone. Check:
-- Page types (forums = opportunity)
-- Content quality (gaps, outdated info)
-- Backlinks to top pages
-- Title relevance (loose matches = opportunity)
-- `allintitle:"keyword"` count
+- **Editorial pace** (≤8 articles/month): brief each article individually; execution goes through `skills/marketing/seo-content`.
+- **Programmatic scale** (data-backed page sets: locations, integrations, comparisons, templates): design one template (meta title/description, H1, intent-matching intro, H2 sections, FAQ block, internal links, schema), a data source per page, and a mandatory human editorial review step. AI drafts; a human owns strategy, fact-checking, and quality control — flag this split explicitly.
 
-**Step 5: Calculate Keyword Golden Ratio (KGR)**
+Every article slots into a cluster and links to its pillar. Specify the internal-linking rule in the plan (each new article links to its pillar + 2–4 siblings).
+
+### 5. Plan link acquisition
+
+Prioritize in this order:
+
+1. **Linkable assets** — 1–2 pieces built to attract links: original research/data, free tools, comprehensive canonical guides, templates. Pick the asset type that fits the niche (data journalism niches → original research; practitioner niches → tools/templates).
+2. **Targeted outreach** — build a list of ~50 sites that already link to comparable content; personalized pitch referencing their specific article; make linking frictionless (direct URL, suggested anchor, preview); one follow-up after 5–7 days, then stop.
+3. **Digital PR** — HARO/journalist requests, podcast guesting, guest posts on relevant sites only.
+
+Hard rule: never recommend paid link schemes or exchanges with low-quality/irrelevant sites — one relevant, authoritative link beats a pile of junk links, and junk links carry penalty risk.
+
+### 6. Set the technical floor
+
+Don't produce a full technical audit unless the site is established and underperforming (Step 1). Minimum bar for every strategy: pages indexable and in the sitemap, Core Web Vitals passing (LCP < 2.5s, CLS < 0.1), mobile-friendly, appropriate schema markup (FAQ/Article/Product/LocalBusiness) on templated and pillar pages. Anything failing this floor goes in Phase 1 of the plan before content scales.
+
+### 7. Assemble the strategy document
+
+Sequence the plan by dependency, not by calendar: foundation (audit fixes + topical map + keyword shortlist) → content production (pillars first, then clusters) → link acquisition (needs content to link to) → review-and-expand (needs ranking data to act on). Define the measurement plan: Search Console (impressions, clicks, average position per cluster), index coverage, referring domains. Set expectations honestly — new content typically needs months, not days, to rank; say so rather than promising traffic numbers.
+
+## Required output format
+
+Deliver the strategy as this document (markdown, concise):
+
 ```
-KGR = Allintitle Count ÷ Monthly Search Volume
-```
-- KGR < 0.25 = Prime opportunity for new sites
-- Example: 12 allintitle ÷ 150 volume = 0.08 (excellent)
+# SEO Strategy — [site]
 
-**Step 6: Validate Search Intent**
-- **Informational**: Tutorials, how-tos, guides
-- **Commercial**: Best-of lists, comparisons, alternatives
-- **Transactional**: Pricing, product pages
-- **Navigational**: Brand-specific queries
+## Situation
+- Site class: [new/weak | established-not-ranking | plateaued] — [evidence]
+- Real SERP competitors: [2–3, with one-line strength notes]
+- Biggest blocker to organic growth: [one sentence]
 
-Match content type to intent. Wrong format = no ranking.
+## Topical Authority Map
+| Core topic (pillar) | Why credible (E-E-A-T) | Supporting subtopics (count) |
+| ... | ... | ... |
 
-**Step 7: Score and Prioritize**
+## Winnable Keyword Shortlist
+| Keyword | Intent | Volume (est.) | Winnability evidence (SERP note / KGR) | Score /20 | Cluster |
+| ... | ... | ... | ... | ... | ... |
+(Top 10–20 only; full candidate list in an appendix if generated)
 
-| Criteria | Score (1-5) |
-|----------|-------------|
-| Intent match | __ |
-| Difficulty (lower = better) | __ |
-| Business value | __ |
-| SERP opportunity | __ |
-| **Total (out of 20)** | **__** |
+## Content Pipeline
+- Mode: [editorial | programmatic] — [why]
+- Cadence: [n articles/pages per month, matched to user capacity]
+- Order of production: [pillar/cluster sequence with rationale]
+- Internal-linking rule: [rule]
+- [If programmatic] Template spec + data source + editorial review step
 
-Prioritize keywords scoring 14+ out of 20.
+## Link Plan
+- Linkable asset(s): [what + why this type fits the niche]
+- Outreach: [target profile, list size, pitch angle]
+- Digital PR: [1–2 channels worth the effort, or "skip for now"]
 
----
+## Technical Floor
+- [ ] Pass/fail per item: indexability, sitemap, CWV, mobile, schema
+- Fixes required before scaling content: [list or "none"]
 
-## Content Production at Scale (Programmatic SEO)
+## Phased Plan (by dependency)
+1. Foundation: [tasks]
+2. Content: [tasks]
+3. Links: [tasks]
+4. Review & expand: [what data triggers what decision]
 
-### The Content Pipeline Problem
-
-Most fail not because they can't create content, but can't create it **consistently**:
-1. Keyword research takes days
-2. Content briefs are manual
-3. Writing is slow
-4. Optimization is sporadic
-5. Publishing is error-prone
-6. Tracking is fragmented
-
-**Solution**: Systematize the entire pipeline.
-
-### The 6-Step Programmatic Framework
-
-**Step 1: Keyword Clustering**
-Group keywords into logical clusters. Each cluster = content pillar + supporting articles.
-
-**Step 2: Data Collection**
-Gather data needed for pages (specs, locations, features, case studies).
-
-**Step 3: Template Design**
-Create reusable template:
-- Meta title (60 chars, includes keyword)
-- Meta description (160 chars)
-- H1 with keyword
-- Introduction with intent
-- Table of contents
-- Main sections (H2s)
-- FAQ section (for featured snippets)
-- Internal links
-- Schema markup (JSON-LD)
-
-**Step 4: Automation**
-Use tools to create pages from templates:
-- Zapier / Make (workflow automation)
-- WordPress + ACF (template-based)
-- Custom scripts (maximum control)
-
-**Step 5: Editorial Review**
-Checklist for each page:
-- [ ] Demonstrates E-E-A-T
-- [ ] Matches search intent
-- [ ] Clean formatting
-- [ ] No factual errors
-- [ ] Relevant internal links
-- [ ] Consistent brand tone
-
-**Step 6: Performance Monitoring**
-Track via Google Search Console + Looker Studio:
-- Index coverage
-- CTR
-- Average position
-- Impressions
-- Dwell time
-- Conversions
-
-### The 80/20 AI Content Rule
-
-- **AI handles 80%**: Research, outlines, first drafts, metadata, optimization
-- **You handle 20%**: Strategy, fact-checking, tone, quality control
-
----
-
-## Link Building Strategy
-
-### Why Links Still Matter
-
-| Metric | Impact |
-|--------|--------|
-| 500+ referring domains | 34% more organic traffic |
-| 100+ backlinks | Almost always ranks top 5 |
-| Average high-quality link cost | $508.95 |
-
-One high-authority link > 100 low-quality links.
-
-### The Linkable Asset Strategy
-
-Create content people naturally want to link to:
-
-| Asset Type | Example | Link Potential |
-|------------|---------|----------------|
-| Infographics | Visual optimization guide | High |
-| Comprehensive guides | 10K-word ultimate guide | Very High |
-| Interactive tools | Free speed test tool | High |
-| Original research | Survey of 1,000 users | Very High |
-| Templates | Free SEO template | Medium |
-| Case studies | "How we increased traffic 300%" | High |
-
-### Strategic Outreach Framework
-
-**Step 1: Identify Potential Linkers**
-- Relevant to your niche
-- High domain authority
-- Already linked to similar content
-- Published related content
-
-**Step 2: Personalize Outreach**
-```
-Hi [Name],
-
-I noticed your article on [Topic] and appreciated your
-perspective on [Specific Point]. Your readers might find
-value in [Your Asset], which covers [Key Benefit].
-
-Let me know if it's a good fit for your audience.
-
-Best,
-[Your Name]
+## Measurement
+- Track: [GSC metrics per cluster, index coverage, referring domains]
+- Review cadence: after each content batch; kill/fix/scale rule: [rule]
 ```
 
-**Step 3: Make Linking Easy**
-Provide: direct link, embed code, suggested anchor text, preview image.
+## Quality bar
 
-**Step 4: Follow Up**
-5-7 days later if no response.
+Before delivering, verify:
 
-### Link Exchange Platforms
-Connect with quality sites for mutual linking. Only exchange with high-quality, relevant sites.
+- [ ] Every shortlisted keyword has **SERP-check evidence written down**, not just a tool score.
+- [ ] Every keyword's intent is classified and the planned content format matches it.
+- [ ] Every planned article belongs to a cluster in the map — no orphan topics.
+- [ ] Content cadence ≤ the user's stated review capacity.
+- [ ] No traffic guarantees, no invented benchmark statistics; rules of thumb (e.g., KGR < 0.25) labeled as heuristics.
+- [ ] No paid-link or link-scheme recommendations.
+- [ ] Plan is sequenced by dependency with no calendar-week scaffolding.
 
-### Guest Blogging & Digital PR
-- HARO (Help A Reporter Out) queries
-- Podcast guest pitches
-- Newsworthy research/announcements
-- Industry collaborations
+## Integration
 
----
+- `skills/marketing/keyword-research` — feeds this skill a raw candidate keyword list; this skill qualifies and prioritizes it.
+- `skills/marketing/seo-content` — consumes the keyword shortlist + cluster map; hand each keyword over with its intent and SERP notes.
+- `skills/marketing/content-atomizer` — consumes published articles as seed content for social distribution.
+- `skills/marketing/newsletter` — consumes SEO traffic as its subscriber-acquisition source; note the capture mechanism in the strategy if audience-building is a goal.
+- `skills/marketing/orchestrator` — routes here when a user's growth problem is organic acquisition.
 
-## Technical SEO Foundation
+## References
 
-### Core Web Vitals
-
-| Metric | Target |
-|--------|--------|
-| LCP (Largest Contentful Paint) | < 2.5 seconds |
-| FID (First Input Delay) | < 100ms |
-| CLS (Cumulative Layout Shift) | < 0.1 |
-
-**Optimization**: WebP images, lazy loading, CDN, minify CSS/JS, caching.
-
-### Schema Markup (Competitive Advantage)
-Less than 30% of sites implement properly.
-
-| Schema Type | Best For |
-|-------------|----------|
-| FAQ | Blog posts with Q&A |
-| Article | Blog posts, news |
-| Product | E-commerce |
-| Local Business | Local services |
-| Review | Customer reviews |
-
-### On-Page Checklist
-
-- [ ] Title tag: 50-60 chars, keyword, compelling
-- [ ] Meta description: 150-160 chars, keyword
-- [ ] H1: One per page, includes keyword
-- [ ] H2s: Main sections with related keywords
-- [ ] Content: 2,000+ words for competitive terms
-- [ ] Images: Compressed, alt text with keywords
-- [ ] Internal links: 3-5 relevant links
-- [ ] External links: 2-3 to authoritative sources
-- [ ] URL: Short, descriptive, includes keyword
-- [ ] Schema: Appropriate for content type
-- [ ] Mobile: Responsive, fast loading
-
----
-
-## The 90-Day SEO Action Plan
-
-### Month 1: Foundation
-
-**Weeks 1-2: Audit & Strategy**
-- Audit current site (Screaming Frog, Sitebulb)
-- Identify topical authority areas
-- Analyze competitor content/backlinks
-- Set realistic goals (+50% traffic in 90 days)
-
-**Weeks 3-4: Keyword Research**
-- Find 50-100 low-competition keywords
-- Create keyword database
-- Prioritize top 20 for content
-
-**Deliverables**: Keyword database, content roadmap, competitor analysis
-
-### Month 2: Content Creation
-
-**Weeks 5-6: Generation**
-- Content briefs for top 10 keywords
-- AI-assisted outlines and drafts
-- Add unique insights, examples, case studies
-- Optimize on-page SEO
-
-**Weeks 7-8: Publishing**
-- Publish 10 articles (1-2/week)
-- Add internal links to pillar content
-- Implement schema markup
-- Optimize images and Core Web Vitals
-
-**Deliverables**: 10 published articles, internal linking, schema
-
-### Month 3: Link Building & Scaling
-
-**Weeks 9-10: Linkable Assets**
-- Create 1-2 linkable assets
-- Identify 50 potential linkers
-- Begin outreach campaign
-
-**Weeks 11-12: Scale & Optimize**
-- Continue outreach (target 10-20 backlinks)
-- Analyze first month results
-- Optimize underperforming content
-- Plan next batch
-
-**Deliverables**: 1-2 linkable assets, 10-20 backlinks, optimization plan
-
-### 90-Day Success Metrics
-
-| Metric | Baseline | 90-Day Goal |
-|--------|----------|-------------|
-| Organic traffic | Current | +50-100% |
-| Indexed pages | Current | +10 |
-| Backlinks | Current | +10-20 |
-| Top 10 rankings | 0 | 5-10 |
-| Top 50 rankings | 0 | 15-20 |
-| Domain Authority | Current | +2-5 points |
-
----
-
-## Key Numbers to Remember
-
-| Metric | Value |
-|--------|-------|
-| Comprehensive vs short articles | 77% more links |
-| Zero-click searches | ~60% of all searches |
-| Sites with proper schema | Less than 30% |
-| New daily searches never seen before | 15% |
-| Data automation efficiency gain | 64% |
-
----
-
-## Common Pitfalls
-
-1. **Chasing Volume Over Quality** — 10 excellent articles > 100 mediocre ones
-2. **Ignoring Search Intent** — Wrong format = no ranking
-3. **Neglecting Internal Linking** — Connect supporting articles to pillars
-4. **Low-Quality Backlinks** — Quality > quantity always
-5. **Not Monitoring Performance** — Track weekly, adjust based on data
-6. **Ignoring E-E-A-T** — Include credentials, cite sources, show expertise
-
----
-
-## Integration with Other Skills
-
-- **keyword-research** — Feeds into this strategy
-- **seo-content** — Executes the content creation
-- **direct-response-copy** — Makes content convert
-- **content-atomizer** — Repurposes content across channels
-- **newsletter** — Drives subscriber growth from SEO traffic
-
----
-
-## How to Use This Skill
-
-1. **Assess Current State** — Where are you in the 90-day plan?
-2. **Identify Blockers** — Keyword research? Content? Links?
-3. **Pick the Right Phase** — Foundation → Content → Links
-4. **Execute Systematically** — Follow checklists, track metrics
-5. **Reference the Playbook** — See `references/Complete_SEO_Playbook.md` for full details
-
-For detailed tactics, metrics, examples, and the complete 10-part framework, reference the full playbook in the references folder.
+- `references/Complete_SEO_Playbook.md` — the full agency playbook: detailed keyword-research walkthroughs, programmatic SEO build-out, outreach scripts, technical checklists, and case detail. Read it when you need step-by-step depth on any single workflow step (e.g., building the programmatic template, running the outreach campaign) or when the user asks "how exactly do I do X".
