@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of **37 agent skills** for building world-class digital products. From product strategy and product design review to marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
+A comprehensive system of **38 agent skills** for building world-class digital products. From product strategy and sprint facilitation to product design review, marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -8,7 +8,7 @@ Vibe Building Skills is a complete, production-ready system of agent skills buil
 
 This repository contains:
 
-- **1 Product Strategy Skill** — Foundation Sprint method for evaluating, differentiating, and pressure-testing product ideas
+- **2 Product Strategy Skills** — Foundation Sprint analysis and facilitated sprint workshops for evaluating, differentiating, and pressure-testing product ideas
 - **1 Product Design Skill** — Heuristic UI/UX reviews, usability audits, accessibility checks, and prioritized product experience recommendations
 - **12 Marketing Skills** — Direct response marketing, SEO, email, content strategy, and X/Twitter writing
 - **10 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
@@ -16,7 +16,7 @@ This repository contains:
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 37 professional skills + comprehensive guidance + automation tools**
+**Total: 38 professional skills + comprehensive guidance + automation tools**
 
 ## Maintainer Snapshot
 
@@ -33,12 +33,13 @@ Maintainer priorities:
 
 ### Skills by Category
 
-#### Product Strategy Skills (1 skill)
+#### Product Strategy Skills (2 skills)
 Decide what to build, who it is for, how it wins, and what to test before committing.
 
 1. **foundation-sprint** — Evaluate, pressure-test, or sharpen any product, feature, app, startup, or business idea using the Foundation Sprint method from Jake Knapp and John Zeratsky's *Click*
+2. **sprint-runner** — Run a facilitated Foundation Sprint, Design Sprint, or chained workshop with a virtual team, note-and-vote exercises, Decider calls, and resumable sprint-room artifacts
 
-**Path:** Start here when you are choosing a direction, validating an idea, improving an existing product, or trying to find sharper differentiation.
+**Path:** Start with foundation-sprint for a fast solo product strategy evaluation, or sprint-runner when you want to facilitate a full workshop with a virtual team.
 
 #### Product Design Skills (1 skill)
 Review and improve digital product experiences with evidence-backed product design judgment.
@@ -227,6 +228,15 @@ vibe-building-skills/
     │   │   └── references/
     │   │       ├── examples.md
     │   │       └── method.md
+    │   ├── sprint-runner/
+    │   │   ├── SKILL.md
+    │   │   ├── docs/
+    │   │   │   └── design.md
+    │   │   └── references/
+    │   │       ├── casting.md
+    │   │       ├── design-sprint-method.md
+    │   │       ├── foundation-sprint-method.md
+    │   │       └── templates.md
     │   └── README.md
     ├── product-design/
     │   ├── product-design-review/
@@ -283,7 +293,7 @@ vibe-building-skills/
 ### Product Strategy Workflow
 
 ```
-1. Start: foundation-sprint
+1. Start: foundation-sprint for solo evaluation, or sprint-runner for a facilitated workshop
    ↓
 2. Lock the customer, problem, advantage, and competitors
    ↓
@@ -294,6 +304,20 @@ vibe-building-skills/
 5. Write the Founding Hypothesis
    ↓
 6. Test the riskiest assumption before building
+```
+
+### Sprint Runner Workflow
+
+```
+1. Start: sprint-runner
+   ↓
+2. Choose Foundation Sprint, Design Sprint, or chained mode
+   ↓
+3. Cast a virtual sprint team with explicit roles and biases
+   ↓
+4. Run note-and-vote, sketching, critique, and Decider-call exercises
+   ↓
+5. Save sprint-room artifacts, decisions, outputs, and resume state
 ```
 
 ### Product Design Review Workflow
@@ -492,10 +516,11 @@ Built with research and insights from:
 Start your journey to world-class products today:
 
 1. **Product Strategy:** `skills/product-strategy/foundation-sprint/SKILL.md`
-2. **Product Design:** `skills/product-design/product-design-review/SKILL.md`
-3. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
-4. **Creative:** `skills/creative/orchestrator/SKILL.md`
-5. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
+2. **Sprint Workshop:** `skills/product-strategy/sprint-runner/SKILL.md`
+3. **Product Design:** `skills/product-design/product-design-review/SKILL.md`
+4. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
+5. **Creative:** `skills/creative/orchestrator/SKILL.md`
+6. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
 
 Choose one, install it in Claude, and ask for help with your specific situation.
 
