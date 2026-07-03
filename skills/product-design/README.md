@@ -4,7 +4,7 @@ Product design skills help you review, critique, and improve digital product exp
 
 ## Skills
 
-1. **product-design-review** — Expert product design and UI/UX review for digital products across web, mobile, and desktop, with heuristic evaluation, prioritized findings, accessibility checks, and concrete recommendations.
+1. **product-design-review** — Evidence-based product design and UI/UX review for digital products across web, mobile, and desktop. Establishes an evidence mode first (rendered browser, fetched source, codebase, or screenshots), walks 3–5 real tasks against heuristic, first-use, and trust lenses, and delivers a Design Review Report: prioritized findings with locations and severity, WCAG 2.2 AA blockers with computed values, and fixes routed to the frontend-design skill that implements each category.
 
 ## Recommended Path
 
@@ -13,7 +13,7 @@ Start with **product-design-review** when you need to:
 - Review a live product, prototype, screenshot set, or flow
 - Diagnose usability friction in onboarding, activation, purchase, retention, or support
 - Critique visual hierarchy, interaction patterns, IA, content, and error handling
-- Identify accessibility blockers against WCAG 2.1 AA
+- Identify accessibility blockers against WCAG 2.2 AA
 - Turn vague design concerns into prioritized, evidence-backed recommendations
 
 ## Install
