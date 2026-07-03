@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of **36 agent skills** for building world-class digital products. From product strategy to marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
+A comprehensive system of **37 agent skills** for building world-class digital products. From product strategy and product design review to marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -9,13 +9,14 @@ Vibe Building Skills is a complete, production-ready system of agent skills buil
 This repository contains:
 
 - **1 Product Strategy Skill** — Foundation Sprint method for evaluating, differentiating, and pressure-testing product ideas
+- **1 Product Design Skill** — Heuristic UI/UX reviews, usability audits, accessibility checks, and prioritized product experience recommendations
 - **12 Marketing Skills** — Direct response marketing, SEO, email, content strategy, and X/Twitter writing
 - **10 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
 - **13 Frontend Design Skills** — Design systems, responsive layouts, typography, interactions, performance, accessibility
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 36 professional skills + comprehensive guidance + automation tools**
+**Total: 37 professional skills + comprehensive guidance + automation tools**
 
 ## Maintainer Snapshot
 
@@ -38,6 +39,13 @@ Decide what to build, who it is for, how it wins, and what to test before commit
 1. **foundation-sprint** — Evaluate, pressure-test, or sharpen any product, feature, app, startup, or business idea using the Foundation Sprint method from Jake Knapp and John Zeratsky's *Click*
 
 **Path:** Start here when you are choosing a direction, validating an idea, improving an existing product, or trying to find sharper differentiation.
+
+#### Product Design Skills (1 skill)
+Review and improve digital product experiences with evidence-backed product design judgment.
+
+1. **product-design-review** — Expert product design and UI/UX review for web, mobile, and desktop products, including heuristic evaluation, usability audits, interaction and visual critique, accessibility checks, and prioritized recommendations
+
+**Path:** Start here when you need to critique a live product, prototype, screenshot set, onboarding flow, dashboard, or core user journey before redesigning or implementing changes.
 
 #### Marketing Skills (12 skills)
 Transform your marketing from generic to direct response, from scattered to strategic.
@@ -165,6 +173,7 @@ Each skill is a standalone `.md` file in the `SKILL.md` format that Claude under
 
 **Option C: Install by Category**
 - Install Product Strategy Skills: `skills/product-strategy/*/SKILL.md`
+- Install Product Design Skills: `skills/product-design/*/SKILL.md`
 - Install Marketing Skills: `skills/marketing/*/SKILL.md`
 - Install Creative Skills: `skills/creative/*/SKILL.md`
 - Install Frontend Design Skills: `skills/frontend-design/*/SKILL.md`
@@ -218,6 +227,13 @@ vibe-building-skills/
     │   │   └── references/
     │   │       ├── examples.md
     │   │       └── method.md
+    │   └── README.md
+    ├── product-design/
+    │   ├── product-design-review/
+    │   │   ├── SKILL.md
+    │   │   └── references/
+    │   │       ├── heuristics-and-checklists.md
+    │   │       └── review-output-template.md
     │   └── README.md
     ├── marketing/
     │   ├── orchestrator/SKILL.md
@@ -278,6 +294,20 @@ vibe-building-skills/
 5. Write the Founding Hypothesis
    ↓
 6. Test the riskiest assumption before building
+```
+
+### Product Design Review Workflow
+
+```
+1. Start: product-design-review
+   ↓
+2. Define product goals, user segments, and review scope
+   ↓
+3. Evaluate representative tasks with heuristics and accessibility checks
+   ↓
+4. Prioritize findings by severity, effort, and confidence
+   ↓
+5. Turn recommendations into quick wins, experiments, and strategic design work
 ```
 
 ### Marketing Workflow
@@ -388,6 +418,12 @@ See `docs/PHILOSOPHY.md` and `docs/RESEARCH.md` for detailed insights.
 - ✅ Defensible differentiation against competitors
 - ✅ A first experiment that tests the riskiest assumption
 
+### Product Design
+- ✅ Prioritized UI/UX review findings
+- ✅ Clear usability, IA, content, interaction, and accessibility recommendations
+- ✅ Severity and effort ratings for product decisions
+- ✅ Concrete next steps for redesign, testing, or implementation
+
 ### Marketing
 - ✅ Direct response marketing system
 - ✅ SEO strategy and content
@@ -418,7 +454,7 @@ See `docs/PHILOSOPHY.md` and `docs/RESEARCH.md` for detailed insights.
 ## 🚀 Getting Started
 
 1. **Clone the repository**
-2. **Choose your starting skill** (`foundation-sprint` for product direction, or an orchestrator for an execution category)
+2. **Choose your starting skill** (`foundation-sprint` for product direction, `product-design-review` for experience critique, or an orchestrator for an execution category)
 3. **Install skills in Claude**
 4. **Follow the recommended path**
 5. **Use Claude Code for implementation**
@@ -456,9 +492,10 @@ Built with research and insights from:
 Start your journey to world-class products today:
 
 1. **Product Strategy:** `skills/product-strategy/foundation-sprint/SKILL.md`
-2. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
-3. **Creative:** `skills/creative/orchestrator/SKILL.md`
-4. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
+2. **Product Design:** `skills/product-design/product-design-review/SKILL.md`
+3. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
+4. **Creative:** `skills/creative/orchestrator/SKILL.md`
+5. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
 
 Choose one, install it in Claude, and ask for help with your specific situation.
 
