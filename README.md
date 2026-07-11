@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of **38 agent skills** for building world-class digital products. From product strategy and sprint facilitation to product design review, marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
+A comprehensive system of **39 agent skills** for building world-class digital products. From product strategy and implementation planning to sprint facilitation, product design review, marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -8,7 +8,7 @@ Vibe Building Skills is a complete, production-ready system of agent skills buil
 
 This repository contains:
 
-- **2 Product Strategy Skills** — Foundation Sprint analysis and facilitated sprint workshops for evaluating, differentiating, and pressure-testing product ideas
+- **3 Product Strategy Skills** — Foundation Sprint analysis, implementation-ready engineering planning, and facilitated sprint workshops for evaluating, differentiating, and pressure-testing product ideas
 - **1 Product Design Skill** — Heuristic UI/UX reviews, usability audits, accessibility checks, and prioritized product experience recommendations
 - **12 Marketing Skills** — Direct response marketing, SEO, email, content strategy, and X/Twitter writing
 - **10 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
@@ -16,7 +16,7 @@ This repository contains:
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 38 professional skills + comprehensive guidance + automation tools**
+**Total: 39 professional skills + comprehensive guidance + automation tools**
 
 ## Maintainer Snapshot
 
@@ -33,13 +33,14 @@ Maintainer priorities:
 
 ### Skills by Category
 
-#### Product Strategy Skills (2 skills)
+#### Product Strategy Skills (3 skills)
 Decide what to build, who it is for, how it wins, and what to test before committing.
 
 1. **foundation-sprint** — Evaluate, pressure-test, or sharpen any product, feature, app, startup, or business idea using the Foundation Sprint method from Jake Knapp and John Zeratsky's *Click*
-2. **sprint-runner** — Run a facilitated Foundation Sprint, Design Sprint, or chained workshop with a virtual team, note-and-vote exercises, Decider calls, and resumable sprint-room artifacts
+2. **fable-like-implementation** — Turn a non-trivial engineering request into an evidence-backed technical specification and implementation plan before production code is written
+3. **sprint-runner** — Run a facilitated Foundation Sprint, Design Sprint, or chained workshop with a virtual team, note-and-vote exercises, Decider calls, and resumable sprint-room artifacts
 
-**Path:** Start with foundation-sprint for a fast solo product strategy evaluation, or sprint-runner when you want to facilitate a full workshop with a virtual team.
+**Path:** Start with foundation-sprint for a fast solo product strategy evaluation, fable-like-implementation when you need an implementation-ready plan for non-trivial engineering work, or sprint-runner when you want to facilitate a full workshop with a virtual team.
 
 #### Product Design Skills (1 skill)
 Review and improve digital product experiences with evidence-backed product design judgment.
@@ -228,6 +229,13 @@ vibe-building-skills/
     │   │   └── references/
     │   │       ├── examples.md
     │   │       └── method.md
+    │   ├── fable-like-implementation/
+    │   │   ├── SKILL.md
+    │   │   └── references/
+    │   │       ├── model-selection.md
+    │   │       ├── operating-manual.md
+    │   │       ├── plan-template.md
+    │   │       └── spec-template.md
     │   ├── sprint-runner/
     │   │   ├── SKILL.md
     │   │   ├── docs/
