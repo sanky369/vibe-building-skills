@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sol Orchestrator"
+  short_description: "Orchestrate multi-agent implementation work"
+  default_prompt: "Use $sol-orchestrator to plan and execute this non-trivial implementation with the right specialist agents."

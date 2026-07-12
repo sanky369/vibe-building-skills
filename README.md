@@ -1,6 +1,6 @@
 # Vibe Building Skills
 
-A comprehensive system of **39 agent skills** for building world-class digital products. From product strategy and implementation planning to sprint facilitation, product design review, marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
+A comprehensive system of **40 agent skills** for building world-class digital products. From product strategy and multi-agent implementation to sprint facilitation, product design review, marketing, creative asset generation, and frontend design excellence--everything you need to create products that are loved.
 
 ## 🎯 What Is This?
 
@@ -8,7 +8,7 @@ Vibe Building Skills is a complete, production-ready system of agent skills buil
 
 This repository contains:
 
-- **3 Product Strategy Skills** — Foundation Sprint analysis, implementation-ready engineering planning, and facilitated sprint workshops for evaluating, differentiating, and pressure-testing product ideas
+- **4 Product Strategy Skills** — Foundation Sprint analysis, implementation-ready engineering planning, multi-agent implementation orchestration, and facilitated sprint workshops for evaluating, differentiating, and pressure-testing product ideas
 - **1 Product Design Skill** — Heuristic UI/UX reviews, usability audits, accessibility checks, and prioritized product experience recommendations
 - **12 Marketing Skills** — Direct response marketing, SEO, email, content strategy, and X/Twitter writing
 - **10 Creative Skills** — AI-powered image generation with nanobanana pro, video planning, Remotion scripts, social graphics
@@ -16,7 +16,7 @@ This repository contains:
 - **Complete Documentation** — Philosophy, research, implementation guides, code examples
 - **Automation Tools** — Python CLI for creative asset generation with FAL.ai nanobanana pro
 
-**Total: 39 professional skills + comprehensive guidance + automation tools**
+**Total: 40 professional skills + comprehensive guidance + automation tools**
 
 ## Maintainer Snapshot
 
@@ -33,14 +33,15 @@ Maintainer priorities:
 
 ### Skills by Category
 
-#### Product Strategy Skills (3 skills)
+#### Product Strategy Skills (4 skills)
 Decide what to build, who it is for, how it wins, and what to test before committing.
 
 1. **foundation-sprint** — Evaluate, pressure-test, or sharpen any product, feature, app, startup, or business idea using the Foundation Sprint method from Jake Knapp and John Zeratsky's *Click*
 2. **fable-like-implementation** — Turn a non-trivial engineering request into an evidence-backed technical specification and implementation plan before production code is written
-3. **sprint-runner** — Run a facilitated Foundation Sprint, Design Sprint, or chained workshop with a virtual team, note-and-vote exercises, Decider calls, and resumable sprint-room artifacts
+3. **sol-orchestrator** — Use GPT-5.6 Sol to plan, delegate, integrate, and verify non-trivial implementation across Sol Light/Medium, Terra, Luna, GPT-5.5, and Claude Sonnet 5 specialists
+4. **sprint-runner** — Run a facilitated Foundation Sprint, Design Sprint, or chained workshop with a virtual team, note-and-vote exercises, Decider calls, and resumable sprint-room artifacts
 
-**Path:** Start with foundation-sprint for a fast solo product strategy evaluation, fable-like-implementation when you need an implementation-ready plan for non-trivial engineering work, or sprint-runner when you want to facilitate a full workshop with a virtual team.
+**Path:** Start with foundation-sprint for a fast solo product strategy evaluation, fable-like-implementation when you need an Opus-gated plan only, sol-orchestrator when you want planned multi-agent implementation, or sprint-runner when you want to facilitate a full workshop with a virtual team.
 
 #### Product Design Skills (1 skill)
 Review and improve digital product experiences with evidence-backed product design judgment.
@@ -236,6 +237,13 @@ vibe-building-skills/
     │   │       ├── operating-manual.md
     │   │       ├── plan-template.md
     │   │       └── spec-template.md
+    │   ├── sol-orchestrator/
+    │   │   ├── SKILL.md
+    │   │   ├── agents/
+    │   │   │   └── openai.yaml
+    │   │   ├── assets/
+    │   │   │   └── codex-agents/
+    │   │   └── references/
     │   ├── sprint-runner/
     │   │   ├── SKILL.md
     │   │   ├── docs/
@@ -524,11 +532,12 @@ Built with research and insights from:
 Start your journey to world-class products today:
 
 1. **Product Strategy:** `skills/product-strategy/foundation-sprint/SKILL.md`
-2. **Sprint Workshop:** `skills/product-strategy/sprint-runner/SKILL.md`
-3. **Product Design:** `skills/product-design/product-design-review/SKILL.md`
-4. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
-5. **Creative:** `skills/creative/orchestrator/SKILL.md`
-6. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
+2. **Multi-Agent Implementation:** `skills/product-strategy/sol-orchestrator/SKILL.md`
+3. **Sprint Workshop:** `skills/product-strategy/sprint-runner/SKILL.md`
+4. **Product Design:** `skills/product-design/product-design-review/SKILL.md`
+5. **Marketing:** `skills/marketing/orchestrator/SKILL.md`
+6. **Creative:** `skills/creative/orchestrator/SKILL.md`
+7. **Frontend Design:** `skills/frontend-design/frontend-orchestrator/SKILL.md`
 
 Choose one, install it in Claude, and ask for help with your specific situation.
 
