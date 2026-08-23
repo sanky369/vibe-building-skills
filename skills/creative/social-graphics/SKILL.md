@@ -1,6 +1,6 @@
 ---
 name: social-graphics
-description: "Produce platform-correct social media graphics: pick the right dimensions and layout per platform, write the headline/body/CTA copy, build the generation prompt, and generate the image via the repo's FAL.ai pipeline. Use whenever the user wants a social post visual, Instagram post/story/carousel, LinkedIn graphic, Twitter/X image, TikTok thumbnail, Pinterest pin, launch announcement graphic, or 'something to post about X' — even if they never name a platform. Also use to adapt one design across several platforms. Produces a Social Graphic Spec per asset (platform, dimensions, layout, copy, full generation prompt) plus generated images when FAL_API_KEY is available."
+description: "Produce platform-correct social media graphics: pick the right dimensions and layout per platform, write the headline/body/CTA copy, build the generation prompt, and generate the image through the repo pipeline. FAL.ai remains the default provider; Atlas Cloud is an explicit opt-in. Use whenever the user wants a social post visual, Instagram post/story/carousel, LinkedIn graphic, Twitter/X image, TikTok thumbnail, Pinterest pin, launch announcement graphic, or 'something to post about X' — even if they never name a platform. Also use to adapt one design across several platforms. Produces a Social Graphic Spec per asset plus generated images when automation is configured."
 ---
 
 # Social Graphics
@@ -83,6 +83,8 @@ python docs/creative_cli.py social \
 ```
 
 `--platform` accepts `instagram|linkedin|twitter|tiktok|pinterest`. Generate `--num-images 2` when the user is choosing between directions. If no key is set, deliver the spec with ready-to-run commands instead.
+
+Use Atlas Cloud only when the user explicitly selects it. Put `--provider atlas` before `social` and omit `--confirm-submit` on the first run; this reads the live catalog/schema, prints the current quote and payload, and sends no generation request. After explicit approval, rerun with `--confirm-submit`. Atlas accepts one image per submission and does not retry the generation POST. See `skills/creative/image-generation/references/automation.md` for the exact commands.
 
 ### 6. Self-check against the quality bar, deliver the spec + images.
 
