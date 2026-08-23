@@ -1,16 +1,17 @@
-# Creative automation reference — FAL.ai `fal-ai/nano-banana-pro`
+# Creative automation reference — FAL.ai default, Atlas Cloud opt-in
 
 The single source of truth for running the image-generation automation that ships
 with this repo. Every creative skill that generates images uses this same stack.
-There is exactly **one** model: `fal-ai/nano-banana-pro` on FAL.ai. There are no
-"fast"/"quality" model variants and no `guidance_scale`, `inference_steps`, or
-pixel-size parameters — anything claiming otherwise is stale.
+FAL.ai `fal-ai/nano-banana-pro` remains the default. Atlas Cloud
+`google/nano-banana-pro/text-to-image` is available only when explicitly selected.
+There are no `guidance_scale`, `inference_steps`, or pixel-size parameters.
 
 ## Files (paths relative to repo root)
 
 | File | Role |
 |---|---|
 | `docs/fal_api.py` | `NanobananProClient` (raw API) + `CreativeAssetGenerator` (saves organized assets) |
+| `docs/atlas_api.py` | Optional Atlas client with live catalog/schema validation, one-submit semantics, and bounded prediction polling |
 | `docs/creative_cli.py` | CLI wrapper: `product`, `social`, `brand`, `custom`, `test` subcommands |
 | `docs/claude_integration.py` | Convenience functions for agent use: `generate_product`, `generate_social`, `generate_brand`, `generate_asset`, `batch_generate_assets`, `get_summary` |
 
@@ -21,6 +22,13 @@ pip install requests
 export FAL_API_KEY="..."   # FAL_KEY also accepted as a fallback
 python docs/creative_cli.py test   # generates one test image to verify the key
 ```
+
+For Atlas Cloud, export `ATLASCLOUD_API_KEY`. First run the intended command with
+`--provider atlas` and without `--confirm-submit`. The read-only plan reports the
+live model price and validates the payload against the current schema, then exits
+without a generation POST. After the user explicitly approves the quote and final
+payload, add `--confirm-submit`. A failed or uncertain POST is never retried; only
+prediction GET requests use bounded backoff.
 
 Running `python docs/creative_cli.py ...` from the repo root works — Python puts
 the script's own directory on `sys.path`, so the `from fal_api import ...` import
@@ -73,6 +81,22 @@ python docs/creative_cli.py test
 Global flag: `--output-dir ./assets` (default `./assets`). All subcommands accept
 `--aspect-ratio`, `--resolution`, `--num-images`; `custom` also accepts `--format`
 and `--web-search`.
+
+Provider flags must appear before the subcommand:
+
+```bash
+# Read-only Atlas plan; no generation POST
+python docs/creative_cli.py --provider atlas custom \
+  --category thumbnails --name video-1 --prompt "..." --aspect-ratio 16:9
+
+# Run only after the user approves the live quote and payload
+python docs/creative_cli.py --provider atlas --confirm-submit custom \
+  --category thumbnails --name video-1 --prompt "..." --aspect-ratio 16:9
+```
+
+Atlas Cloud currently supports one image per submission (`--num-images 1`) and
+`png` or `jpeg` output. The existing FAL.ai defaults and multi-image behavior are
+unchanged.
 
 ## Python API (agent-friendly helpers)
 

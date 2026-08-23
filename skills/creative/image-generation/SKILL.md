@@ -1,6 +1,6 @@
 ---
 name: image-generation
-description: "Turns any request for an AI-generated image into precise, generation-ready prompt specs and — when the FAL.ai automation is configured — the generated files themselves, using the single model fal-ai/nano-banana-pro. Use whenever the user asks to 'generate an image', 'make a picture of X', 'create a thumbnail / hero image / illustration / infographic', 'write me a prompt for this image', or any visual that isn't specifically product photography, a social-platform graphic, or a brand mark (hand those to the sibling skills). Produces one prompt-spec block per asset (subject, style, composition, lighting, mood, aspect ratio, negative constraints) plus file-naming and variant conventions, and runs docs/creative_cli.py to generate when a FAL_API_KEY is available."
+description: "Turns any request for an AI-generated image into precise, generation-ready prompt specs and — when automation is configured — the generated files themselves. FAL.ai remains the default provider; Atlas Cloud is an explicit opt-in. Use whenever the user asks to 'generate an image', 'make a picture of X', 'create a thumbnail / hero image / illustration / infographic', 'write me a prompt for this image', or any visual that isn't specifically product photography, a social-platform graphic, or a brand mark (hand those to the sibling skills). Produces one prompt-spec block per asset plus file-naming and variant conventions, and runs docs/creative_cli.py to generate."
 ---
 
 # Image Generation
@@ -34,7 +34,7 @@ Ask in one batch, only what's missing:
 2. **Use** — where does it go? (this decides aspect ratio and resolution)
 3. **Style anchor** — existing style guide / creative-strategist style block,
    reference images, or 3 adjectives for the mood?
-4. **Automation** — is `FAL_API_KEY` set so you can generate, or deliver specs only?
+4. **Automation** — use FAL.ai by default. Use Atlas Cloud only if the user explicitly selects it; `ATLASCLOUD_API_KEY` access is not permission to spend.
 
 Infer, don't ask: aspect ratio from the stated destination (thumbnail → `16:9`,
 story → `9:16`, feed → `1:1` or `4:5`); resolution from stakes (`2K` default,
@@ -60,7 +60,7 @@ state your assumptions for the rest and proceed.
    composition or style angle, not synonym swaps), generate 1 of each or
    `num_images` 3–4 of the winner, and have the user pick. Never present one
    option for a hero asset.
-4. **Generate or deliver.** If `FAL_API_KEY` (or `FAL_KEY`) is set:
+4. **Generate or deliver.** If `FAL_API_KEY` (or `FAL_KEY`) is set, use the default command:
 
    ```bash
    python docs/creative_cli.py custom \
@@ -73,6 +73,8 @@ state your assumptions for the rest and proceed.
    (e.g. "2026 trends infographic"). If no key is set, deliver the prompt-spec
    blocks and the exact command the user can run later — do not fake results or
    claim images were generated.
+
+   For Atlas Cloud, first run the same command with `--provider atlas` before the subcommand and without `--confirm-submit`. This performs read-only live catalog/schema validation and reports the current quote without generating. After the user approves that quote and final payload, rerun with `--confirm-submit`. Atlas sends one image per submission and never retries the generation POST.
 5. **Review and iterate.** Compare output to the spec's mood/style/negative
    constraints. Fix misses by editing the prompt (more specific subject, explicit
    lighting, stronger prohibitions) — there are no other model knobs. One
@@ -113,7 +115,7 @@ Before delivering, verify every spec:
 - [ ] Style, lighting, composition, and mood are each explicitly stated — none left to model default
 - [ ] Aspect ratio matches the stated destination (no `1:1` "because default")
 - [ ] Negative constraints listed (at minimum: no watermark; state text policy explicitly — models mangle long text)
-- [ ] No invented parameters — only the ones in `references/automation.md`; the model is always `fal-ai/nano-banana-pro`
+- [ ] No invented parameters — only the ones in `references/automation.md`; FAL.ai is the default, and Atlas Cloud is used only after explicit selection and quote confirmation
 - [ ] Keeper assets got 3+ distinct variants, not one take
 - [ ] If automation wasn't run, the deliverable says so and includes runnable commands
 

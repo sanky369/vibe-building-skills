@@ -167,15 +167,33 @@ class NanobananProClient:
 class CreativeAssetGenerator:
     """High-level interface for generating creative assets with nanobanana pro"""
     
-    def __init__(self, api_key: Optional[str] = None, output_dir: str = "./assets"):
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        output_dir: str = "./assets",
+        provider: str = "fal",
+        confirm_submit: bool = False,
+    ):
         """
         Initialize creative asset generator
         
         Args:
-            api_key: FAL.ai API key
+            api_key: Provider API key
             output_dir: Base directory for saving assets
+            provider: Image provider (fal or atlas)
+            confirm_submit: Explicit approval for one Atlas generation POST
         """
-        self.client = NanobananProClient(api_key)
+        if provider == "fal":
+            self.client = NanobananProClient(api_key)
+        elif provider == "atlas":
+            from atlas_api import AtlasCloudClient
+
+            self.client = AtlasCloudClient(
+                api_key=api_key,
+                confirm_submit=confirm_submit,
+            )
+        else:
+            raise ValueError("provider must be fal or atlas")
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
