@@ -152,6 +152,19 @@ class AtlasCloudClient:
             definition = properties.get(name)
             if not isinstance(definition, dict):
                 continue
+            expected = definition.get("type")
+            if expected == "boolean":
+                valid = isinstance(value, bool)
+            elif expected == "integer":
+                valid = isinstance(value, int) and not isinstance(value, bool)
+            elif expected == "number":
+                valid = isinstance(value, (int, float)) and not isinstance(value, bool)
+            elif expected == "string":
+                valid = isinstance(value, str)
+            else:
+                valid = True
+            if not valid:
+                raise AtlasCloudError(f"invalid Atlas Cloud {name}: expected {expected}")
             allowed = definition.get("enum")
             if isinstance(allowed, list) and value not in allowed:
                 raise AtlasCloudError(f"invalid Atlas Cloud {name}: {value!r}")

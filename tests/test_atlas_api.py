@@ -119,6 +119,17 @@ class AtlasCloudClientTests(unittest.TestCase):
         self.assertEqual(session.post.call_count, 1)
         self.assertEqual(sleeps, [1, 2])
 
+    def test_non_boolean_flags_are_rejected_before_any_post(self):
+        for kwargs in ({"enable_web_search": "false"}, {"sync_mode": "false"}):
+            session = Mock()
+            session.get.side_effect = [Response(catalog()), Response(schema())]
+            client = AtlasCloudClient(api_key="secret", confirm_submit=True, session=session)
+
+            with self.assertRaisesRegex(RuntimeError, "expected boolean"):
+                client.generate_image("A precise image", **kwargs)
+
+            self.assertEqual(session.post.call_count, 0)
+
     def test_post_failure_is_not_retried(self):
         session = Mock()
         session.get.side_effect = [Response(catalog()), Response(schema())]
