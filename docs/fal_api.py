@@ -4,11 +4,47 @@ Handles all interactions with FAL.ai nanobanana pro image generation model
 """
 
 import os
+import re
 import json
+import unicodedata
 import requests
 from typing import Optional, Dict, Any, List
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from datetime import datetime
+
+_BIDI_AND_CTRL_RE = re.compile(r"[\x00-\x1f\x7f\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff]")
+
+
+def _sanitize_segment(raw: str, sep: str = "-") -> str:
+    """Normalize and sanitize a user-supplied name into a single safe path segment."""
+    if not isinstance(raw, str) or not raw.strip():
+        raise ValueError("Path segment must be a non-empty string")
+    cleaned = _BIDI_AND_CTRL_RE.sub("", unicodedata.normalize("NFC", raw)).strip()
+    if (
+        cleaned.startswith(("/", "\\"))
+        or ".." in PurePosixPath(cleaned).parts
+        or ".." in PureWindowsPath(cleaned).parts
+        or PureWindowsPath(cleaned).drive
+    ):
+        raise ValueError(f"Unsafe path traversal segment rejected: {raw!r}")
+    # Replace path separators and whitespace with sep; keep Unicode word chars and Arabic marks
+    cleaned = re.sub(r"[/\\:\s]+", sep, cleaned.lower())
+    cleaned = re.sub(r"[^\w\-\u064b-\u065f\u0670]", "", cleaned, flags=re.UNICODE)
+    cleaned = re.sub(rf"{re.escape(sep)}+", sep, cleaned).strip(f".{sep}_")
+    if not cleaned or cleaned in {".", ".."}:
+        raise ValueError(f"Path segment resolves to empty after sanitization: {raw!r}")
+    return cleaned
+
+
+def _resolve_within_base(base_dir: Path, *segments: str) -> Path:
+    """Join segments under base_dir and verify the resolved path stays inside base_dir."""
+    base_resolved = base_dir.resolve()
+    candidate = base_resolved.joinpath(*segments).resolve()
+    try:
+        candidate.relative_to(base_resolved)
+    except ValueError as exc:
+        raise ValueError(f"Resolved path escapes output_dir: {candidate}") from exc
+    return candidate
 
 class NanobananProClient:
     """Client for FAL.ai nanobanana pro image generation API"""
@@ -203,8 +239,10 @@ class CreativeAssetGenerator:
             Dictionary with image URLs and metadata
         """
         
-        # Create product directory
-        product_dir = self.output_dir / "product-photography" / product_name.lower().replace(" ", "-")
+        # Create product directory safely inside output_dir
+        safe_product_dir = _sanitize_segment(product_name, sep="-")
+        safe_product_file = _sanitize_segment(product_name, sep="_")
+        product_dir = _resolve_within_base(self.output_dir, "product-photography", safe_product_dir)
         product_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate images
@@ -223,8 +261,8 @@ class CreativeAssetGenerator:
                 image_url = image_data.get("url")
                 if image_url:
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = f"{product_name.lower().replace(' ', '_')}_{i+1}_{timestamp}.png"
-                    filepath = product_dir / filename
+                    filename = f"{safe_product_file}_{i+1}_{timestamp}.png"
+                    filepath = _resolve_within_base(product_dir, filename)
                     
                     self.client.download_image(image_url, str(filepath))
                     saved_paths.append(str(filepath))
@@ -259,8 +297,10 @@ class CreativeAssetGenerator:
             Dictionary with image URLs and metadata
         """
         
-        # Create social directory
-        social_dir = self.output_dir / "social-graphics" / platform.lower()
+        # Create social directory safely inside output_dir
+        safe_platform = _sanitize_segment(platform, sep="-")
+        safe_topic = _sanitize_segment(topic, sep="_")
+        social_dir = _resolve_within_base(self.output_dir, "social-graphics", safe_platform)
         social_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate images
@@ -279,8 +319,8 @@ class CreativeAssetGenerator:
                 image_url = image_data.get("url")
                 if image_url:
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = f"{platform}_{topic.lower().replace(' ', '_')}_{i+1}_{timestamp}.png"
-                    filepath = social_dir / filename
+                    filename = f"{safe_platform}_{safe_topic}_{i+1}_{timestamp}.png"
+                    filepath = _resolve_within_base(social_dir, filename)
                     
                     self.client.download_image(image_url, str(filepath))
                     saved_paths.append(str(filepath))
@@ -315,8 +355,10 @@ class CreativeAssetGenerator:
             Dictionary with image URLs and metadata
         """
         
-        # Create brand directory
-        brand_dir = self.output_dir / "brand-assets" / brand_name.lower().replace(" ", "-") / asset_type.lower()
+        # Create brand directory safely inside output_dir
+        safe_brand = _sanitize_segment(brand_name, sep="-")
+        safe_asset_type = _sanitize_segment(asset_type, sep="_")
+        brand_dir = _resolve_within_base(self.output_dir, "brand-assets", safe_brand, safe_asset_type)
         brand_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate images
@@ -335,8 +377,8 @@ class CreativeAssetGenerator:
                 image_url = image_data.get("url")
                 if image_url:
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = f"{asset_type}_{i+1}_{timestamp}.png"
-                    filepath = brand_dir / filename
+                    filename = f"{safe_asset_type}_{i+1}_{timestamp}.png"
+                    filepath = _resolve_within_base(brand_dir, filename)
                     
                     self.client.download_image(image_url, str(filepath))
                     saved_paths.append(str(filepath))
@@ -375,8 +417,11 @@ class CreativeAssetGenerator:
             Dictionary with image URLs and metadata
         """
         
-        # Create directory
-        asset_dir = self.output_dir / asset_category.lower() / asset_name.lower().replace(" ", "-")
+        # Create directory safely inside output_dir
+        safe_category = _sanitize_segment(asset_category, sep="-")
+        safe_name_dir = _sanitize_segment(asset_name, sep="-")
+        safe_name_file = _sanitize_segment(asset_name, sep="_")
+        asset_dir = _resolve_within_base(self.output_dir, safe_category, safe_name_dir)
         asset_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate images
@@ -397,8 +442,8 @@ class CreativeAssetGenerator:
                 if image_url:
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     ext = output_format if output_format in ["png", "jpeg", "webp"] else "png"
-                    filename = f"{asset_name.lower().replace(' ', '_')}_{i+1}_{timestamp}.{ext}"
-                    filepath = asset_dir / filename
+                    filename = f"{safe_name_file}_{i+1}_{timestamp}.{ext}"
+                    filepath = _resolve_within_base(asset_dir, filename)
                     
                     self.client.download_image(image_url, str(filepath))
                     saved_paths.append(str(filepath))
