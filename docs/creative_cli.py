@@ -18,6 +18,7 @@ def create_generator(args):
         output_dir=args.output_dir,
         provider=args.provider,
         confirm_submit=args.confirm_submit,
+        quote_id=args.quote_id,
     )
 
 
@@ -192,7 +193,9 @@ def test_api(args):
         if args.provider == "atlas":
             from atlas_api import AtlasCloudClient
 
-            client = AtlasCloudClient(confirm_submit=args.confirm_submit)
+            client = AtlasCloudClient(
+                confirm_submit=args.confirm_submit, quote_id=args.quote_id
+            )
         else:
             client = NanobananProClient()
         
@@ -254,7 +257,12 @@ Examples:
     parser.add_argument(
         "--confirm-submit",
         action="store_true",
-        help="Confirm exactly one billable Atlas generation POST",
+        help="Confirm exactly one billable Atlas generation POST (requires --quote-id)",
+    )
+    parser.add_argument(
+        "--quote-id",
+        default=None,
+        help="quote_id printed by the Atlas plan you reviewed; the POST is refused if the live quote/payload changed",
     )
     
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")

@@ -27,7 +27,8 @@ For Atlas Cloud, export `ATLASCLOUD_API_KEY`. First run the intended command wit
 `--provider atlas` and without `--confirm-submit`. The read-only plan reports the
 live model price and validates the payload against the current schema, then exits
 without a generation POST. After the user explicitly approves the quote and final
-payload, add `--confirm-submit`. A failed or uncertain POST is never retried; only
+payload, add `--confirm-submit --quote-id <quote_id>` using the `quote_id` the plan
+printed; if the live quote or payload changed since the review, nothing is submitted. A failed or uncertain POST is never retried; only
 prediction GET requests use bounded backoff.
 
 Running `python docs/creative_cli.py ...` from the repo root works — Python puts
@@ -90,7 +91,7 @@ python docs/creative_cli.py --provider atlas custom \
   --category thumbnails --name video-1 --prompt "..." --aspect-ratio 16:9
 
 # Run only after the user approves the live quote and payload
-python docs/creative_cli.py --provider atlas --confirm-submit custom \
+python docs/creative_cli.py --provider atlas --confirm-submit --quote-id <quote_id> custom \
   --category thumbnails --name video-1 --prompt "..." --aspect-ratio 16:9
 ```
 

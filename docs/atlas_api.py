@@ -1,5 +1,6 @@
 """Atlas Cloud provider for the creative asset generation helpers."""
 
+import hashlib
 import json
 import os
 import time
@@ -23,8 +24,9 @@ class AtlasConfirmationRequired(AtlasCloudError):
         super().__init__(
             "Atlas plan ready: "
             f"model={plan['model']}, current base_price={price}. "
-            f"payload={payload}. Review the live quote and payload, then rerun "
-            "with --confirm-submit."
+            f"payload={payload}. quote_id={plan['quote_id']}. Review the live quote "
+            "and payload, then rerun with --confirm-submit --quote-id "
+            f"{plan['quote_id']}."
         )
         self.plan = plan
 
@@ -45,6 +47,7 @@ class AtlasCloudClient:
         api_key: Optional[str] = None,
         *,
         confirm_submit: bool = False,
+        quote_id: Optional[str] = None,
         poll_attempts: int = 60,
         poll_interval: float = 3.0,
         session: Any = requests,
@@ -52,6 +55,7 @@ class AtlasCloudClient:
     ):
         self.api_key = api_key or os.getenv("ATLASCLOUD_API_KEY")
         self.confirm_submit = confirm_submit
+        self.quote_id = quote_id
         self.poll_attempts = poll_attempts
         self.poll_interval = poll_interval
         self.session = session
@@ -197,12 +201,24 @@ class AtlasCloudClient:
         }
         model, schema = self._live_model_and_schema()
         self._validate_payload(payload, schema)
+        price = model.get("price") or {}
         return {
             "provider": "atlas",
             "model": self.MODEL_ID,
-            "price": model.get("price") or {},
+            "price": price,
             "payload": payload,
+            "quote_id": self._quote_id(self.MODEL_ID, price, payload),
         }
+
+    @staticmethod
+    def _quote_id(model_id: str, price: Dict[str, Any], payload: Dict[str, Any]) -> str:
+        """Fingerprint of the exact model, live price and payload shown for review."""
+        canonical = json.dumps(
+            {"model": model_id, "price": price, "payload": payload},
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
 
     def _submit_once(self, payload: Dict[str, Any]) -> str:
         if not self.api_key:
@@ -292,13 +308,24 @@ class AtlasCloudClient:
             enable_web_search=enable_web_search,
             sync_mode=sync_mode,
         )
-        if not self.confirm_submit:
+        if not self.confirm_submit or not self.quote_id:
             raise AtlasConfirmationRequired(plan)
+        if self.quote_id != plan["quote_id"]:
+            raise AtlasCloudError(
+                "the live Atlas quote or payload changed since it was reviewed "
+                f"(reviewed quote_id={self.quote_id}, current quote_id={plan['quote_id']}); "
+                "nothing was submitted. Review the new plan and rerun with the new --quote-id."
+            )
         request_id = self._submit_once(plan["payload"])
         prediction = self._poll_prediction(request_id)
         images: List[Dict[str, str]] = []
         for output in prediction["outputs"]:
-            url = output if isinstance(output, str) else output.get("url")
+            if isinstance(output, str):
+                url = output
+            elif isinstance(output, dict):
+                url = output.get("url")
+            else:
+                raise AtlasCloudError("Atlas Cloud prediction has an invalid output item")
             if isinstance(url, str) and url:
                 images.append({"url": url})
         if not images:

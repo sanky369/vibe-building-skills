@@ -84,7 +84,7 @@ python docs/creative_cli.py social \
 
 `--platform` accepts `instagram|linkedin|twitter|tiktok|pinterest`. Generate `--num-images 2` when the user is choosing between directions. If no key is set, deliver the spec with ready-to-run commands instead.
 
-Use Atlas Cloud only when the user explicitly selects it. Put `--provider atlas` before `social` and omit `--confirm-submit` on the first run; this reads the live catalog/schema, prints the current quote and payload, and sends no generation request. After explicit approval, rerun with `--confirm-submit`. Atlas accepts one image per submission and does not retry the generation POST. See `skills/creative/image-generation/references/automation.md` for the exact commands.
+Use Atlas Cloud only when the user explicitly selects it. Put `--provider atlas` before `social` and omit `--confirm-submit` on the first run; this reads the live catalog/schema, prints the current quote and payload, and sends no generation request. Use `--num-images 1` with Atlas (it rejects other counts). After explicit approval, rerun with `--confirm-submit --quote-id <quote_id>` (the id printed with the plan). Atlas accepts one image per submission and does not retry the generation POST. See `skills/creative/image-generation/references/automation.md` for the exact commands.
 
 ### 6. Self-check against the quality bar, deliver the spec + images.
 

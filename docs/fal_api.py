@@ -173,6 +173,7 @@ class CreativeAssetGenerator:
         output_dir: str = "./assets",
         provider: str = "fal",
         confirm_submit: bool = False,
+        quote_id: Optional[str] = None,
     ):
         """
         Initialize creative asset generator
@@ -182,6 +183,7 @@ class CreativeAssetGenerator:
             output_dir: Base directory for saving assets
             provider: Image provider (fal or atlas)
             confirm_submit: Explicit approval for one Atlas generation POST
+            quote_id: quote_id of the reviewed Atlas plan; submission is refused if the live quote/payload no longer matches
         """
         if provider == "fal":
             self.client = NanobananProClient(api_key)
@@ -191,6 +193,7 @@ class CreativeAssetGenerator:
             self.client = AtlasCloudClient(
                 api_key=api_key,
                 confirm_submit=confirm_submit,
+                quote_id=quote_id,
             )
         else:
             raise ValueError("provider must be fal or atlas")

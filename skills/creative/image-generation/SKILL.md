@@ -74,7 +74,7 @@ state your assumptions for the rest and proceed.
    blocks and the exact command the user can run later — do not fake results or
    claim images were generated.
 
-   For Atlas Cloud, first run the same command with `--provider atlas` before the subcommand and without `--confirm-submit`. This performs read-only live catalog/schema validation and reports the current quote without generating. After the user approves that quote and final payload, rerun with `--confirm-submit`. Atlas sends one image per submission and never retries the generation POST.
+   For Atlas Cloud, first run the same command with `--provider atlas` before the subcommand, with `--num-images 1` (Atlas sends one image per submission and rejects any other count), and without `--confirm-submit`. This performs read-only live catalog/schema validation and reports the current quote, payload and a `quote_id` without generating. After the user approves that quote and final payload, rerun with `--confirm-submit --quote-id <quote_id>`; if the live quote or payload changed in between, nothing is submitted and a new plan must be reviewed. The generation POST is never retried.
 5. **Review and iterate.** Compare output to the spec's mood/style/negative
    constraints. Fix misses by editing the prompt (more specific subject, explicit
    lighting, stronger prohibitions) — there are no other model knobs. One

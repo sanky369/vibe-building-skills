@@ -59,6 +59,13 @@ def schema():
     }
 
 
+def reviewed_quote_id(prompt="A precise image", **plan_kwargs):
+    """quote_id the user would have seen from the read-only plan run."""
+    session = Mock()
+    session.get.side_effect = [Response(catalog()), Response(schema())]
+    return AtlasCloudClient(session=session).plan_image(prompt, **plan_kwargs)["quote_id"]
+
+
 class AtlasCloudClientTests(unittest.TestCase):
     def test_plan_reads_live_catalog_and_schema_without_posting(self):
         session = Mock()
@@ -104,9 +111,11 @@ class AtlasCloudClientTests(unittest.TestCase):
             {"code": 200, "data": {"id": "request-1"}}
         )
         sleeps = []
+        quote_id = reviewed_quote_id()
         client = AtlasCloudClient(
             api_key="secret",
             confirm_submit=True,
+            quote_id=quote_id,
             poll_attempts=3,
             poll_interval=1,
             session=session,
@@ -123,7 +132,9 @@ class AtlasCloudClientTests(unittest.TestCase):
         for kwargs in ({"enable_web_search": "false"}, {"sync_mode": "false"}):
             session = Mock()
             session.get.side_effect = [Response(catalog()), Response(schema())]
-            client = AtlasCloudClient(api_key="secret", confirm_submit=True, session=session)
+            client = AtlasCloudClient(
+                api_key="secret", confirm_submit=True, quote_id="reviewed", session=session
+            )
 
             with self.assertRaisesRegex(RuntimeError, "expected boolean"):
                 client.generate_image("A precise image", **kwargs)
@@ -137,6 +148,7 @@ class AtlasCloudClientTests(unittest.TestCase):
         client = AtlasCloudClient(
             api_key="secret",
             confirm_submit=True,
+            quote_id=reviewed_quote_id(),
             session=session,
         )
 
@@ -144,6 +156,55 @@ class AtlasCloudClientTests(unittest.TestCase):
             client.generate_image("A precise image")
 
         self.assertEqual(session.post.call_count, 1)
+
+    def test_confirm_without_quote_id_does_not_post(self):
+        session = Mock()
+        session.get.side_effect = [Response(catalog()), Response(schema())]
+        client = AtlasCloudClient(api_key="secret", confirm_submit=True, session=session)
+
+        with self.assertRaises(AtlasConfirmationRequired) as raised:
+            client.generate_image("A precise image")
+
+        self.assertIn(raised.exception.plan["quote_id"], str(raised.exception))
+        session.post.assert_not_called()
+
+    def test_changed_quote_or_payload_is_not_submitted(self):
+        stale = reviewed_quote_id()
+        repriced = catalog()
+        repriced["data"][0]["price"]["actual"]["base_price"] = "0.99"
+        for get_side_effect, prompt in (
+            ([Response(repriced), Response(schema())], "A precise image"),
+            ([Response(catalog()), Response(schema())], "A different image"),
+        ):
+            session = Mock()
+            session.get.side_effect = get_side_effect
+            client = AtlasCloudClient(
+                api_key="secret", confirm_submit=True, quote_id=stale, session=session
+            )
+
+            with self.assertRaisesRegex(RuntimeError, "changed since it was reviewed"):
+                client.generate_image(prompt)
+
+            session.post.assert_not_called()
+
+    def test_malformed_output_item_is_an_atlas_error(self):
+        session = Mock()
+        session.get.side_effect = [
+            Response(catalog()),
+            Response(schema()),
+            Response({"code": 200, "data": {"status": "completed", "outputs": [123]}}),
+        ]
+        session.post.return_value = Response({"code": 200, "data": {"id": "request-1"}})
+        client = AtlasCloudClient(
+            api_key="secret",
+            confirm_submit=True,
+            quote_id=reviewed_quote_id(),
+            poll_attempts=1,
+            session=session,
+        )
+
+        with self.assertRaisesRegex(RuntimeError, "invalid output item"):
+            client.generate_image("A precise image")
 
     def test_atlas_rejects_multiple_images_and_webp(self):
         client = AtlasCloudClient(session=Mock())
