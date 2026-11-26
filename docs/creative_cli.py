@@ -12,6 +12,16 @@ from typing import Optional
 from fal_api import CreativeAssetGenerator, NanobananProClient
 
 
+def create_generator(args):
+    """Create the selected provider without changing the default FAL path."""
+    return CreativeAssetGenerator(
+        output_dir=args.output_dir,
+        provider=args.provider,
+        confirm_submit=args.confirm_submit,
+        quote_id=args.quote_id,
+    )
+
+
 def print_success(message: str):
     """Print success message"""
     print(f"✅ {message}")
@@ -30,7 +40,7 @@ def print_info(message: str):
 def generate_product_photo(args):
     """Generate product photography"""
     try:
-        generator = CreativeAssetGenerator(output_dir=args.output_dir)
+        generator = create_generator(args)
         
         print_info(f"Generating product photo for: {args.product_name}")
         print_info(f"Prompt: {args.prompt}")
@@ -65,7 +75,7 @@ def generate_product_photo(args):
 def generate_social_graphic(args):
     """Generate social media graphics"""
     try:
-        generator = CreativeAssetGenerator(output_dir=args.output_dir)
+        generator = create_generator(args)
         
         print_info(f"Generating {args.platform} graphic for: {args.topic}")
         print_info(f"Prompt: {args.prompt}")
@@ -101,7 +111,7 @@ def generate_social_graphic(args):
 def generate_brand_asset(args):
     """Generate brand assets"""
     try:
-        generator = CreativeAssetGenerator(output_dir=args.output_dir)
+        generator = create_generator(args)
         
         print_info(f"Generating {args.asset_type} for: {args.brand_name}")
         print_info(f"Prompt: {args.prompt}")
@@ -137,7 +147,7 @@ def generate_brand_asset(args):
 def generate_custom(args):
     """Generate custom asset"""
     try:
-        generator = CreativeAssetGenerator(output_dir=args.output_dir)
+        generator = create_generator(args)
         
         print_info(f"Generating {args.category}/{args.name}")
         print_info(f"Prompt: {args.prompt}")
@@ -180,7 +190,14 @@ def test_api(args):
     try:
         print_info("Testing nanobanana pro API connection...")
         
-        client = NanobananProClient()
+        if args.provider == "atlas":
+            from atlas_api import AtlasCloudClient
+
+            client = AtlasCloudClient(
+                confirm_submit=args.confirm_submit, quote_id=args.quote_id
+            )
+        else:
+            client = NanobananProClient()
         
         print_info("Generating test image...")
         result = client.generate_image(
@@ -230,6 +247,22 @@ Examples:
         "--output-dir",
         default="./assets",
         help="Output directory for generated assets (default: ./assets)"
+    )
+    parser.add_argument(
+        "--provider",
+        choices=["fal", "atlas"],
+        default="fal",
+        help="Image provider (default: fal)",
+    )
+    parser.add_argument(
+        "--confirm-submit",
+        action="store_true",
+        help="Confirm exactly one billable Atlas generation POST (requires --quote-id)",
+    )
+    parser.add_argument(
+        "--quote-id",
+        default=None,
+        help="quote_id printed by the Atlas plan you reviewed; the POST is refused if the live quote/payload changed",
     )
     
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
